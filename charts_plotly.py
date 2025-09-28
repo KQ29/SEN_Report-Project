@@ -176,3 +176,35 @@ def bar_response_time_subjects(data: dict, unit_label: str = " mins"):
         uniformtext_mode="show",
     )
     return fig
+
+def bar_period_kpis(labels, values, units):
+    """Bar chart for period KPIs like Avg session length and Time-on-task."""
+    colors = [PALETTE[0], PALETTE[1]]
+    texts = [f"{v:.1f}{u}" for v, u in zip(values, units)]
+
+    fig = go.Figure(
+        data=[
+            go.Bar(
+                x=labels,
+                y=values,
+                marker_color=colors,
+                text=texts,
+                textposition="outside",
+                cliponaxis=False,
+                hovertemplate="%{x}: %{y:.1f}%{customdata}<extra></extra>",
+                customdata=units,
+            )
+        ]
+    )
+    fig.update_layout(
+        template="plotly_white",
+        height=320,
+        margin=dict(l=10, r=10, t=40, b=40),
+        title="Period KPIs",
+        xaxis=dict(tickangle=-10, categoryorder="array", categoryarray=labels),
+        yaxis=dict(showgrid=True, zeroline=True, rangemode="tozero"),
+        uniformtext_minsize=10,
+        uniformtext_mode="show",
+        showlegend=False,
+    )
+    return fig

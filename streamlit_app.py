@@ -2,9 +2,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
-
 from datetime import datetime, date, timedelta
-
 
 from constants import PRIMARY_JSON_PATH, SECONDARY_JSON_PATH
 from loaders import load_json, extract_user_id_and_audience, merge_data
@@ -27,8 +25,8 @@ from charts_plotly import (
     alltime_kpi_bars,
     bar_mastery_subjects,
     bar_response_time_subjects,
+    bar_period_kpis,   # NEW
 )
-from charts_altair import meter_chart
 from ui_profile import display_user_metadata
 from ui_subjects import render_subject_growth
 from ui_personalisation import render_personalisation_usage
@@ -41,7 +39,7 @@ st.set_page_config(page_title="Student Report Generator", layout="wide")
 def main():
     st.title("Student Report Generator (merged datasets)")
 
-    # -------- Data sources (supports multiple uploads; else defaults to PRIMARY+SECONDARY) --------
+    # -------- Data sources --------
     uploaded = st.sidebar.file_uploader("Upload one or more JSON files", type=["json"], accept_multiple_files=True)
     if uploaded:
         datasets = [load_json(u) for u in uploaded]
@@ -111,7 +109,7 @@ def main():
         # ----- Profile -----
         display_user_metadata(agg)
 
-        # ----- Period KPI charts (pies) -----
+        # ----- Period KPI pies -----
         st.markdown("### Period KPI charts")
         r1c1, r1c2 = st.columns(2)
         with r1c1:
@@ -122,22 +120,13 @@ def main():
                 use_container_width=True
             )
 
-        # ----- Optional compact meters -----
-        m1, m2 = st.columns(2)
-        with m1:
-            st.altair_chart(
-                meter_chart(curr["avg_session_mins"], max_value=max(50, curr["avg_session_mins"] * 1.4),
-                            title="Avg session length (period)", unit=" mins"),
-                use_container_width=True
-            )
-        with m2:
-            st.altair_chart(
-                meter_chart(curr["total_time_mins"], max_value=max(100, curr["total_time_mins"] * 1.4),
-                            title="Time-on-task (period)", unit=" mins"),
-                use_container_width=True
-            )
+        # ----- Period KPI bar (combined) -----
+        labels = ["Avg session length (period)", "Time-on-task (period)"]
+        values = [curr["avg_session_mins"], curr["total_time_mins"]]
+        units = [" mins", " mins"]
+        st.plotly_chart(bar_period_kpis(labels, values, units), use_container_width=True)
 
-        # ----- All-time KPIs (combined bars) -----
+        # ----- All-time KPIs -----
         st.markdown("### All-time KPI charts")
         labels = [
             "All-time points",
@@ -168,7 +157,6 @@ def main():
         with tab2:
             spd_block = response_time_stats(data, user_id, start_dt, end_dt)
             st.caption(f"Attempts: **{spd_block['attempts']}** • Mean: **{spd_block['mean']}** • Median: **{spd_block['median']}** • P90: **{spd_block['p90']}**")
-            # If your time_spent is seconds, pass unit_label=' s'
             st.plotly_chart(bar_response_time_subjects(spd_block["per_subject"], unit_label=" mins"), use_container_width=True)
 
         with tab3:
@@ -177,20 +165,18 @@ def main():
             st.write("Total sessions:", eng["sessions_total"])
             st.write("Longest streak:", eng["streak"])
 
-            # ---- Engagement Heatmap (Mon..Sun x Weeks) ----
+            # Engagement Heatmap
             weeks = eng.get("weeks", [])
-            heat_cols = eng.get("heat", [])  # list of columns; each is [Mon..Sun]
+            heat_cols = eng.get("heat", [])
             days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 
             if weeks and heat_cols:
-                # transpose: rows=days, cols=weeks
-                z = list(map(list, zip(*heat_cols)))  # shape 7 x num_weeks
-
+                z = list(map(list, zip(*heat_cols)))  # transpose
                 fig = go.Figure(
                     data=go.Heatmap(
                         z=z,
-                        x=weeks,          # week starting dates (ISO strings)
-                        y=days,           # Mon..Sun
+                        x=weeks,
+                        y=days,
                         colorscale="Blues",
                         colorbar=dict(title="Sessions/day"),
                         hovertemplate="Week start: %{x}<br>Day: %{y}<br>Sessions: %{z}<extra></extra>",
@@ -218,7 +204,7 @@ def main():
             st.write("Messages (period):", comm["messages"])
             st.write("Personalisation changes (proxy):", comm["personalisation_changes"])
 
-        # ---------- Personalisation usage ----------
+        # ---------- Personalisation ----------
         st.markdown("### Personalisation usage")
         render_personalisation_usage(data, user_id, start_dt, end_dt)
 
@@ -230,23 +216,18 @@ def main():
         if not curr["had_ts"]:
             st.warning("No reliable timestamps found in your selected range.")
 
-        # Compute report-driving KPIs (now including the NEW blocks)
         acc_block = accuracy_and_mastery(data, user_id, start_dt, end_dt)
         spd_block = response_time_stats(data, user_id, start_dt, end_dt)
 
         focus_score_now = compute_focus_score(curr["completion_pct"], curr["avg_session_mins"])
         focus_score_prev = compute_focus_score(prev["completion_pct"], prev["avg_session_mins"])
         focus_delta = focus_score_now - focus_score_prev
-        dropoff_risk = (
-            "high" if (curr.get("active_days", 0) <= 2 or curr["completion_pct"] < 30)
-            else ("medium" if curr["completion_pct"] < 60 else "low")
-        )
+        dropoff_risk = "high" if (curr.get("active_days", 0) <= 2 or curr["completion_pct"] < 30) else ("medium" if curr["completion_pct"] < 60 else "low")
 
         report_data = {
             "student": {"name": agg["name"], "id": user_id, "class": agg.get("class_level", "—"), "year": agg.get("class_level", "—")},
             "period": {"start": start_date.isoformat(), "end": end_date.isoformat(), "generated_on": date.today().isoformat()},
             "prepared_for": "Teacher" if audience == "teacher" else "Parent/Carer",
-            "devices": {},
             "usage": {
                 "active_days": curr.get("active_days", "—"),
                 "sessions": curr["sessions"],
@@ -270,8 +251,6 @@ def main():
             "goals": [],
             "recommendations": [],
             "questions": {},
-
-            # >>> These two blocks drive Sections 5 & 6 in the report <<<
             "accuracy_mastery": acc_block,
             "processing_speed": spd_block,
         }
@@ -279,7 +258,7 @@ def main():
         report_text = build_report(report_data)
         st.text_area("Report (copy-ready)", value=report_text, height=600)
 
-        # ---------- Events table ----------
+        # ---------- Event log ----------
         st.markdown("### Event log")
         render_event_log_table(data, user_id)
 
