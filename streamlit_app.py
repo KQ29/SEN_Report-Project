@@ -25,7 +25,7 @@ from charts_plotly import (
     alltime_kpi_bars,
     bar_mastery_subjects,
     bar_response_time_subjects,
-    bar_period_kpis,   # NEW
+    bar_period_kpis,   
 )
 from ui_profile import display_user_metadata
 from ui_subjects import render_subject_growth

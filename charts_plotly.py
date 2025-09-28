@@ -109,14 +109,14 @@ def bar_mastery_subjects(data):
 
     Accepts either:
       - dict {subject: accuracy_percent}
-      - list of {"subject": ..., "avg": ...}  # we’ll accept this too
+      - list of {"subject": ..., "avg": ...}
     """
     if isinstance(data, list):
-        subjects = [d["subject"] for d in data]
+        subjects = [d.get("subject", "—") for d in data]
         values = [float(d.get("avg") or d.get("accuracy") or 0.0) for d in data]
     else:
         subjects = list(data.keys())
-        values = [data[s] for s in subjects]
+        values = [float(data[s]) for s in subjects]
 
     fig = go.Figure(
         data=[
@@ -150,7 +150,7 @@ def bar_response_time_subjects(data: dict, unit_label: str = " mins"):
     data: {subject: avg_time_value}
     """
     subjects = list(data.keys())
-    values = [data[s] for s in subjects]
+    values = [float(data[s]) for s in subjects]
 
     fig = go.Figure(
         data=[
@@ -177,22 +177,22 @@ def bar_response_time_subjects(data: dict, unit_label: str = " mins"):
     )
     return fig
 
+
 def bar_period_kpis(labels, values, units):
-    """Bar chart for period KPIs like Avg session length and Time-on-task."""
+    """Simple 2-bar chart for 'Avg session length' and 'Time-on-task'."""
+    values = [float(v) for v in values]
+    texts = [f"{v:.1f}{u}" if u else f"{v:.1f}" for v, u in zip(values, units)]
     colors = [PALETTE[0], PALETTE[1]]
-    texts = [f"{v:.1f}{u}" for v, u in zip(values, units)]
 
     fig = go.Figure(
         data=[
             go.Bar(
                 x=labels,
                 y=values,
-                marker_color=colors,
+                marker_color=colors[: len(values)],
                 text=texts,
                 textposition="outside",
                 cliponaxis=False,
-                hovertemplate="%{x}: %{y:.1f}%{customdata}<extra></extra>",
-                customdata=units,
             )
         ]
     )
@@ -201,10 +201,9 @@ def bar_period_kpis(labels, values, units):
         height=320,
         margin=dict(l=10, r=10, t=40, b=40),
         title="Period KPIs",
-        xaxis=dict(tickangle=-10, categoryorder="array", categoryarray=labels),
-        yaxis=dict(showgrid=True, zeroline=True, rangemode="tozero"),
+        yaxis=dict(rangemode="tozero", showgrid=True),
+        showlegend=False,
         uniformtext_minsize=10,
         uniformtext_mode="show",
-        showlegend=False,
     )
     return fig
