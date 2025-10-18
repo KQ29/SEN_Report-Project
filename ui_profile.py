@@ -14,13 +14,27 @@ def _metric_chip(label: str, value: str, *, icon: str = "") -> str:
     )
 
 
-def _detail_row(label: str, value: str) -> str:
+def _detail_row(label: str, value: str, css_class: str = "") -> str:
+    class_attr = f"detail-row {css_class}".strip()
     return (
-        "<div class='detail-row'>"
+        f"<div class='{class_attr}'>"
         f"<span class='detail-label'>{label}</span>"
         f"<span class='detail-value'>{value}</span>"
         "</div>"
     )
+
+
+def _format_iso_date(value) -> str:
+    if value in (None, "", "Unknown", "—"):
+        return "—"
+    if not isinstance(value, str):
+        return str(value)
+    s = value.strip()
+    if "T" in s:
+        s = s.split("T", 1)[0]
+    elif " " in s:
+        s = s.split(" ", 1)[0]
+    return s
 
 
 PROFILE_STYLE = """
@@ -94,6 +108,10 @@ PROFILE_STYLE = """
         word-break: break-word;
         white-space: normal;
     }
+.detail-row.email .detail-value {
+        font-size: 0.95rem;
+        line-height: 1.25;
+    }
     .metric-grid {
         display: flex;
         flex-wrap: wrap;
@@ -154,10 +172,10 @@ def display_user_metadata(agg):
             f"{_detail_row('Age', agg['age_display'])}"
             f"{_detail_row('Gender', agg['gender'])}"
             f"{_detail_row('Reading Level', agg['reading_level'])}"
-            f"{_detail_row('Email', agg['email'])}"
-            f"{_detail_row('Parental Email', agg['parental_email'])}"
-            f"{_detail_row('Account Created', agg['created_at'])}"
-            f"{_detail_row('Last Updated', agg['updated_at'])}"
+            f"{_detail_row('Email', agg['email'], css_class='email')}"
+            f"{_detail_row('Parental Email', agg['parental_email'], css_class='email')}"
+            f"{_detail_row('Account Created', _format_iso_date(agg.get('created_at')))}"
+            f"{_detail_row('Last Updated', _format_iso_date(agg.get('updated_at')))}"
             "</div>"
             "</div>"
             "</div>"
