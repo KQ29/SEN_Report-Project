@@ -2,25 +2,82 @@
 from datetime import datetime
 from typing import Dict, Any, List
 
-def _fmt(v, suffix=""):
-    if v is None or v == "":
-        return "—"
-    if isinstance(v, float):
-        # keep one decimal for nicer readability
-        return f"{v:.1f}{suffix}"
-    return f"{v}{suffix}"
 
-def _line(txt: str) -> str:
-    return txt.rstrip() + "\n"
+def _fmt(value, suffix: str = "") -> str:
+    if value is None or value == "":
+        return "—"
+    try:
+        num = float(value)
+    except (TypeError, ValueError):
+        return f"{value}{suffix}"
+    if num.is_integer():
+        num_str = f"{int(num)}"
+    else:
+        num_str = f"{num:.1f}"
+    return f"{num_str}{suffix}"
+
+
+def _fmt_delta(delta, suffix: str = "") -> str:
+    if delta in (None, "", "—"):
+        return "—"
+    try:
+        val = float(delta)
+    except (TypeError, ValueError):
+        return "—"
+    sign = "+" if val >= 0 else "-"
+    mag = abs(val)
+    mag_str = f"{int(mag)}" if mag.is_integer() else f"{mag:.1f}"
+    return f"{sign}{mag_str}{suffix}"
+
 
 def _section(title: str) -> str:
-    return f"\n{title}\n" + "-" * max(6, len(title)) + "\n"
+    return f"\n{title}\n" + "-" * len(title) + "\n"
 
-def _bullet(items: List[str]) -> str:
-    return "".join([f"- {x}\n" for x in items])
+
+def _info_line(icon: str, label: str, value: Any, width: int = 24) -> str:
+    return f"{icon} {label:<{width}}: {value}\n"
+
+
+def _list_line(icon: str, text: str) -> str:
+    return f"{icon} {text}\n"
+
+
+def _bullet(items: List[str], icon: str = "•") -> str:
+    return "".join(f"{icon} {item}\n" for item in items)
+
+
+def _status_icon(value, thresholds=(55, 80)) -> str:
+    try:
+        val = float(value)
+    except (TypeError, ValueError):
+        return "⚪"
+    if val >= thresholds[1]:
+        return "🟢"
+    if val >= thresholds[0]:
+        return "🟡"
+    return "🔴"
+
+
+def _trend_icon(change) -> str:
+    try:
+        val = float(change)
+    except (TypeError, ValueError):
+        return "⚪"
+    if val >= 5:
+        return "🟢"
+    if val <= -5:
+        return "🔴"
+    return "🟡"
+
+
+def _risk_icon(risk: Any) -> str:
+    if risk is None:
+        return "⚪"
+    lookup = {"low": "🟢", "medium": "🟡", "high": "🔴"}
+    return lookup.get(str(risk).lower(), "⚪")
+
 
 def build_report(d: Dict[str, Any]) -> str:
-    # Core references
     student = d.get("student", {})
     period = d.get("period", {})
     usage = d.get("usage", {})
@@ -29,126 +86,199 @@ def build_report(d: Dict[str, Any]) -> str:
     routine = d.get("routine", {})
     acc = d.get("accuracy_mastery", {})
     spd = d.get("processing_speed", {})
-    ai = d.get("ai_literacy", {})  # NEW
+    ai = d.get("ai_literacy", {})
 
-    out = []
+    focus_score = focus.get("focus_score")
+    focus_delta = focus.get("focus_score_delta")
+    completion_pct = usage.get("completion_pct")
+    lessons_done = usage.get("lessons_done", 0)
+    lessons_total = usage.get("lessons_total", 0)
+    total_time = usage.get("total_time_mins")
+    trend_vs_prev = usage.get("trend_vs_prev_pct")
+    avg_session = usage.get("avg_session_mins")
+    active_days = usage.get("active_days", "—")
+    sessions = usage.get("sessions", "—")
+    dropoff_risk = routine.get("dropoff_risk", "—")
 
-    # Header
-    out.append(_line("Student Learning Report (SEN)"))
-    out.append(_line(""))
-    out.append(_line(f"Student: {student.get('name','—')}"))
-    out.append(_line(f"Student ID: {student.get('id','—')}"))
-    out.append(_line(f"Class / Year: {student.get('class','—')} / {student.get('year','—')}"))
-    out.append(_line(f"Reporting Period: {period.get('start','—')} – {period.get('end','—')}"))
-    out.append(_line(f"Prepared for: {d.get('prepared_for','—')}"))
-    out.append(_line(f"Generated on: {period.get('generated_on') or datetime.today().date().isoformat()}"))
-    out.append(_line("Data Sources: activity_performance, chapter_session, topic_session, lesson_session, daily_activity_log, topics, enrollment"))
-    out.append(_line(""))
+    focus_badge = _status_icon(focus_score)
+    completion_badge = _status_icon(completion_pct)
+    trend_badge = _trend_icon(trend_vs_prev)
+    risk_badge = _risk_icon(dropoff_risk)
 
-    # 1) Executive Summary
-    out.append(_section("1) Executive Summary"))
-    out.append(_line("Summary: Overall progress is steady with moderate gains; continue current routine and supports."))
-    out.append(_line(f"Focus score: {focus.get('focus_score', '—')} (↑ {focus.get('focus_score_delta','—')} from last period)"))
-    out.append(_line(f"Completion rate: {usage.get('lessons_done',0)}/{usage.get('lessons_total',0)} ({_fmt(usage.get('completion_pct'), '%')})"))
-    out.append(_line(f"Time-on-task: {_fmt(usage.get('total_time_mins'),' mins')} total ({_fmt(usage.get('trend_vs_prev_pct'), '%')} vs last period)"))
-
-    # 2) SEN Profile & Accommodations
-    out.append(_section("2) SEN Profile & Accommodations"))
-    out.append(_line("Summary: Derived metrics only (no pre-set accommodations in source)."))
-    out.append(_line("Primary Needs: —"))
-    out.append(_line("Accommodations: —"))
-    out.append(_line("Effectiveness: TTS ON → 0% vs OFF → 0% (0pp)"))
-    out.append(_line("Stability: Font size changed 0× this period"))
-
-    # 3) Engagement & Usage
-    out.append(_section("3) Engagement & Usage"))
-    out.append(_line("Summary: Moderate engagement; room for higher completion."))
-    out.append(_line(f"Active Days: {usage.get('active_days','—')}"))
-    out.append(_line(f"Sessions: {usage.get('sessions','—')} (avg. {_fmt(usage.get('avg_session_mins'),' mins')})"))
-    out.append(_line(f"Completion: {usage.get('lessons_done',0)} of {usage.get('lessons_total',0)} ({_fmt(usage.get('completion_pct'),'%')})"))
-    out.append(_line(f"Trend: {_fmt(usage.get('trend_vs_prev_pct'),'%')} vs last period"))
-
-    # 4) Focus & Concentration
-    out.append(_section("4) Focus & Concentration"))
-    out.append(_line("Summary: Improved attention relative to class median."))
-    out.append(_line(f"Focus score: {focus.get('focus_score','—')} (class median: {focus.get('class_median','—')})"))
-    out.append(_line(f"Avg. attention block: {_fmt(focus.get('avg_sustained_block_mins'),' mins')}"))
-
-    # 5) Learning Progress & Mastery
-    out.append(_section("5) Learning Progress & Mastery"))
-    out.append(_line("Summary: Subject-level growth based on activity performance."))
-    # Print short per-subject breakdown if present
     subs_meta = acc.get("subjects_meta") or []
+    spd_attempts = spd.get("attempts", 0) if spd else 0
+    spd_meta = spd.get("per_subject_meta", []) if spd else []
+
+    out: List[str] = []
+
+    title = "Student Learning Report (SEN)"
+    out.append(title + "\n" + "=" * len(title) + "\n\n")
+
+    out.append(_section("STUDENT SNAPSHOT"))
+    out.append(_info_line("👤", "Student", student.get("name", "—")))
+    out.append(_info_line("🆔", "Student ID", student.get("id", "—")))
+    out.append(_info_line("🏫", "Class / Year", f"{student.get('class','—')} / {student.get('year','—')}"))
+    out.append(_info_line("🗓️", "Reporting window", f"{period.get('start','—')} → {period.get('end','—')}"))
+    out.append(_info_line("🎯", "Prepared for", d.get("prepared_for", "—")))
+    out.append(
+        _info_line(
+            "🕒",
+            "Generated on",
+            period.get("generated_on") or datetime.today().date().isoformat(),
+        )
+    )
+    out.append(
+        _info_line(
+            "🗂️",
+            "Data sources",
+            "activity_performance, chapter_session, topic_session, lesson_session, daily_activity_log, topics, enrollment",
+        )
+    )
+
+    out.append(_section("EXECUTIVE SUMMARY"))
+    out.append(_list_line("🟦", "Steady learning momentum with clear opportunities to deepen mastery."))
+    out.append(
+        _info_line(
+            focus_badge,
+            "Focus score",
+            f"{_fmt(focus_score)} (Δ {_fmt_delta(focus_delta)})",
+        )
+    )
+    out.append(
+        _info_line(
+            completion_badge,
+            "Completion",
+            f"{lessons_done}/{lessons_total} ({_fmt(completion_pct, '%')})",
+        )
+    )
+    out.append(
+        _info_line(
+            trend_badge,
+            "Time on task",
+            f"{_fmt(total_time, ' mins')} (trend {_fmt_delta(trend_vs_prev, '%')})",
+        )
+    )
+
+    out.append(_section("ENGAGEMENT & ROUTINE"))
+    out.append(_info_line("📅", "Active days", active_days))
+    out.append(
+        _info_line(
+            "⏱️",
+            "Sessions",
+            f"{sessions} (avg {_fmt(avg_session, ' mins')})",
+        )
+    )
+    out.append(
+        _info_line(
+            risk_badge,
+            "Drop-off risk",
+            str(dropoff_risk).capitalize() if isinstance(dropoff_risk, str) else _fmt(dropoff_risk),
+        )
+    )
+
+    out.append(_section("FOCUS & ATTENTION"))
+    out.append(
+        _list_line(
+            "🎯",
+            f"Focus score { _fmt(focus_score) } compared with class median { _fmt(focus.get('class_median')) }.",
+        )
+    )
+    out.append(
+        _info_line(
+            "🧠",
+            "Avg sustained block",
+            _fmt(focus.get("avg_sustained_block_mins"), " mins"),
+        )
+    )
+
+    out.append(_section("LEARNING PROGRESS & MASTERY"))
     if subs_meta:
+        band_icon = {"Proficient": "🟢", "Developing": "🟡", "Emerging": "🔴"}
         for row in subs_meta:
-            out.append(_line(f"- {row['subject']}: {row['avg']:.1f}% ({row['band']}, {row['attempts']} attempts)"))
+            icon = band_icon.get(row.get("band"), "🔹")
+            out.append(
+                _list_line(
+                    icon,
+                    f"{row['subject']}: {row['avg']:.1f}% ({row['band']}; {row['attempts']} attempts)",
+                )
+            )
     else:
-        out.append(_line("No subject-level performance available in the selected period."))
-    out.append(_line(f"Perseverance index: {learning.get('perseverance_index','—')} (fraction of attempts using hints)"))
+        out.append(_list_line("⚪", "No subject-level performance captured in the selected window."))
+    out.append(
+        _info_line(
+            "🧩",
+            "Perseverance (hints per attempt)",
+            _fmt(learning.get("perseverance_index")),
+        )
+    )
 
-    # 6) Processing Speed
-    out.append(_section("6) Processing Speed"))
-    out.append(_line("Summary: Average response/processing time per subject based on total time spent on attempts."))
-    if spd and spd.get("attempts",0) > 0:
-        out.append(_line(f"Overall mean: {_fmt(spd.get('mean'),' mins')} • median: {_fmt(spd.get('median'),' mins')} • p90: {_fmt(spd.get('p90'),' mins')} (n={spd.get('attempts')})"))
-        per_sub = spd.get("per_subject_meta") or []
-        for r in per_sub:
-            out.append(_line(f"- {r['subject']}: {_fmt(r['avg_time'],' mins')} (total {_fmt(r['total_time'],' mins')}, {r['attempts']} attempts)"))
+    out.append(_section("PROCESSING SPEED"))
+    if spd_attempts > 0:
+        out.append(
+            _list_line(
+                "📊",
+                f"Overall mean {_fmt(spd.get('mean'), ' mins')} • median {_fmt(spd.get('median'), ' mins')} • "
+                f"p90 {_fmt(spd.get('p90'), ' mins')} (n={spd_attempts})",
+            )
+        )
+        for row in spd_meta:
+            out.append(
+                _list_line(
+                    "➤",
+                    f"{row['subject']}: {_fmt(row['avg_time'], ' mins')} avg • {_fmt(row['total_time'], ' mins')} total • {row['attempts']} attempts",
+                )
+            )
     else:
-        out.append(_line("No processing speed data in the selected period."))
+        out.append(_list_line("⚪", "No processing speed data recorded for this period."))
 
-    # 7) AI Literacy & Learning Gain (NEW)
-    out.append(_section("7) AI Literacy & Learning Gain"))
+    out.append(_section("AI LITERACY & LEARNING GAIN"))
     if ai and ai.get("available"):
-        pre_s = ai.get("pre_score")
-        post_s = ai.get("post_score")
-        mx = ai.get("max_score") or 100.0
-        lg = ai.get("learning_gain")
-        out.append(_line(f"Pre-test: {_fmt(pre_s)} / {mx:.0f}  |  Post-test: {_fmt(post_s)} / {mx:.0f}"))
-        out.append(_line(f"Learning Gain: {_fmt(lg, '%')}"))
-        out.append(_line(f"Level (before → after): {ai.get('level_before','—')} → {ai.get('level_after','—')}"))
+        out.append(_info_line("🧠", "Pre-test", f"{_fmt(ai.get('pre_score'))} / {_fmt(ai.get('max_score'))}"))
+        out.append(_info_line("🚀", "Post-test", f"{_fmt(ai.get('post_score'))} / {_fmt(ai.get('max_score'))}"))
+        out.append(_info_line("📈", "Learning gain", _fmt(ai.get("learning_gain"), "%")))
+        out.append(
+            _info_line(
+                "🎓",
+                "Level shift",
+                f"{ai.get('level_before','—')} → {ai.get('level_after','—')}",
+            )
+        )
         concepts = ai.get("concepts_mastered") or []
-        apps = ai.get("applications") or []
+        applications = ai.get("applications") or []
         if concepts:
-            out.append(_line("Key Concepts Mastered: " + ", ".join(concepts)))
-        if apps:
-            out.append(_line("Skill Applications: " + "; ".join(apps)))
+            out.append(_list_line("🟪", "Key concepts: " + ", ".join(concepts)))
+        if applications:
+            out.append(_list_line("🟦", "Applications: " + "; ".join(applications)))
     else:
-        out.append(_line("Not available in this dataset (add local 'ai_literacy_assessment' for pre/post tracking)."))
+        out.append(_list_line("⚪", "No AI literacy assessments recorded in the selected window."))
 
-    # 8) Reading, Language & Expression
-    out.append(_section("8) Reading, Language & Expression"))
-    out.append(_line("Summary: Not available in this dataset."))
-    out.append(_line("Readability: —"))
-    out.append(_line("TTR: —"))
+    out.append(_section("COMMUNICATION & SUPPORT"))
+    out.append(
+        _list_line(
+            "🤖",
+            "Derived from hints and retries; native AI interaction fields are not available in this dataset.",
+        )
+    )
+    out.append(
+        _info_line(
+            "💡",
+            "Hints per attempt",
+            _fmt(learning.get("perseverance_index")),
+        )
+    )
 
-    # 9) AI Interaction Quality & Support Usage
-    out.append(_section("9) AI Interaction Quality & Support Usage"))
-    out.append(_line("Summary: Derived hints usage (no built-in AI support fields in source)."))
-    out.append(_line(f"Hints used per attempt: {learning.get('perseverance_index','—')}"))
+    out.append(_section("TECHNOLOGY & ACCESSIBILITY"))
+    out.append(_list_line("💻", "Device telemetry is incomplete in the supplied dataset."))
 
-    # 10) Motivation & Routine
-    out.append(_section("10) Motivation & Routine"))
-    out.append(_line(f"Summary: Potential drop-off risk."))
-    out.append(_line(f"Drop-off risk: {routine.get('dropoff_risk','—')}"))
-
-    # 11) Technology & Accessibility Diagnostics
-    out.append(_section("11) Technology & Accessibility Diagnostics"))
-    out.append(_line("Summary: Device info is partial in this dataset."))
-
-    # 12) Goals & Recommendations
-    recs = d.get("recommendations") or [
-        "Encourage regular short practice sessions (5–7 mins) on weaker subjects",
-        "Review missed questions in recent attempts",
-        "Use shorter sessions if average session length is below 10 mins",
+    recommendations = d.get("recommendations") or [
+        "Encourage regular short practice sessions (5–7 mins) on priority subjects.",
+        "Review missed questions together to reinforce strategies.",
+        "Maintain shorter, high-quality sessions if average length is below 10 mins.",
     ]
-    out.append(_section("12) Goals & Recommendations"))
-    out.append(_bullet(recs))
+    out.append(_section("GOALS & RECOMMENDATIONS"))
+    out.append(_bullet(recommendations, icon="✅"))
 
-    # 13) Unanswered & Out-of-Scope Questions
-    out.append(_section("13) Unanswered & Out-of-Scope Questions"))
-    out.append(_line("Summary: Not tracked in this dataset."))
-    out.append(_line("Total questions: —"))
-    out.append(_line("Unanswered: — | Out-of-scope: —"))
+    out.append(_section("OPEN QUESTIONS"))
+    out.append(_list_line("ℹ️", "The dataset does not capture unanswered or out-of-scope questions."))
 
     return "".join(out)
