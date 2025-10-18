@@ -60,10 +60,9 @@ def load_json_raw(path_or_bytes) -> Any:
 
 def _ensure_lists(d: Dict[str, Any]) -> Dict[str, Any]:
     keys = [
-        "user", "users",
-        "enrollment", "daily_activity_log", "topic_session",
+        "user", "users", "enrollment", "daily_activity_log", "topic_session",
         "chapter_session", "activity_performance", "lesson_session",
-        "topics", "Topics", "messages"
+        "topics", "Topics", "messages", "ai_literacy_assessment"  # ✅ NEW
     ]
     out = dict(d)
     for k in keys:
@@ -76,7 +75,7 @@ def normalize_union(raw: Any) -> Dict[str, Any]:
     canon_keys = [
         "user", "enrollment", "daily_activity_log", "topic_session",
         "chapter_session", "activity_performance", "lesson_session",
-        "topics", "messages"
+        "topics", "messages", "ai_literacy_assessment"  # ✅ NEW
     ]
 
     buckets: Dict[str, List[Any]] = {k: [] for k in canon_keys}
@@ -91,9 +90,11 @@ def normalize_union(raw: Any) -> Dict[str, Any]:
             buckets["topics"].extend(d.get("Topics", []))
         if "topics" in d:
             buckets["topics"].extend(d.get("topics", []))
-        for k in ["enrollment", "daily_activity_log", "topic_session",
-                  "chapter_session", "activity_performance", "lesson_session",
-                  "messages"]:
+        for k in [
+            "enrollment", "daily_activity_log", "topic_session",
+            "chapter_session", "activity_performance", "lesson_session",
+            "messages", "ai_literacy_assessment"  # ✅ NEW
+        ]:
             if k in d:
                 buckets[k].extend(d.get(k, []))
         for v in d.values():
@@ -127,10 +128,26 @@ def merge_data(*datasets: Dict[str, Any]) -> Dict[str, Any]:
     if not datasets:
         return {}
     merged: Dict[str, List[Any]] = {}
-    # union of all keys
     keys = set().union(*[set(ds.keys()) for ds in datasets])
     for k in keys:
         merged[k] = []
         for ds in datasets:
             merged[k].extend(ds.get(k, []))
+
+    # ✅ Deduplicate ai_literacy_assessment
+    if "ai_literacy_assessment" in merged:
+        seen = set()
+        uniq = []
+        for r in merged["ai_literacy_assessment"]:
+            if not isinstance(r, dict):
+                continue
+            uid = r.get("user_id")
+            t_at = str(r.get("taken_at", ""))
+            typ = str(r.get("type", "")).lower()
+            key = (uid, typ, t_at)
+            if key not in seen:
+                seen.add(key)
+                uniq.append(r)
+        merged["ai_literacy_assessment"] = uniq
+
     return merged

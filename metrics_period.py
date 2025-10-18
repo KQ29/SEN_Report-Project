@@ -1,4 +1,3 @@
-# metrics_period.py
 """
 Period metrics and derived KPIs for the Student Report app.
 
@@ -14,6 +13,9 @@ Advanced Learning KPIs:
 - engagement_consistency(data, user_id, start_dt, end_dt)
 - independence_support(data, user_id, start_dt, end_dt)
 - communication_social(data, user_id, start_dt, end_dt)
+
+NEW:
+- ai_literacy_stats(data, user_id, start_dt, end_dt)
 """
 
 from __future__ import annotations
@@ -55,6 +57,7 @@ def _pick_first_ts(record: Dict[str, Any], keys: List[str]) -> Optional[datetime
 
 
 def _get_time_spent(r: Dict[str, Any]) -> float:
+    """Use either total_time_spent or time_spent if present (minutes or seconds, depending on source)."""
     v = r.get("total_time_spent", None)
     if v is None:
         v = r.get("time_spent", 0)
@@ -72,18 +75,21 @@ def available_date_range_for_user(
 ) -> Tuple[Optional[datetime], Optional[datetime]]:
     dates: List[datetime] = []
 
+    # daily_activity_log
     for r in data.get("daily_activity_log", []):
         if r.get("user_id") == user_id:
             dt = parse_ts(r.get("login_timestamp"))
             if dt:
                 dates.append(dt)
 
+    # lesson_session
     for r in data.get("lesson_session", []):
         if r.get("user_id") == user_id:
             dt = parse_ts(r.get("created_at"))
             if dt:
                 dates.append(dt)
 
+    # topic_session
     for ts in data.get("topic_session", []):
         uid = topic_session_user_id(ts, idx)
         if uid == user_id:
@@ -92,6 +98,7 @@ def available_date_range_for_user(
                 if dt:
                     dates.append(dt)
 
+    # chapter_session
     for cs in data.get("chapter_session", []):
         uid = chapter_session_user_id(cs, idx)
         if uid == user_id:
@@ -100,6 +107,7 @@ def available_date_range_for_user(
                 if dt:
                     dates.append(dt)
 
+    # activity_performance
     for ap in data.get("activity_performance", []):
         uid = perf_user_id(ap, idx)
         if uid == user_id:
@@ -173,6 +181,7 @@ def period_stats(
     total_lessons = len(topic_sessions)
     completion_pct = _pct(completed, total_lessons)
 
+    # unique active days across all collections
     day_set = set()
 
     def _collect_dates(coll, keys):
@@ -234,9 +243,11 @@ def accuracy_and_mastery(
     """
     Returns:
       {
-        "overall": float,
-        "subjects": {subject: avg%},
-        "subjects_meta": [{"subject": str, "avg": float, "band": str, "attempts": int}]
+        "overall": float,             # overall accuracy %
+        "subjects": {subject: avg%},  # dict for bar chart
+        "subjects_meta": [            # optional richer rows
+            {"subject": str, "avg": float, "band": str, "attempts": int}
+        ]
       }
     """
     idx = build_indexes(data)
@@ -260,7 +271,7 @@ def accuracy_and_mastery(
     overall = float(df["score"].mean())
 
     def band(x: float) -> str:
-        return "Mastered" if x >= 80 else ("Developing" if x >= 50 else "Emerging")
+        return "Proficient" if x >= 75 else ("Developing" if x >= 50 else "Emerging")
 
     grp = (
         df.groupby("subject")
@@ -280,14 +291,22 @@ def response_time_stats(
     data: Dict[str, Any], user_id: int, start_dt: datetime, end_dt: datetime
 ) -> Dict[str, Any]:
     """
-    Primary: attempt-level time_spent per activity within the window.
-    Fallback: if none available, estimate per-subject time from session durations.
-    Returns dicts suitable for bar charts and SEN report bullets.
+    Compute processing speed using TOTAL time actually spent on attempts (time_spent)
+    within the window. Returns dicts suitable for bar charts.
+
+    Returns:
+      {
+        "mean": float, "median": float, "p90": float, "attempts": int,
+        "per_subject": {subject: avg_time},
+        "per_subject_meta": [
+            {"subject": str, "avg_time": float, "total_time": float, "attempts": int}
+        ]
+      }
+
+    NOTE: If your time_spent is in minutes, these are minutes. If in seconds, adjust your labels in charts.
     """
     idx = build_indexes(data)
-
-    # ---- Primary: attempt-level ----
-    attempt_rows: List[Dict[str, Any]] = []
+    rows: List[Dict[str, Any]] = []
     for ap in data.get("activity_performance", []):
         if perf_user_id(ap, idx) != user_id:
             continue
@@ -299,140 +318,61 @@ def response_time_stats(
             t = float(t)
         except Exception:
             t = 0.0
-        if t <= 0:
-            continue
         subj = perf_subject(ap, idx) or "Math"
-        attempt_rows.append({"subject": subj, "time_spent": t})
+        if t > 0:
+            rows.append({"subject": subj, "time_spent": t})
 
-    if attempt_rows:
-        df = pd.DataFrame(attempt_rows)
-        arr = df["time_spent"].to_numpy(dtype=float)
-        mean_t = float(np.mean(arr))
-        med_t  = float(np.median(arr))
-        p90_t  = float(np.quantile(arr, 0.9))
-
-        per_subj = (
-            df.groupby("subject")
-              .agg(total_time=("time_spent", "sum"),
-                   attempts=("time_spent", "size"),
-                   avg_time=("time_spent", "mean"))
-              .reset_index()
-        )
-        per_subj["total_time"] = per_subj["total_time"].round(1)
-        per_subj["avg_time"]   = per_subj["avg_time"].round(1)
-
+    if not rows:
         return {
-            "unit": "mins",  # change label if your time_spent is seconds
-            "mean": round(mean_t, 1),
-            "median": round(med_t, 1),
-            "p90": round(p90_t, 1),
-            "attempts": int(len(arr)),
-            "per_subject": {r["subject"]: float(r["avg_time"]) for r in per_subj.to_dict(orient="records")},
-            "per_subject_meta": per_subj[["subject", "avg_time", "total_time", "attempts"]].to_dict(orient="records"),
-        }
-
-    # ---- Fallback: session-level minutes per subject ----
-    subj2mins: Dict[str, List[float]] = defaultdict(list)
-
-    def add_session_time(coll, user_id_func, date_keys, subject_func):
-        for r in coll:
-            if user_id_func and user_id_func(r, idx) != user_id:
-                continue
-            if not user_id_func and r.get("user_id") != user_id:
-                continue
-            ts = None
-            for k in date_keys:
-                ts = parse_ts(r.get(k))
-                if ts:
-                    break
-            if not ts or not (start_dt <= ts <= end_dt):
-                continue
-            v = r.get("total_time_spent") or r.get("time_spent") or 0
-            try:
-                mins = float(v)
-            except Exception:
-                mins = 0.0
-            if mins <= 0:
-                continue
-            subj = subject_func(r) or "Unknown"
-            subj2mins[subj].append(mins)
-
-    def subj_from_topic_session(ts):
-        en = idx["enrollment_by_id"].get(ts.get("enrollment_id"))
-        if not en:
-            return None
-        t = idx["topics_by_id"].get(en.get("topic_id"))
-        return t.get("subject") if t else None
-
-    def subj_from_chapter_session(cs):
-        ts = idx["topic_session_by_id"].get(cs.get("topic_session_id"))
-        return subj_from_topic_session(ts) if ts else None
-
-    add_session_time(
-        data.get("topic_session", []),
-        topic_session_user_id,
-        ["started_at", "completed_at", "created_at"],
-        subj_from_topic_session,
-    )
-    add_session_time(
-        data.get("chapter_session", []),
-        chapter_session_user_id,
-        ["started_at", "completed_at"],
-        subj_from_chapter_session,
-    )
-    add_session_time(
-        data.get("lesson_session", []),
-        None,
-        ["created_at", "started_at", "completed_at"],
-        lambda _: "Unknown",
-    )
-
-    if not subj2mins:
-        return {
-            "unit": "mins",
             "mean": 0.0, "median": 0.0, "p90": 0.0, "attempts": 0,
             "per_subject": {}, "per_subject_meta": []
         }
 
-    rows = []
-    for subj, mins_list in subj2mins.items():
-        total_t = float(sum(mins_list))
-        cnt = int(len(mins_list))
-        avg_t = total_t / cnt if cnt else 0.0
-        rows.append({"subject": subj, "avg_time": round(avg_t, 1), "total_time": round(total_t, 1), "attempts": cnt})
-
     df = pd.DataFrame(rows)
-    arr = df["avg_time"].to_numpy(dtype=float)
+    arr = df["time_spent"].to_numpy(dtype=float)
     mean_t = float(np.mean(arr))
     med_t  = float(np.median(arr))
     p90_t  = float(np.quantile(arr, 0.9))
 
+    per_subj = (
+        df.groupby("subject")
+          .agg(total_time=("time_spent", "sum"), attempts=("time_spent", "size"), avg_time=("time_spent", "mean"))
+          .reset_index()
+    )
+    per_subj["total_time"] = per_subj["total_time"].round(1)
+    per_subj["avg_time"]   = per_subj["avg_time"].round(1)
+
+    per_subject_dict = {r["subject"]: float(r["avg_time"]) for r in per_subj.to_dict(orient="records")}
+    per_subject_meta = per_subj[["subject", "avg_time", "total_time", "attempts"]].to_dict(orient="records")
+
     return {
-        "unit": "mins",
         "mean": round(mean_t, 1),
         "median": round(med_t, 1),
         "p90": round(p90_t, 1),
-        "attempts": int(df["attempts"].sum()),
-        "per_subject": {r["subject"]: float(r["avg_time"]) for r in rows},
-        "per_subject_meta": rows,
+        "attempts": int(len(arr)),
+        "per_subject": per_subject_dict,
+        "per_subject_meta": per_subject_meta,
     }
 
 
 def engagement_consistency(
     data: Dict[str, Any], user_id: int, start_dt: datetime, end_dt: datetime
 ) -> Dict[str, Any]:
+    """Active-days, sessions total, longest streak, weekly heat matrix (Mon..Sun x weeks)."""
     stamps: List[datetime] = []
 
     def add_ts(ts):
         if ts:
             stamps.append(ts)
 
+    # Daily log
     for r in data.get("daily_activity_log", []):
         if r.get("user_id") == user_id:
             dt = parse_ts(r.get("login_timestamp"))
             if dt and start_dt <= dt <= end_dt:
                 add_ts(dt)
 
+    # Lesson / Topic / Chapter sessions
     for coll, keys in [
         (data.get("lesson_session", []), ["created_at", "started_at", "completed_at"]),
         (data.get("topic_session", []), ["started_at", "completed_at", "created_at"]),
@@ -447,6 +387,7 @@ def engagement_consistency(
     if not stamps:
         return {"active_days": 0, "sessions_total": 0, "streak": 0, "weeks": [], "heat": []}
 
+    # Active days & longest streak
     days = sorted(set([d.date() for d in stamps]))
     active_days = len(days)
     streak = best = 1
@@ -457,10 +398,12 @@ def engagement_consistency(
         else:
             streak = 1
 
+    # Sessions per day for heatmap
     by_day = defaultdict(int)
     for dt in stamps:
         by_day[dt.date()] += 1
 
+    # Build continuous weeks between start_dt..end_dt (Monday starts)
     start_w = start_dt.date() - timedelta(days=start_dt.weekday())
     end_d = end_dt.date()
     weeks = []
@@ -469,7 +412,7 @@ def engagement_consistency(
         weeks.append(cur)
         cur += timedelta(days=7)
 
-    heat = []
+    heat = []  # list of columns; each is list[7] counts Mon..Sun
     for w in weeks:
         col = []
         for d in range(7):
@@ -489,6 +432,7 @@ def engagement_consistency(
 def independence_support(
     data: Dict[str, Any], user_id: int, start_dt: datetime, end_dt: datetime
 ) -> Dict[str, float]:
+    """Hint usage rate and retry rate; independence index (0..100 = higher is more independent)."""
     idx = build_indexes(data)
     hints = 0
     attempts = 0
@@ -512,12 +456,20 @@ def independence_support(
     hint_rate = 100.0 * hints / attempts
     retry_rate = 100.0 * retries / attempts
     independence = max(0.0, 100.0 - (0.6 * hint_rate + 0.4 * retry_rate))
-    return {"hint_rate": round(hint_rate, 1), "retry_rate": round(retry_rate, 1), "independence": round(independence, 1)}
+    return {
+        "hint_rate": round(hint_rate, 1),
+        "retry_rate": round(retry_rate, 1),
+        "independence": round(independence, 1),
+    }
 
 
 def communication_social(
     data: Dict[str, Any], user_id: int, start_dt: datetime, end_dt: datetime
 ) -> Dict[str, float]:
+    """
+    If your dataset has 'messages', count them within the window.
+    As a fallback, count personalisation variants used in the window as a proxy.
+    """
     msgs = 0
     if "messages" in data:
         for m in data["messages"]:
@@ -535,3 +487,134 @@ def communication_social(
         changes = 0
 
     return {"messages": float(msgs), "personalisation_changes": float(changes)}
+
+
+# ============================================================
+# NEW: AI Literacy & Learning Gain
+# ============================================================
+def ai_literacy_stats(
+    data: Dict[str, Any], user_id: int, start_dt: datetime, end_dt: datetime
+) -> Dict[str, Any]:
+    """
+    Reads assessments from data['ai_literacy_assessment'].
+
+    Expected minimal schema per row:
+      {
+        "user_id": int,
+        "taken_at": ISO string,
+        "type": "pre" | "post",
+        "score": number,
+        "max_score": number,
+        "concepts_mastered": [str],    # optional
+        "applications": [str]          # optional
+      }
+
+    Returns (gracefully empty if none):
+      {
+        "available": bool,
+        "pre_score": float|None,
+        "post_score": float|None,
+        "max_score": float|None,
+        "learning_gain": float|None,   # (%)
+        "level_before": str|None,      # Beginner/Developing/Proficient
+        "level_after": str|None,
+        "concepts_mastered": [str],
+        "applications": [str]
+      }
+    """
+    rows = data.get("ai_literacy_assessment", [])
+    if not rows:
+        return {
+            "available": False,
+            "pre_score": None,
+            "post_score": None,
+            "max_score": None,
+            "learning_gain": None,
+            "level_before": None,
+            "level_after": None,
+            "concepts_mastered": [],
+            "applications": [],
+        }
+
+    # Filter for this user and this window
+    def _dt_ok(r):
+        dt = parse_ts(r.get("taken_at"))
+        return dt and (start_dt <= dt <= end_dt)
+
+    user_rows = [r for r in rows if r.get("user_id") == user_id and _dt_ok(r)]
+    if not user_rows:
+        # Fall back to most recent pre/post if window filtering yields none
+        user_rows = [r for r in rows if r.get("user_id") == user_id]
+
+    if not user_rows:
+        return {
+            "available": False,
+            "pre_score": None,
+            "post_score": None,
+            "max_score": None,
+            "learning_gain": None,
+            "level_before": None,
+            "level_after": None,
+            "concepts_mastered": [],
+            "applications": [],
+        }
+
+    # Pick the latest pre and post by taken_at
+    pre = None
+    post = None
+    for r in user_rows:
+        t = (r.get("type") or "").lower()
+        ts = parse_ts(r.get("taken_at"))
+        if t == "pre":
+            if (pre is None) or (ts and parse_ts(pre.get("taken_at") or "1970-01-01") and ts > parse_ts(pre["taken_at"])):
+                pre = r
+        elif t == "post":
+            if (post is None) or (ts and parse_ts(post.get("taken_at") or "1970-01-01") and ts > parse_ts(post["taken_at"])):
+                post = r
+
+    def _score(r):  # (score, max)
+        if not r:
+            return None, None
+        try:
+            s = float(r.get("score", 0))
+            m = float(r.get("max_score", 100) or 100)
+        except Exception:
+            return None, None
+        return s, m
+
+    pre_s, pre_m = _score(pre)
+    post_s, post_m = _score(post)
+    max_score = post_m or pre_m or 100.0
+
+    def _level(score: Optional[float], maximum: float) -> Optional[str]:
+        if score is None:
+            return None
+        pct = 100.0 * score / max(1.0, maximum)
+        if pct >= 75:
+            return "Proficient"
+        if pct >= 50:
+            return "Developing"
+        return "Beginner"
+
+    learning_gain = None
+    if (pre_s is not None) and (post_s is not None) and (max_score and max_score > 0):
+        learning_gain = round((post_s - pre_s) / max_score * 100.0, 1)
+
+    concepts = (post or {}).get("concepts_mastered") or []
+    if not isinstance(concepts, list):
+        concepts = []
+    apps = (post or {}).get("applications") or []
+    if not isinstance(apps, list):
+        apps = []
+
+    return {
+        "available": True if (pre or post) else False,
+        "pre_score": pre_s,
+        "post_score": post_s,
+        "max_score": float(max_score) if max_score is not None else None,
+        "learning_gain": learning_gain,
+        "level_before": _level(pre_s, max_score) if pre_s is not None else None,
+        "level_after": _level(post_s, max_score) if post_s is not None else None,
+        "concepts_mastered": concepts,
+        "applications": apps,
+    }

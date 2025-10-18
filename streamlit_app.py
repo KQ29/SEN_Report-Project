@@ -18,6 +18,7 @@ from metrics_period import (
     engagement_consistency,
     independence_support,
     communication_social,
+    ai_literacy_stats,          # NEW
 )
 from charts_plotly import (
     pie_for_score,
@@ -25,7 +26,6 @@ from charts_plotly import (
     alltime_kpi_bars,
     bar_mastery_subjects,
     bar_response_time_subjects,
-    bar_period_kpis,   
 )
 from ui_profile import display_user_metadata
 from ui_subjects import render_subject_growth
@@ -34,6 +34,32 @@ from ui_event_log import render_event_log_table
 from report_builder import build_report
 
 st.set_page_config(page_title="Student Report Generator", layout="wide")
+
+
+def bar_period_kpis(labels, values, units):
+    colors = ["#2E86AB", "#6AA84F"]
+    texts = [f"{v:.1f}{u}" for v, u in zip(values, units)]
+    fig = go.Figure(
+        data=[
+            go.Bar(
+                x=labels, y=values,
+                marker_color=colors,
+                text=texts, textposition="outside", cliponaxis=False,
+                hovertemplate="%{x}: %{y:.1f}%{customdata}<extra></extra>",
+                customdata=units,
+            )
+        ]
+    )
+    fig.update_layout(
+        template="plotly_white",
+        height=340,
+        margin=dict(l=10, r=10, t=40, b=40),
+        title="Period KPIs",
+        xaxis=dict(tickangle=-10),
+        yaxis=dict(rangemode="tozero"),
+        showlegend=False,
+    )
+    return fig
 
 
 def main():
@@ -97,7 +123,7 @@ def main():
             return
 
         start_dt = datetime.combine(start_date, datetime.min.time())
-        end_dt = datetime.combine(end_date, datetime.max.time())
+        end_dt   = datetime.combine(end_date, datetime.max.time())
 
         curr = period_stats(data, user_id, start_dt, end_dt)
         prev_span_days = max(1, (end_dt.date() - start_dt.date()).days + 1)
@@ -120,10 +146,10 @@ def main():
                 use_container_width=True
             )
 
-        # ----- Period KPI bar (combined) -----
+        # ----- Period KPI combined bars (no Altair) -----
         labels = ["Avg session length (period)", "Time-on-task (period)"]
         values = [curr["avg_session_mins"], curr["total_time_mins"]]
-        units = [" mins", " mins"]
+        units  = [" mins", " mins"]
         st.plotly_chart(bar_period_kpis(labels, values, units), use_container_width=True)
 
         # ----- All-time KPIs -----
@@ -145,8 +171,9 @@ def main():
 
         # ---------- Advanced Learning KPIs ----------
         st.markdown("### Advanced Learning KPIs")
-        tab1, tab2, tab3, tab4, tab5 = st.tabs([
-            "Accuracy & Mastery", "Processing Speed", "Engagement & Consistency", "Independence", "Communication"
+        tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
+            "Accuracy & Mastery", "Processing Speed", "Engagement & Consistency",
+            "Independence", "Communication", "AI Literacy"  # NEW tab
         ])
 
         with tab1:
@@ -156,7 +183,10 @@ def main():
 
         with tab2:
             spd_block = response_time_stats(data, user_id, start_dt, end_dt)
-            st.caption(f"Attempts: **{spd_block['attempts']}** • Mean: **{spd_block['mean']}** • Median: **{spd_block['median']}** • P90: **{spd_block['p90']}**")
+            st.caption(
+                f"Attempts: **{spd_block['attempts']}** • Mean: **{spd_block['mean']}** • "
+                f"Median: **{spd_block['median']}** • P90: **{spd_block['p90']}**"
+            )
             st.plotly_chart(bar_response_time_subjects(spd_block["per_subject"], unit_label=" mins"), use_container_width=True)
 
         with tab3:
@@ -164,34 +194,8 @@ def main():
             st.write("Active days:", eng["active_days"])
             st.write("Total sessions:", eng["sessions_total"])
             st.write("Longest streak:", eng["streak"])
-
-            # Engagement Heatmap
             weeks = eng.get("weeks", [])
-            heat_cols = eng.get("heat", [])
-            days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-
-            if weeks and heat_cols:
-                z = list(map(list, zip(*heat_cols)))  # transpose
-                fig = go.Figure(
-                    data=go.Heatmap(
-                        z=z,
-                        x=weeks,
-                        y=days,
-                        colorscale="Blues",
-                        colorbar=dict(title="Sessions/day"),
-                        hovertemplate="Week start: %{x}<br>Day: %{y}<br>Sessions: %{z}<extra></extra>",
-                        zmin=0
-                    )
-                )
-                fig.update_layout(
-                    template="plotly_white",
-                    height=280,
-                    margin=dict(l=10, r=10, t=30, b=10),
-                    title="Engagement Heatmap (sessions per day)"
-                )
-                st.plotly_chart(fig, use_container_width=True)
-            else:
-                st.info("No engagement activity in the selected period to render the heatmap.")
+            st.caption(f"Weeks with activity: {sum(1 for col in eng.get('heat', []) if sum(col) > 0)} / {len(weeks)}")
 
         with tab4:
             indep = independence_support(data, user_id, start_dt, end_dt)
@@ -204,7 +208,23 @@ def main():
             st.write("Messages (period):", comm["messages"])
             st.write("Personalisation changes (proxy):", comm["personalisation_changes"])
 
-        # ---------- Personalisation ----------
+        with tab6:
+            ai_block = ai_literacy_stats(data, user_id, start_dt, end_dt)
+            if ai_block.get("available"):
+                st.write(f"Pre-test: {ai_block.get('pre_score','—')} / {int(ai_block.get('max_score') or 100)}")
+                st.write(f"Post-test: {ai_block.get('post_score','—')} / {int(ai_block.get('max_score') or 100)}")
+                st.write(f"Learning Gain: {ai_block.get('learning_gain','—')}%")
+                st.write(f"Level (before → after): {ai_block.get('level_before','—')} → {ai_block.get('level_after','—')}")
+                concepts = ai_block.get("concepts_mastered") or []
+                apps = ai_block.get("applications") or []
+                if concepts:
+                    st.write("Key Concepts Mastered:", ", ".join(concepts))
+                if apps:
+                    st.write("Skill Applications:", "; ".join(apps))
+            else:
+                st.info("AI Literacy assessment not found. Add 'ai_literacy_assessment' to your JSON to enable this section.")
+
+        # ---------- Personalisation usage ----------
         st.markdown("### Personalisation usage")
         render_personalisation_usage(data, user_id, start_dt, end_dt)
 
@@ -218,16 +238,21 @@ def main():
 
         acc_block = accuracy_and_mastery(data, user_id, start_dt, end_dt)
         spd_block = response_time_stats(data, user_id, start_dt, end_dt)
+        ai_block  = ai_literacy_stats(data, user_id, start_dt, end_dt)
 
         focus_score_now = compute_focus_score(curr["completion_pct"], curr["avg_session_mins"])
         focus_score_prev = compute_focus_score(prev["completion_pct"], prev["avg_session_mins"])
         focus_delta = focus_score_now - focus_score_prev
-        dropoff_risk = "high" if (curr.get("active_days", 0) <= 2 or curr["completion_pct"] < 30) else ("medium" if curr["completion_pct"] < 60 else "low")
+        dropoff_risk = (
+            "high" if (curr.get("active_days", 0) <= 2 or curr["completion_pct"] < 30)
+            else ("medium" if curr["completion_pct"] < 60 else "low")
+        )
 
         report_data = {
             "student": {"name": agg["name"], "id": user_id, "class": agg.get("class_level", "—"), "year": agg.get("class_level", "—")},
             "period": {"start": start_date.isoformat(), "end": end_date.isoformat(), "generated_on": date.today().isoformat()},
             "prepared_for": "Teacher" if audience == "teacher" else "Parent/Carer",
+            "devices": {},
             "usage": {
                 "active_days": curr.get("active_days", "—"),
                 "sessions": curr["sessions"],
@@ -251,14 +276,16 @@ def main():
             "goals": [],
             "recommendations": [],
             "questions": {},
+            # report drivers
             "accuracy_mastery": acc_block,
             "processing_speed": spd_block,
+            "ai_literacy": ai_block,   # NEW
         }
 
         report_text = build_report(report_data)
         st.text_area("Report (copy-ready)", value=report_text, height=600)
 
-        # ---------- Event log ----------
+        # ---------- Events table ----------
         st.markdown("### Event log")
         render_event_log_table(data, user_id)
 

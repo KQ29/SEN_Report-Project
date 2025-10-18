@@ -1,203 +1,154 @@
 # report_builder.py
-from __future__ import annotations
+from datetime import datetime
 from typing import Dict, Any, List
 
-
-def _arrow(delta: int) -> str:
-    return "↑" if delta >= 0 else "↓"
-
-
-def _fmt_pct(x) -> str:
-    try:
-        return f"{float(x):.1f}%"
-    except Exception:
+def _fmt(v, suffix=""):
+    if v is None or v == "":
         return "—"
+    if isinstance(v, float):
+        # keep one decimal for nicer readability
+        return f"{v:.1f}{suffix}"
+    return f"{v}{suffix}"
 
+def _line(txt: str) -> str:
+    return txt.rstrip() + "\n"
 
-def _fmt_float(x, digits=1) -> str:
-    try:
-        return f"{float(x):.{digits}f}"
-    except Exception:
-        return "—"
+def _section(title: str) -> str:
+    return f"\n{title}\n" + "-" * max(6, len(title)) + "\n"
 
-
-def _fmt_int(x) -> str:
-    try:
-        return str(int(x))
-    except Exception:
-        return "—"
-
-
-def _lines_for_mastery(acc_block: Dict[str, Any]) -> List[str]:
-    if not acc_block or not acc_block.get("subjects_meta"):
-        return ["No subject accuracy data in the selected period."]
-    out = []
-    rows = sorted(acc_block["subjects_meta"], key=lambda r: r.get("avg", 0.0), reverse=True)
-    for r in rows:
-        subj = r.get("subject", "—")
-        avg = r.get("avg", 0.0)
-        band = r.get("band", "—")
-        attempts = r.get("attempts", 0)
-        out.append(f"- {subj}: {avg:.1f}% ({band}, {attempts} attempt{'s' if attempts!=1 else ''})")
-    return out
-
-
-def _lines_for_speed(speed_block: Dict[str, Any]) -> List[str]:
-    if not speed_block:
-        return ["No processing speed data in the selected period."]
-    unit = speed_block.get("unit", "mins")
-    unit_label = f" {unit}".rstrip()
-
-    lines = []
-    attempts = speed_block.get("attempts", 0)
-    mean_v = speed_block.get("mean", None)
-    med_v = speed_block.get("median", None)
-    p90_v = speed_block.get("p90", None)
-
-    if attempts and (mean_v is not None):
-        lines.append(
-            f"Overall mean: {_fmt_float(mean_v)}{unit_label} • median: {_fmt_float(med_v)}{unit_label} • p90: {_fmt_float(p90_v)}{unit_label} (n={attempts})"
-        )
-
-    rows = speed_block.get("per_subject_meta") or []
-    if not rows:
-        per_dict = speed_block.get("per_subject") or {}
-        if per_dict:
-            for subj, avg_time in sorted(per_dict.items(), key=lambda kv: kv[1], reverse=True):
-                lines.append(f"- {subj}: {_fmt_float(avg_time)}{unit_label}")
-        else:
-            lines.append("No per-subject processing data.")
-        return lines
-
-    rows = sorted(rows, key=lambda r: r.get("avg_time", 0.0), reverse=True)
-    for r in rows:
-        subj = r.get("subject", "—")
-        avg_t = r.get("avg_time", 0.0)
-        tot_t = r.get("total_time", 0.0)
-        att = r.get("attempts", 0)
-        lines.append(
-            f"- {subj}: {avg_t:.1f}{unit_label} (total {tot_t:.1f}{unit_label}, {att} attempt{'s' if att!=1 else ''})"
-        )
-    return lines
-
+def _bullet(items: List[str]) -> str:
+    return "".join([f"- {x}\n" for x in items])
 
 def build_report(d: Dict[str, Any]) -> str:
+    # Core references
     student = d.get("student", {})
     period = d.get("period", {})
     usage = d.get("usage", {})
     focus = d.get("focus", {})
-    learning = d.get("learning", {}) or {}
+    learning = d.get("learning", {})
+    routine = d.get("routine", {})
+    acc = d.get("accuracy_mastery", {})
+    spd = d.get("processing_speed", {})
+    ai = d.get("ai_literacy", {})  # NEW
 
-    rep = []
-    rep.append("Student Learning Report (SEN)\n")
-    rep.append(f"Student: {student.get('name','')}")
-    rep.append(f"Student ID: {student.get('id','')}")
-    rep.append(f"Class / Year: {student.get('class','—')} / {student.get('year','—')}")
-    rep.append(f"Reporting Period: {period.get('start','—')} – {period.get('end','—')}")
-    rep.append(f"Prepared for: {d.get('prepared_for','—')}")
-    rep.append(f"Generated on: {period.get('generated_on','—')}")
-    rep.append("Data Sources: activity_performance, chapter_session, topic_session, lesson_session, daily_activity_log, topics, enrollment\n")
+    out = []
 
-    focus_delta = int(focus.get("focus_score_delta", 0) or 0)
-    comp_pct = float(usage.get("completion_pct", 0) or 0)
-    focus_score = int(focus.get("focus_score", 0) or 0)
-    class_median = int(focus.get("class_median", 62) or 62)
+    # Header
+    out.append(_line("Student Learning Report (SEN)"))
+    out.append(_line(""))
+    out.append(_line(f"Student: {student.get('name','—')}"))
+    out.append(_line(f"Student ID: {student.get('id','—')}"))
+    out.append(_line(f"Class / Year: {student.get('class','—')} / {student.get('year','—')}"))
+    out.append(_line(f"Reporting Period: {period.get('start','—')} – {period.get('end','—')}"))
+    out.append(_line(f"Prepared for: {d.get('prepared_for','—')}"))
+    out.append(_line(f"Generated on: {period.get('generated_on') or datetime.today().date().isoformat()}"))
+    out.append(_line("Data Sources: activity_performance, chapter_session, topic_session, lesson_session, daily_activity_log, topics, enrollment"))
+    out.append(_line(""))
 
-    if focus_delta >= 5 and comp_pct >= 70:
-        exec_summary = "Engagement and comprehension are improving; routine and supports appear to help."
-    elif comp_pct < 40 or focus_score < class_median:
-        exec_summary = "Engagement, focus, and skill growth have declined compared to last period. Immediate teacher support is advised."
+    # 1) Executive Summary
+    out.append(_section("1) Executive Summary"))
+    out.append(_line("Summary: Overall progress is steady with moderate gains; continue current routine and supports."))
+    out.append(_line(f"Focus score: {focus.get('focus_score', '—')} (↑ {focus.get('focus_score_delta','—')} from last period)"))
+    out.append(_line(f"Completion rate: {usage.get('lessons_done',0)}/{usage.get('lessons_total',0)} ({_fmt(usage.get('completion_pct'), '%')})"))
+    out.append(_line(f"Time-on-task: {_fmt(usage.get('total_time_mins'),' mins')} total ({_fmt(usage.get('trend_vs_prev_pct'), '%')} vs last period)"))
+
+    # 2) SEN Profile & Accommodations
+    out.append(_section("2) SEN Profile & Accommodations"))
+    out.append(_line("Summary: Derived metrics only (no pre-set accommodations in source)."))
+    out.append(_line("Primary Needs: —"))
+    out.append(_line("Accommodations: —"))
+    out.append(_line("Effectiveness: TTS ON → 0% vs OFF → 0% (0pp)"))
+    out.append(_line("Stability: Font size changed 0× this period"))
+
+    # 3) Engagement & Usage
+    out.append(_section("3) Engagement & Usage"))
+    out.append(_line("Summary: Moderate engagement; room for higher completion."))
+    out.append(_line(f"Active Days: {usage.get('active_days','—')}"))
+    out.append(_line(f"Sessions: {usage.get('sessions','—')} (avg. {_fmt(usage.get('avg_session_mins'),' mins')})"))
+    out.append(_line(f"Completion: {usage.get('lessons_done',0)} of {usage.get('lessons_total',0)} ({_fmt(usage.get('completion_pct'),'%')})"))
+    out.append(_line(f"Trend: {_fmt(usage.get('trend_vs_prev_pct'),'%')} vs last period"))
+
+    # 4) Focus & Concentration
+    out.append(_section("4) Focus & Concentration"))
+    out.append(_line("Summary: Improved attention relative to class median."))
+    out.append(_line(f"Focus score: {focus.get('focus_score','—')} (class median: {focus.get('class_median','—')})"))
+    out.append(_line(f"Avg. attention block: {_fmt(focus.get('avg_sustained_block_mins'),' mins')}"))
+
+    # 5) Learning Progress & Mastery
+    out.append(_section("5) Learning Progress & Mastery"))
+    out.append(_line("Summary: Subject-level growth based on activity performance."))
+    # Print short per-subject breakdown if present
+    subs_meta = acc.get("subjects_meta") or []
+    if subs_meta:
+        for row in subs_meta:
+            out.append(_line(f"- {row['subject']}: {row['avg']:.1f}% ({row['band']}, {row['attempts']} attempts)"))
     else:
-        exec_summary = "Overall progress is steady with moderate gains; continue current routine and supports."
+        out.append(_line("No subject-level performance available in the selected period."))
+    out.append(_line(f"Perseverance index: {learning.get('perseverance_index','—')} (fraction of attempts using hints)"))
 
-    rep.append("1) Executive Summary")
-    rep.append(f"Summary: {exec_summary}")
-    rep.append(f"Focus score: {focus_score} ({_arrow(focus_delta)} {abs(focus_delta)} from last period)")
-    rep.append(f"Completion rate: {usage.get('lessons_done',0)}/{usage.get('lessons_total',0)} ({_fmt_pct(usage.get('completion_pct',0))})")
-    rep.append(f"Time-on-task: {_fmt_float(usage.get('total_time_mins',0))} mins total ({_fmt_int(usage.get('trend_vs_prev_pct',0))}% vs last period)\n")
-
-    rep.append("2) SEN Profile & Accommodations")
-    rep.append("Summary: Derived metrics only (no pre-set accommodations in source).")
-    rep.append("Primary Needs: —")
-    rep.append("Accommodations: —")
-    rep.append("Effectiveness: TTS ON → 0% vs OFF → 0% (0pp)")
-    rep.append("Stability: Font size changed 0× this period\n")
-
-    eng_summary = (
-        "Strong participation and lesson completion." if comp_pct >= 70 else
-        "Very low engagement, with limited active days and short sessions." if comp_pct < 40 else
-        "Moderate engagement; room for higher completion."
-    )
-    rep.append("3) Engagement & Usage")
-    rep.append(f"Summary: {eng_summary}")
-    rep.append(f"Active Days: {_fmt_int(usage.get('active_days','—'))}")
-    rep.append(f"Sessions: {_fmt_int(usage.get('sessions','—'))} (avg. {_fmt_float(usage.get('avg_session_mins','—'))} mins)")
-    rep.append(f"Completion: {_fmt_int(usage.get('lessons_done',0))} of {_fmt_int(usage.get('lessons_total',0))} lessons ({_fmt_pct(usage.get('completion_pct',0))})")
-    rep.append(f"Trend: {_fmt_int(usage.get('trend_vs_prev_pct',0))}% vs last period\n")
-
-    rep.append("4) Focus & Concentration")
-    rep.append(f"Summary: {'Improved attention relative to class median.' if focus_score >= class_median else 'Below class median; consider shorter, more frequent sessions.'}")
-    rep.append(f"Focus score: {focus_score} (class median: {class_median})")
-    rep.append(f"Avg. attention block: {_fmt_float(focus.get('avg_sustained_block_mins','—'))} mins\n")
-
-    # ---- 5) Accuracy & Mastery ----
-    rep.append("5) Learning Progress & Mastery")
-    rep.append("Summary: Subject-level growth based on activity performance.")
-    for s in learning.get("skills", []):
-        try:
-            rep.append(f"- {s['name']}: {float(s['value'])*100:.0f}% ({float(s.get('delta',0))*100:+.0f}pp)")
-        except Exception:
-            pass
-    acc_block = d.get("accuracy_mastery", {})
-    if acc_block:
-        rep.extend(_lines_for_mastery(acc_block))
-    pi = learning.get("perseverance_index", None)
-    if pi is not None:
-        try:
-            rep.append(f"Perseverance index: {float(pi):.2f} (fraction of attempts using hints)\n")
-        except Exception:
-            rep.append(f"Perseverance index: {pi}\n")
+    # 6) Processing Speed
+    out.append(_section("6) Processing Speed"))
+    out.append(_line("Summary: Average response/processing time per subject based on total time spent on attempts."))
+    if spd and spd.get("attempts",0) > 0:
+        out.append(_line(f"Overall mean: {_fmt(spd.get('mean'),' mins')} • median: {_fmt(spd.get('median'),' mins')} • p90: {_fmt(spd.get('p90'),' mins')} (n={spd.get('attempts')})"))
+        per_sub = spd.get("per_subject_meta") or []
+        for r in per_sub:
+            out.append(_line(f"- {r['subject']}: {_fmt(r['avg_time'],' mins')} (total {_fmt(r['total_time'],' mins')}, {r['attempts']} attempts)"))
     else:
-        rep.append("Perseverance index: —\n")
+        out.append(_line("No processing speed data in the selected period."))
 
-    # ---- 6) Processing Speed ----
-    rep.append("6) Processing Speed")
-    rep.append("Summary: Average response/processing time per subject based on total time spent on attempts.")
-    speed_block = d.get("processing_speed", {})
-    rep.extend(_lines_for_speed(speed_block))
-    rep.append("")
-
-    rep.append("7) Reading, Language & Expression")
-    rep.append("Summary: Not available in this dataset.")
-    rep.append("Readability: —")
-    rep.append("TTR: —\n")
-
-    rep.append("8) AI Interaction Quality & Support Usage")
-    rep.append("Summary: Derived hints usage (no built-in AI support fields in source).")
-    rep.append(f"Hints used per attempt: {learning.get('perseverance_index','—')}\n")
-
-    rep.append("9) Motivation & Routine")
-    dropoff_risk = d.get("routine", {}).get("dropoff_risk", "—")
-    rep.append(f"Summary: {'Low drop-off risk.' if dropoff_risk=='low' else ('Potential drop-off risk.' if dropoff_risk in ('medium','high') else '—')}\n")
-
-    rep.append("10) Technology & Accessibility Diagnostics")
-    rep.append("Summary: Device info is partial in this dataset.\n")
-
-    rep.append("11) Goals & Recommendations")
-    recs = d.get("recommendations", [])
-    if recs:
-        rep.append("Recommendations:")
-        for r in recs:
-            rep.append(f"- {r}")
+    # 7) AI Literacy & Learning Gain (NEW)
+    out.append(_section("7) AI Literacy & Learning Gain"))
+    if ai and ai.get("available"):
+        pre_s = ai.get("pre_score")
+        post_s = ai.get("post_score")
+        mx = ai.get("max_score") or 100.0
+        lg = ai.get("learning_gain")
+        out.append(_line(f"Pre-test: {_fmt(pre_s)} / {mx:.0f}  |  Post-test: {_fmt(post_s)} / {mx:.0f}"))
+        out.append(_line(f"Learning Gain: {_fmt(lg, '%')}"))
+        out.append(_line(f"Level (before → after): {ai.get('level_before','—')} → {ai.get('level_after','—')}"))
+        concepts = ai.get("concepts_mastered") or []
+        apps = ai.get("applications") or []
+        if concepts:
+            out.append(_line("Key Concepts Mastered: " + ", ".join(concepts)))
+        if apps:
+            out.append(_line("Skill Applications: " + "; ".join(apps)))
     else:
-        rep.append("Recommendations:")
-        rep.append("- Encourage regular short practice sessions (5–7 mins) on weaker subjects")
-        rep.append("- Review missed questions in recent attempts")
-        rep.append("- Use shorter sessions if average session length is below 10 mins")
-    rep.append("")
+        out.append(_line("Not available in this dataset (add local 'ai_literacy_assessment' for pre/post tracking)."))
 
-    rep.append("12) Unanswered & Out-of-Scope Questions")
-    rep.append("Summary: Not tracked in this dataset.")
-    rep.append("Total questions: —")
-    rep.append("Unanswered: — | Out-of-scope: —")
-    return "\n".join(rep).strip()
+    # 8) Reading, Language & Expression
+    out.append(_section("8) Reading, Language & Expression"))
+    out.append(_line("Summary: Not available in this dataset."))
+    out.append(_line("Readability: —"))
+    out.append(_line("TTR: —"))
+
+    # 9) AI Interaction Quality & Support Usage
+    out.append(_section("9) AI Interaction Quality & Support Usage"))
+    out.append(_line("Summary: Derived hints usage (no built-in AI support fields in source)."))
+    out.append(_line(f"Hints used per attempt: {learning.get('perseverance_index','—')}"))
+
+    # 10) Motivation & Routine
+    out.append(_section("10) Motivation & Routine"))
+    out.append(_line(f"Summary: Potential drop-off risk."))
+    out.append(_line(f"Drop-off risk: {routine.get('dropoff_risk','—')}"))
+
+    # 11) Technology & Accessibility Diagnostics
+    out.append(_section("11) Technology & Accessibility Diagnostics"))
+    out.append(_line("Summary: Device info is partial in this dataset."))
+
+    # 12) Goals & Recommendations
+    recs = d.get("recommendations") or [
+        "Encourage regular short practice sessions (5–7 mins) on weaker subjects",
+        "Review missed questions in recent attempts",
+        "Use shorter sessions if average session length is below 10 mins",
+    ]
+    out.append(_section("12) Goals & Recommendations"))
+    out.append(_bullet(recs))
+
+    # 13) Unanswered & Out-of-Scope Questions
+    out.append(_section("13) Unanswered & Out-of-Scope Questions"))
+    out.append(_line("Summary: Not tracked in this dataset."))
+    out.append(_line("Total questions: —"))
+    out.append(_line("Unanswered: — | Out-of-scope: —"))
+
+    return "".join(out)
