@@ -1,8 +1,10 @@
 # streamlit_app.py
+import math
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 from datetime import datetime, date, timedelta
+from html import escape
 
 from constants import PRIMARY_JSON_PATH, SECONDARY_JSON_PATH
 from loaders import load_json, extract_user_id_and_audience, merge_data
@@ -30,10 +32,325 @@ from charts_plotly import (
 from ui_profile import display_user_metadata
 from ui_subjects import render_subject_growth
 from ui_personalisation import render_personalisation_usage
-from ui_event_log import render_event_log_table
 from report_builder import build_report
 
 st.set_page_config(page_title="Student Report Generator", layout="wide")
+
+SEN_REPORT_CSS = """
+<style>
+[data-testid="stMain"] .sen-report {
+    font-size: 0.95rem;
+    background: var(--secondary-background-color);
+    color: var(--text-color);
+    border: 1px solid rgba(128, 128, 128, 0.2);
+    border-radius: 0.75rem;
+    padding: 1.1rem 1.35rem;
+    margin-top: 0.75rem;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+}
+[data-testid="stMain"] .sen-report__header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem 1rem;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+[data-testid="stMain"] .sen-report__title {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+[data-testid="stMain"] .sen-report__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    font-size: 0.88rem;
+    opacity: 0.85;
+}
+[data-testid="stMain"] .sen-report__meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+[data-testid="stMain"] .sen-report__grid {
+    display: grid;
+    gap: 0.9rem;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+[data-testid="stMain"] .sen-card {
+    background: var(--background-color);
+    border: 1px solid rgba(128, 128, 128, 0.18);
+    border-radius: 0.65rem;
+    padding: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    min-height: 100%;
+}
+[data-testid="stMain"] .sen-card h4 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+}
+[data-testid="stMain"] .sen-metric {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+[data-testid="stMain"] .sen-metric__label {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    opacity: 0.7;
+}
+[data-testid="stMain"] .sen-metric__value {
+    font-weight: 500;
+}
+[data-testid="stMain"] .sen-metric__value--emph {
+    font-weight: 600;
+    font-size: 1.02rem;
+}
+[data-testid="stMain"] .sen-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.02em;
+}
+[data-testid="stMain"] .sen-tag--low {
+    background: rgba(106, 168, 79, 0.2);
+    color: rgb(66, 115, 39);
+}
+[data-testid="stMain"] .sen-tag--medium {
+    background: rgba(255, 193, 7, 0.22);
+    color: rgb(166, 121, 0);
+}
+[data-testid="stMain"] .sen-tag--high {
+    background: rgba(220, 53, 69, 0.22);
+    color: rgb(156, 26, 37);
+}
+[data-testid="stMain"] .sen-report__list {
+    margin: 0;
+    padding-left: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+[data-testid="stMain"] .sen-report__footer {
+    margin-top: 1rem;
+    display: grid;
+    gap: 0.85rem;
+}
+[data-testid="stMain"] .sen-report__smallprint {
+    font-size: 0.78rem;
+    opacity: 0.65;
+}
+@media (max-width: 640px) {
+    [data-testid="stMain"] .sen-report {
+        padding: 1rem;
+    }
+    [data-testid="stMain"] .sen-metric {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+</style>
+"""
+
+
+def _inject_sen_report_css() -> None:
+    if st.session_state.get("_sen_report_css_loaded"):
+        return
+    st.session_state["_sen_report_css_loaded"] = True
+    st.markdown(SEN_REPORT_CSS, unsafe_allow_html=True)
+
+
+def render_sen_report(report: dict) -> None:
+    """Render a styled SEN report snapshot using the prepared report dict."""
+    _inject_sen_report_css()
+
+    def fmt_metric(value, unit="", decimals=1, plus_sign=False):
+        if value in (None, "", "—"):
+            return "—"
+        if isinstance(value, (int, float)):
+            if isinstance(value, float) and (math.isnan(value) or math.isinf(value)):
+                return "—"
+            decimals_to_use = decimals
+            if isinstance(value, int) or decimals == 0:
+                decimals_to_use = 0
+            if decimals_to_use == 0:
+                formatted = f"{value:.0f}"
+                formatted = formatted.rstrip("0").rstrip(".") if "." in formatted else formatted
+            else:
+                formatted = f"{value:.{decimals_to_use}f}"
+            sign = "+" if plus_sign and value > 0 else ""
+            return f"{sign}{formatted}{unit}"
+        return str(value)
+
+    def metric(label, value, *, emphasize=False, raw=False):
+        label_html = escape(label)
+        if raw:
+            value_html = value
+        else:
+            value_html = escape(value if value not in (None, "") else "—")
+        value_class = "sen-metric__value sen-metric__value--emph" if emphasize else "sen-metric__value"
+        return f"<div class='sen-metric'><span class='sen-metric__label'>{label_html}</span><span class='{value_class}'>{value_html}</span></div>"
+
+    student = report.get("student", {})
+    period = report.get("period", {})
+    usage = report.get("usage", {})
+    focus = report.get("focus", {})
+    learning = report.get("learning", {})
+    ai_support = report.get("ai_support", {})
+    routine = report.get("routine", {})
+    goals = report.get("goals") or []
+    recommendations = report.get("recommendations") or []
+    questions = report.get("questions") or {}
+    drivers = {
+        "Accuracy & Mastery": report.get("accuracy_mastery"),
+        "Processing Speed": report.get("processing_speed"),
+        "AI Literacy": report.get("ai_literacy"),
+    }
+
+    dropoff = (routine.get("dropoff_risk") or "—").lower()
+    dropoff_class = f"sen-tag sen-tag--{dropoff}" if dropoff in {"low", "medium", "high"} else "sen-tag"
+    dropoff_copy = dropoff.capitalize() if dropoff not in {"", "—"} else "—"
+    dropoff_html = f"<span class='{dropoff_class}'>{escape(dropoff_copy)}</span>" if dropoff_copy != "—" else escape(dropoff_copy)
+
+    lessons_done = usage.get("lessons_done")
+    lessons_total = usage.get("lessons_total")
+
+    def safe_value(val):
+        if val in (None, ""):
+            return "—"
+        return val
+
+    lessons_summary = f"{safe_value(lessons_done)} / {safe_value(lessons_total)}"
+
+    period_range = f"{escape(period.get('start', '—'))} → {escape(period.get('end', '—'))}"
+    generated_on = escape(period.get("generated_on", "—"))
+    prepared_for = report.get("prepared_for", "—")
+
+    usage_card = "".join([
+        metric("Active days", fmt_metric(usage.get("active_days"), decimals=0)),
+        metric("Sessions", fmt_metric(usage.get("sessions"), decimals=0)),
+        metric("Avg session", fmt_metric(usage.get("avg_session_mins"), unit=" mins")),
+        metric("Time on task", fmt_metric(usage.get("total_time_mins"), unit=" mins")),
+        metric("Completion", fmt_metric(usage.get("completion_pct"), unit="%", decimals=0)),
+        metric("Trend vs prev", fmt_metric(usage.get("trend_vs_prev_pct"), unit="%", plus_sign=True)),
+        metric("Lessons", lessons_summary),
+    ])
+
+    focus_card = "".join([
+        metric("Focus score", fmt_metric(focus.get("focus_score"), decimals=0), emphasize=True),
+        metric("Change vs prev", fmt_metric(focus.get("focus_score_delta"), decimals=1, plus_sign=True)),
+        metric("Class median", fmt_metric(focus.get("class_median"), decimals=0)),
+        metric("Avg sustained block", fmt_metric(focus.get("avg_sustained_block_mins"), unit=" mins")),
+    ])
+
+    learning_card = "".join([
+        metric("Skills highlighted", str(len(learning.get("skills", [])))),
+        metric("Perseverance index", fmt_metric(learning.get("perseverance_index"), decimals=1)),
+        metric("Hints / activity", fmt_metric(ai_support.get("hints_per_activity"), decimals=2)),
+    ])
+
+    routine_card = "".join([
+        metric("Drop-off risk", dropoff_html, raw=True, emphasize=True),
+        metric("Devices noted", fmt_metric(len(report.get("devices", {})), decimals=0)),
+    ])
+
+    driver_html = ""
+    driver_rows = []
+    if drivers["Accuracy & Mastery"]:
+        acc = drivers["Accuracy & Mastery"]
+        overall = fmt_metric(acc.get("overall"), unit="%", decimals=0)
+        driver_rows.append(metric("Accuracy (overall)", overall, emphasize=True))
+    if drivers["Processing Speed"]:
+        spd = drivers["Processing Speed"]
+        driver_rows.append(metric("Median response", fmt_metric(spd.get("median"), unit=" mins")))
+        driver_rows.append(metric("P90 response", fmt_metric(spd.get("p90"), unit=" mins")))
+    if drivers["AI Literacy"]:
+        ai = drivers["AI Literacy"]
+        if ai.get("available"):
+            driver_rows.append(metric("Learning gain", fmt_metric(ai.get("learning_gain"), unit="%", decimals=0, plus_sign=True)))
+            lv = f"{ai.get('level_before', '—')} → {ai.get('level_after', '—')}"
+            driver_rows.append(metric("Level change", lv))
+        else:
+            driver_rows.append(metric("Learning gain", "Assessment not available"))
+    if driver_rows:
+        driver_html = f"<div class='sen-card'><h4>Key Drivers</h4>{''.join(driver_rows)}</div>"
+
+    def render_list(title, items):
+        if not items:
+            return ""
+        entries = "".join(f"<li>{escape(str(item))}</li>" for item in items if item not in (None, ""))
+        if not entries:
+            return ""
+        return f"<div class='sen-card'><h4>{escape(title)}</h4><ul class='sen-report__list'>{entries}</ul></div>"
+
+    def render_questions(title, mapping):
+        if not mapping:
+            return ""
+        rows = []
+        for prompt, answer in mapping.items():
+            if answer in (None, "") and prompt in (None, ""):
+                continue
+            rows.append(
+                f"<div class='sen-metric'><span class='sen-metric__label'>{escape(str(prompt or 'Question'))}</span>"
+                f"<span class='sen-metric__value'>{escape(str(answer or '—'))}</span></div>"
+            )
+        if not rows:
+            return ""
+        return f"<div class='sen-card'><h4>{escape(title)}</h4>{''.join(rows)}</div>"
+
+    grid_cards = [
+        f"<div class='sen-card'><h4>Student</h4>"
+        f"{metric('Name', student.get('name', '—'), emphasize=True)}"
+        f"{metric('ID', str(student.get('id', '—')))}"
+        f"{metric('Class', student.get('class', '—'))}"
+        f"{metric('Year', student.get('year', '—'))}"
+        f"</div>",
+        f"<div class='sen-card'><h4>Usage</h4>{usage_card}</div>",
+        f"<div class='sen-card'><h4>Focus</h4>{focus_card}</div>",
+        f"<div class='sen-card'><h4>Learning & Support</h4>{learning_card}{metric('Prepared for', prepared_for or '—')}</div>",
+        f"<div class='sen-card'><h4>Routine</h4>{routine_card}</div>",
+    ]
+    if driver_html:
+        grid_cards.append(driver_html)
+
+    footer_sections = [
+        render_list("Goals", goals),
+        render_list("Recommendations", recommendations),
+        render_questions("Open Questions", questions),
+    ]
+    footer_sections = [section for section in footer_sections if section]
+
+    footer_html = ""
+    if footer_sections:
+        footer_html = f"<div class='sen-report__footer'>{''.join(footer_sections)}</div>"
+
+    audience_html = escape(prepared_for or "—")
+
+    report_html = f"""
+    <div class="sen-report">
+        <div class="sen-report__header">
+            <div class="sen-report__title">SEN Report Snapshot</div>
+            <div class="sen-report__meta">
+                <span>Range: {period_range}</span>
+                <span>Generated: {generated_on}</span>
+                <span>Audience: {audience_html}</span>
+            </div>
+        </div>
+        <div class="sen-report__grid">
+            {''.join(grid_cards)}
+        </div>
+        {footer_html}
+    </div>
+    """
+    st.markdown(report_html, unsafe_allow_html=True)
 
 
 def bar_period_kpis(labels, values, units):
@@ -282,13 +599,9 @@ def main():
             "ai_literacy": ai_block,   # NEW
         }
 
+        render_sen_report(report_data)
+
         report_text = build_report(report_data)
         st.text_area("Report (copy-ready)", value=report_text, height=600)
-
-        # ---------- Events table ----------
-        st.markdown("### Event log")
-        render_event_log_table(data, user_id)
-
-
 if __name__ == "__main__":
     main()
