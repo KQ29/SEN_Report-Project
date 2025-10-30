@@ -20,6 +20,8 @@ from metrics_period import (
     engagement_consistency,
     independence_support,
     communication_social,
+    emotional_regulation_summary,
+    activity_attempt_profile,
     ai_literacy_stats,          # NEW
 )
 from charts_plotly import (
@@ -206,6 +208,10 @@ def render_sen_report(report: dict) -> None:
     learning = report.get("learning", {})
     ai_support = report.get("ai_support", {})
     routine = report.get("routine", {})
+    independence = report.get("independence", {})
+    communication = report.get("communication", {})
+    emotional = report.get("emotional_regulation", {})
+    activity_profile = report.get("activity_performance", {})
     goals = report.get("goals") or []
     recommendations = report.get("recommendations") or []
     questions = report.get("questions") or {}
@@ -260,6 +266,54 @@ def render_sen_report(report: dict) -> None:
     routine_card = "".join([
         metric("Drop-off risk", dropoff_html, raw=True, emphasize=True),
         metric("Devices noted", fmt_metric(len(report.get("devices", {})), decimals=0)),
+    ])
+
+    independence_card = "".join([
+        metric("Hint rate", fmt_metric(independence.get("hint_rate"), unit="%", decimals=1)),
+        metric("Retry rate", fmt_metric(independence.get("retry_rate"), unit="%", decimals=1)),
+        metric("Support features", fmt_metric(independence.get("support_feature_uses"), decimals=0)),
+        metric("Accessibility uses", fmt_metric(independence.get("accessibility_uses"), decimals=0)),
+        metric("Independence index", fmt_metric(independence.get("independence"), decimals=1), emphasize=True),
+    ])
+
+    communication_card = "".join([
+        metric("Messages", fmt_metric(communication.get("messages"), decimals=0)),
+        metric("Interactions", fmt_metric(communication.get("interactions"), decimals=0)),
+        metric("Student initiated", fmt_metric(communication.get("student_initiated"), decimals=0)),
+        metric("Avg length", fmt_metric(communication.get("avg_length"), decimals=1)),
+        metric("Avg turns", fmt_metric(communication.get("avg_turns"), decimals=1)),
+        metric("Last interaction", communication.get("last_interaction_type") or "—"),
+    ])
+
+    adjustments_text = ", ".join(emotional.get("top_adjustments") or [])
+    adjustments_text = adjustments_text if adjustments_text else "—"
+    timeline_entries = emotional.get("timeline") or []
+    timeline_text = ", ".join(f"{item['date']} ({item['zone']})" for item in timeline_entries) if timeline_entries else "—"
+    emotional_card = "".join([
+        metric("Entries", fmt_metric(emotional.get("records"), decimals=0)),
+        metric("Current zone", emotional.get("latest_zone") or "—"),
+        metric("Latest mood", emotional.get("latest_mood") or "—"),
+        metric("Green time", fmt_metric(emotional.get("green_pct"), unit="%", decimals=1)),
+        metric("Stability index", fmt_metric(emotional.get("stability_index"), unit="%", decimals=1), emphasize=True),
+        metric("Sensory adjustments", adjustments_text),
+        metric("Recent timeline", timeline_text),
+    ])
+
+    attempt_details = activity_profile.get("attempt_details") or []
+    recent_attempt_text = "—"
+    if attempt_details:
+        last_attempt = attempt_details[-1]
+        status = "✅" if last_attempt.get("is_right") else "❌"
+        recent_attempt_text = (
+            f"{status} {last_attempt.get('activity_type', 'activity')} in {last_attempt.get('attempts', '—')} attempt(s)"
+        )
+    activity_card = "".join([
+        metric("Logged activities", fmt_metric(activity_profile.get("activities_recorded"), decimals=0)),
+        metric("MCQ attempted", fmt_metric(activity_profile.get("mcq_attempted"), decimals=0)),
+        metric("MCQ correct", fmt_metric(activity_profile.get("mcq_correct_pct"), unit="%", decimals=1)),
+        metric("Avg attempts", fmt_metric(activity_profile.get("mcq_avg_attempts"), decimals=2)),
+        metric("1st try success", fmt_metric(activity_profile.get("mcq_first_try_success_pct"), unit="%", decimals=1)),
+        metric("Latest outcome", recent_attempt_text),
     ])
 
     driver_html = ""
@@ -317,6 +371,10 @@ def render_sen_report(report: dict) -> None:
         f"<div class='sen-card'><h4>Focus</h4>{focus_card}</div>",
         f"<div class='sen-card'><h4>Learning & Support</h4>{learning_card}{metric('Prepared for', prepared_for or '—')}</div>",
         f"<div class='sen-card'><h4>Routine</h4>{routine_card}</div>",
+        f"<div class='sen-card'><h4>Emotional Regulation</h4>{emotional_card}</div>",
+        f"<div class='sen-card'><h4>Independence & Support</h4>{independence_card}</div>",
+        f"<div class='sen-card'><h4>Communication & Social</h4>{communication_card}</div>",
+        f"<div class='sen-card'><h4>Activity Performance</h4>{activity_card}</div>",
     ]
     if driver_html:
         grid_cards.append(driver_html)
@@ -488,18 +546,33 @@ def main():
 
         # ---------- Advanced Learning KPIs ----------
         st.markdown("### Advanced Learning KPIs")
-        tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
-            "Accuracy & Mastery", "Processing Speed", "Engagement & Consistency",
-            "Independence", "Communication", "AI Literacy"  # NEW tab
+
+        acc_block = accuracy_and_mastery(data, user_id, start_dt, end_dt)
+        spd_block = response_time_stats(data, user_id, start_dt, end_dt)
+        eng_block = engagement_consistency(data, user_id, start_dt, end_dt)
+        indep_block = independence_support(data, user_id, start_dt, end_dt)
+        comm_block = communication_social(data, user_id, start_dt, end_dt)
+        emo_block = emotional_regulation_summary(data, user_id, start_dt, end_dt)
+        attempts_block = activity_attempt_profile(data, user_id, start_dt, end_dt)
+        ai_block = ai_literacy_stats(data, user_id, start_dt, end_dt)
+        independence_for_report = {k: v for k, v in indep_block.items() if k not in {"support_rate", "help_requests"}}
+
+        tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8 = st.tabs([
+            "Accuracy & Mastery",
+            "Processing Speed",
+            "Engagement & Consistency",
+            "Independence",
+            "Communication",
+            "Emotional Regulation",
+            "Activity Performance",
+            "AI Literacy",
         ])
 
         with tab1:
-            acc_block = accuracy_and_mastery(data, user_id, start_dt, end_dt)
             st.caption(f"Overall accuracy: **{acc_block['overall']:.1f}%**")
             st.plotly_chart(bar_mastery_subjects(acc_block["subjects"]), use_container_width=True)
 
         with tab2:
-            spd_block = response_time_stats(data, user_id, start_dt, end_dt)
             st.caption(
                 f"Attempts: **{spd_block['attempts']}** • Mean: **{spd_block['mean']}** • "
                 f"Median: **{spd_block['median']}** • P90: **{spd_block['p90']}**"
@@ -507,26 +580,59 @@ def main():
             st.plotly_chart(bar_response_time_subjects(spd_block["per_subject"], unit_label=" mins"), use_container_width=True)
 
         with tab3:
-            eng = engagement_consistency(data, user_id, start_dt, end_dt)
-            st.write("Active days:", eng["active_days"])
-            st.write("Total sessions:", eng["sessions_total"])
-            st.write("Longest streak:", eng["streak"])
-            weeks = eng.get("weeks", [])
-            st.caption(f"Weeks with activity: {sum(1 for col in eng.get('heat', []) if sum(col) > 0)} / {len(weeks)}")
+            st.write("Active days:", eng_block["active_days"])
+            st.write("Total sessions:", eng_block["sessions_total"])
+            st.write("Longest streak:", eng_block["streak"])
+            weeks = eng_block.get("weeks", [])
+            st.caption(f"Weeks with activity: {sum(1 for col in eng_block.get('heat', []) if sum(col) > 0)} / {len(weeks)}")
 
         with tab4:
-            indep = independence_support(data, user_id, start_dt, end_dt)
-            st.write("Hint rate:", f"{indep['hint_rate']}%")
-            st.write("Retry rate:", f"{indep['retry_rate']}%")
-            st.write("Independence index:", f"{indep['independence']}")
+            st.write("Hint rate:", f"{indep_block['hint_rate']}%")
+            st.write("Retry rate:", f"{indep_block['retry_rate']}%")
+            st.write("Support rate:", f"{indep_block['support_rate']}%")
+            st.write("Help requests:", int(indep_block["help_requests"]))
+            st.write("Support features used:", int(indep_block["support_feature_uses"]))
+            st.write("Accessibility toggles:", int(indep_block["accessibility_uses"]))
+            st.write("Independence index:", f"{indep_block['independence']}")
 
         with tab5:
-            comm = communication_social(data, user_id, start_dt, end_dt)
-            st.write("Messages (period):", comm["messages"])
-            st.write("Personalisation changes (proxy):", comm["personalisation_changes"])
+            st.write("Messages (period):", comm_block["messages"])
+            st.write("Personalisation changes (proxy):", comm_block["personalisation_changes"])
+            st.write("Avatar/Text interactions:", comm_block["interactions"])
+            st.write("Student-initiated:", comm_block["student_initiated"])
+            st.write("Avg length (chars):", comm_block["avg_length"])
+            st.write("Avg turns:", comm_block["avg_turns"])
+            st.write("Last interaction type:", comm_block.get("last_interaction_type") or "—")
 
         with tab6:
-            ai_block = ai_literacy_stats(data, user_id, start_dt, end_dt)
+            if emo_block["records"]:
+                st.write("Entries captured:", int(emo_block["records"]))
+                st.write("Latest zone:", emo_block.get("latest_zone") or "—")
+                st.write("Latest mood:", emo_block.get("latest_mood") or "—")
+                st.write("Green time:", f"{emo_block['green_pct']}%")
+                st.write("Stability index:", f"{emo_block['stability_index']}%")
+                adjustments = emo_block.get("top_adjustments") or []
+                st.write("Top sensory adjustments:", ", ".join(adjustments) if adjustments else "—")
+                timeline = emo_block.get("timeline") or []
+                if timeline:
+                    timeline_text = ", ".join(f"{item['date']} ({item['zone']})" for item in timeline)
+                    st.write("Recent timeline:", timeline_text)
+            else:
+                st.info("No emotional regulation entries in this period.")
+
+        with tab7:
+            st.write("Activities recorded:", attempts_block["activities_recorded"])
+            st.write("MCQ attempted:", attempts_block["mcq_attempted"])
+            st.write("MCQ correct:", f"{attempts_block['mcq_correct_pct']}%")
+            st.write("Avg attempts (MCQ):", attempts_block["mcq_avg_attempts"])
+            st.write("First-try success:", f"{attempts_block['mcq_first_try_success_pct']}%")
+            detail_df = pd.DataFrame(attempts_block["attempt_details"])
+            if not detail_df.empty:
+                st.dataframe(detail_df)
+            else:
+                st.info("No activity performance captured for this period.")
+
+        with tab8:
             if ai_block.get("available"):
                 st.write(f"Pre-test: {ai_block.get('pre_score','—')} / {int(ai_block.get('max_score') or 100)}")
                 st.write(f"Post-test: {ai_block.get('post_score','—')} / {int(ai_block.get('max_score') or 100)}")
@@ -552,10 +658,6 @@ def main():
         st.subheader("🧾 SEN Report (auto-generated)")
         if not curr["had_ts"]:
             st.warning("No reliable timestamps found in your selected range.")
-
-        acc_block = accuracy_and_mastery(data, user_id, start_dt, end_dt)
-        spd_block = response_time_stats(data, user_id, start_dt, end_dt)
-        ai_block  = ai_literacy_stats(data, user_id, start_dt, end_dt)
 
         focus_score_now = compute_focus_score(curr["completion_pct"], curr["avg_session_mins"])
         focus_score_prev = compute_focus_score(prev["completion_pct"], prev["avg_session_mins"])
@@ -597,6 +699,10 @@ def main():
             "accuracy_mastery": acc_block,
             "processing_speed": spd_block,
             "ai_literacy": ai_block,   # NEW
+            "independence": independence_for_report,
+            "communication": comm_block,
+            "emotional_regulation": emo_block,
+            "activity_performance": attempts_block,
         }
 
         render_sen_report(report_data)

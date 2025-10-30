@@ -62,7 +62,8 @@ def _ensure_lists(d: Dict[str, Any]) -> Dict[str, Any]:
     keys = [
         "user", "users", "enrollment", "daily_activity_log", "topic_session",
         "chapter_session", "activity_performance", "lesson_session",
-        "topics", "Topics", "messages", "ai_literacy_assessment" 
+        "topics", "Topics", "messages", "ai_literacy_assessment",
+        "emotional_regulation_log", "support_usage", "communication_events",
     ]
     out = dict(d)
     for k in keys:
@@ -75,7 +76,8 @@ def normalize_union(raw: Any) -> Dict[str, Any]:
     canon_keys = [
         "user", "enrollment", "daily_activity_log", "topic_session",
         "chapter_session", "activity_performance", "lesson_session",
-        "topics", "messages", "ai_literacy_assessment" 
+        "topics", "messages", "ai_literacy_assessment",
+        "emotional_regulation_log", "support_usage", "communication_events",
     ]
 
     buckets: Dict[str, List[Any]] = {k: [] for k in canon_keys}
@@ -93,7 +95,8 @@ def normalize_union(raw: Any) -> Dict[str, Any]:
         for k in [
             "enrollment", "daily_activity_log", "topic_session",
             "chapter_session", "activity_performance", "lesson_session",
-            "messages", "ai_literacy_assessment" 
+            "messages", "ai_literacy_assessment", "emotional_regulation_log",
+            "support_usage", "communication_events",
         ]:
             if k in d:
                 buckets[k].extend(d.get(k, []))

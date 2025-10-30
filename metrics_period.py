@@ -13,6 +13,8 @@ Advanced Learning KPIs:
 - engagement_consistency(data, user_id, start_dt, end_dt)
 - independence_support(data, user_id, start_dt, end_dt)
 - communication_social(data, user_id, start_dt, end_dt)
+- emotional_regulation_summary(data, user_id, start_dt, end_dt)
+- activity_attempt_profile(data, user_id, start_dt, end_dt)
 
 NEW:
 - ai_literacy_stats(data, user_id, start_dt, end_dt)
@@ -21,7 +23,7 @@ NEW:
 from __future__ import annotations
 from typing import Dict, Any, List, Tuple, Optional
 from statistics import mean
-from collections import defaultdict
+from collections import defaultdict, Counter
 from datetime import datetime, timedelta
 import numpy as np
 import pandas as pd
@@ -432,10 +434,10 @@ def engagement_consistency(
 def independence_support(
     data: Dict[str, Any], user_id: int, start_dt: datetime, end_dt: datetime
 ) -> Dict[str, float]:
-    """Hint usage rate and retry rate; independence index (0..100 = higher is more independent)."""
+    """Blend hint usage, retry behaviour, and support feature usage into an independence index."""
     idx = build_indexes(data)
     hints = 0
-    attempts = 0
+    questions_attempted = 0
     retries = 0
 
     for ap in data.get("activity_performance", []):
@@ -444,21 +446,70 @@ def independence_support(
         dt = parse_ts(ap.get("submitted_at"))
         if not dt or not (start_dt <= dt <= end_dt):
             continue
-        attempts += 1
+        questions_attempted += 1
         if ap.get("used_hint") in (True, 1, "true", "True"):
             hints += 1
-        if ap.get("attempt_index", 0) not in (None, 0, "0"):
-            retries += 1
+        attempt_count = 0
+        try:
+            attempt_count = int(ap.get("attempts", 0) or 0)
+        except Exception:
+            attempt_count = 0
+        if attempt_count <= 0:
+            attempt_count = 1
+        if attempt_count > 1:
+            retries += attempt_count - 1
 
-    if attempts == 0:
-        return {"hint_rate": 0.0, "retry_rate": 0.0, "independence": 0.0}
+    support_events: List[Dict[str, Any]] = []
+    for evt in data.get("support_usage", []):
+        if evt.get("user_id") != user_id:
+            continue
+        dt = parse_ts(evt.get("recorded_at") or evt.get("created_at") or evt.get("timestamp"))
+        if dt and start_dt <= dt <= end_dt:
+            support_events.append(evt)
 
-    hint_rate = 100.0 * hints / attempts
-    retry_rate = 100.0 * retries / attempts
-    independence = max(0.0, 100.0 - (0.6 * hint_rate + 0.4 * retry_rate))
+    help_requests = 0
+    assistive_feature_uses = 0
+    accessibility_uses = 0
+    for evt in support_events:
+        count = evt.get("count", 1)
+        try:
+            count = int(count)
+        except Exception:
+            count = 1
+        event_type = str(evt.get("event_type", "")).lower()
+        feature = str(evt.get("feature", "")).lower()
+        if event_type == "help_request":
+            help_requests += count
+        else:
+            assistive_feature_uses += count
+        if any(token in feature for token in ("accessibility", "contrast", "font", "reader", "text_to_speech")):
+            accessibility_uses += count
+
+    if questions_attempted == 0:
+        return {
+            "hint_rate": 0.0,
+            "retry_rate": 0.0,
+            "support_rate": 0.0,
+            "help_requests": float(help_requests),
+            "support_feature_uses": float(assistive_feature_uses),
+            "accessibility_uses": float(accessibility_uses),
+            "independence": 0.0,
+        }
+
+    hint_rate = 100.0 * hints / questions_attempted
+    retry_rate = 100.0 * retries / questions_attempted
+    support_rate = 0.0
+    if questions_attempted:
+        support_rate = 100.0 * (help_requests + assistive_feature_uses) / questions_attempted
+
+    independence = max(0.0, 100.0 - (0.5 * hint_rate + 0.3 * retry_rate + 0.2 * support_rate))
     return {
         "hint_rate": round(hint_rate, 1),
         "retry_rate": round(retry_rate, 1),
+        "support_rate": round(support_rate, 1),
+        "help_requests": float(help_requests),
+        "support_feature_uses": float(assistive_feature_uses),
+        "accessibility_uses": float(accessibility_uses),
         "independence": round(independence, 1),
     }
 
@@ -486,8 +537,170 @@ def communication_social(
     except Exception:
         changes = 0
 
-    return {"messages": float(msgs), "personalisation_changes": float(changes)}
+    comm_events: List[Dict[str, Any]] = []
+    for evt in data.get("communication_events", []):
+        if evt.get("user_id") != user_id:
+            continue
+        dt = parse_ts(evt.get("timestamp") or evt.get("created_at"))
+        if dt and start_dt <= dt <= end_dt:
+            comm_events.append({**evt, "_dt": dt})
 
+    interactions = len(comm_events)
+    student_initiated = sum(
+        1 for evt in comm_events if str(evt.get("initiated_by", "")).lower() == "student"
+    )
+    avg_length = mean(
+        [float(evt.get("message_length", 0) or 0.0) for evt in comm_events]
+    ) if comm_events else 0.0
+    avg_turns = mean(
+        [float(evt.get("turns", 0) or 0.0) for evt in comm_events]
+    ) if comm_events else 0.0
+    longest = max(comm_events, key=lambda e: float(e.get("message_length") or 0.0), default=None)
+    last_evt = max(comm_events, key=lambda e: e["_dt"], default=None)
+
+    return {
+        "messages": float(msgs),
+        "personalisation_changes": float(changes),
+        "interactions": float(interactions),
+        "student_initiated": float(student_initiated),
+        "avg_length": round(avg_length, 1),
+        "avg_turns": round(avg_turns, 1),
+        "last_interaction_type": last_evt.get("interaction_type") if last_evt else None,
+        "longest_message_length": float(longest.get("message_length")) if longest else 0.0,
+    }
+
+
+def emotional_regulation_summary(
+    data: Dict[str, Any], user_id: int, start_dt: datetime, end_dt: datetime
+) -> Dict[str, Any]:
+    """
+    Summarise mood and sensory regulation data captured as Zones of Regulation entries.
+    """
+    entries: List[Dict[str, Any]] = []
+    for rec in data.get("emotional_regulation_log", []):
+        if rec.get("user_id") != user_id:
+            continue
+        dt = parse_ts(rec.get("recorded_at") or rec.get("timestamp") or rec.get("created_at"))
+        if dt and start_dt <= dt <= end_dt:
+            entries.append({**rec, "_dt": dt})
+
+    if not entries:
+        return {
+            "records": 0,
+            "zone_counts": {},
+            "green_pct": 0.0,
+            "stability_index": 0.0,
+            "latest_zone": None,
+            "latest_mood": None,
+            "top_adjustments": [],
+            "timeline": [],
+        }
+
+    zone_counts = Counter(
+        (str(e.get("zone", "Unknown")).strip().title() or "Unknown") for e in entries
+    )
+    total = sum(zone_counts.values())
+    green_pct = 100.0 * zone_counts.get("Green", 0) / total if total else 0.0
+
+    weight_map = {"Green": 1.0, "Yellow": 0.6, "Blue": 0.8, "Red": 0.2}
+    weighted_sum = sum(weight_map.get(zone, 0.5) * count for zone, count in zone_counts.items())
+    stability_index = 100.0 * weighted_sum / total if total else 0.0
+
+    adjustments_counter: Counter[str] = Counter()
+    for e in entries:
+        adjustments = e.get("sensory_adjustments")
+        if isinstance(adjustments, dict):
+            for key, val in adjustments.items():
+                adjustments_counter[f"{key}:{val}"] += 1
+        elif isinstance(adjustments, list):
+            for item in adjustments:
+                adjustments_counter[str(item)] += 1
+        elif adjustments:
+            adjustments_counter[str(adjustments)] += 1
+
+    top_adjustments = [label for label, _ in adjustments_counter.most_common(3)]
+    entries.sort(key=lambda r: r["_dt"])
+    latest = entries[-1]
+    timeline = [
+        {"date": e["_dt"].date().isoformat(), "zone": str(e.get("zone"))}
+        for e in entries[-5:]
+    ]
+
+    return {
+        "records": float(total),
+        "zone_counts": dict(zone_counts),
+        "green_pct": round(green_pct, 1),
+        "stability_index": round(stability_index, 1),
+        "latest_zone": latest.get("zone"),
+        "latest_mood": latest.get("mood_indicator"),
+        "top_adjustments": top_adjustments,
+        "timeline": timeline,
+    }
+
+
+def activity_attempt_profile(
+    data: Dict[str, Any], user_id: int, start_dt: datetime, end_dt: datetime
+) -> Dict[str, Any]:
+    """
+    Track attempts per activity, focusing on MCQs for now while remaining future-proof.
+    """
+    idx = build_indexes(data)
+    attempts: List[Tuple[datetime, Dict[str, Any]]] = []
+    for ap in data.get("activity_performance", []):
+        if perf_user_id(ap, idx) != user_id:
+            continue
+        dt = parse_ts(ap.get("submitted_at"))
+        if dt and start_dt <= dt <= end_dt:
+            attempts.append((dt, ap))
+
+    if not attempts:
+        return {
+            "activities_recorded": 0,
+            "mcq_attempted": 0,
+            "mcq_correct_pct": 0.0,
+            "mcq_avg_attempts": 0.0,
+            "mcq_first_try_success_pct": 0.0,
+            "attempt_details": [],
+        }
+
+    attempts.sort(key=lambda tup: tup[0])
+    mcq_rows = [row for row in attempts if str(row[1].get("activity_type", "")).lower() == "mcq"]
+
+    def _attempts_count(ap: Dict[str, Any]) -> int:
+        try:
+            val = int(ap.get("attempts", 0) or 0)
+        except Exception:
+            val = 0
+        return max(val, 1)
+
+    mcq_correct = sum(1 for _, ap in mcq_rows if ap.get("is_right") in (True, 1, "true", "True"))
+    mcq_first_try = sum(
+        1 for _, ap in mcq_rows if _attempts_count(ap) == 1 and ap.get("is_right") in (True, 1, "true", "True")
+    )
+    mcq_attempt_counts = [_attempts_count(ap) for _, ap in mcq_rows]
+
+    details = []
+    for dt, ap in attempts:
+        attempts_taken = _attempts_count(ap)
+        details.append(
+            {
+                "activity_id": ap.get("activity_id"),
+                "activity_type": ap.get("activity_type"),
+                "attempts": attempts_taken,
+                "final_answer": ap.get("user_answer"),
+                "is_right": bool(ap.get("is_right")),
+                "submitted_at": dt.isoformat(),
+            }
+        )
+
+    return {
+        "activities_recorded": len(attempts),
+        "mcq_attempted": len(mcq_rows),
+        "mcq_correct_pct": round(_pct(mcq_correct, len(mcq_rows)), 1) if mcq_rows else 0.0,
+        "mcq_avg_attempts": round(mean(mcq_attempt_counts), 2) if mcq_attempt_counts else 0.0,
+        "mcq_first_try_success_pct": round(_pct(mcq_first_try, len(mcq_rows)), 1) if mcq_rows else 0.0,
+        "attempt_details": details[:12],
+    }
 
 # ============================================================
 # NEW: AI Literacy & Learning Gain

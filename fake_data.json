@@ -228,6 +228,99 @@
                 "created_at": "2024-09-04T09:24:52",
                 "updated_at": "2025-06-25T03:09:16"
             }
+        ],
+        "emotional_regulation_log": [
+            {
+                "entry_id": 101,
+                "user_id": 1,
+                "recorded_at": "2024-09-10T09:15:00",
+                "zone": "Green",
+                "mood_indicator": "calm-focused",
+                "sensory_adjustments": {
+                    "contrast": "high",
+                    "font_size": "large",
+                    "audio_dampener": false
+                }
+            },
+            {
+                "entry_id": 102,
+                "user_id": 1,
+                "recorded_at": "2024-09-12T10:00:00",
+                "zone": "Yellow",
+                "mood_indicator": "anxious",
+                "sensory_adjustments": {
+                    "contrast": "standard",
+                    "font_size": "medium",
+                    "background_audio": "white_noise"
+                }
+            },
+            {
+                "entry_id": 103,
+                "user_id": 1,
+                "recorded_at": "2024-09-14T09:50:00",
+                "zone": "Red",
+                "mood_indicator": "overwhelmed",
+                "sensory_adjustments": {
+                    "contrast": "low",
+                    "font_size": "large",
+                    "overlay_filter": "soft_blue"
+                }
+            }
+        ],
+        "support_usage": [
+            {
+                "event_id": 501,
+                "user_id": 1,
+                "event_type": "help_request",
+                "feature": "live_support",
+                "count": 1,
+                "recorded_at": "2024-09-10T09:20:00"
+            },
+            {
+                "event_id": 502,
+                "user_id": 1,
+                "event_type": "support_feature",
+                "feature": "hints",
+                "count": 2,
+                "recorded_at": "2024-09-12T10:05:00"
+            },
+            {
+                "event_id": 503,
+                "user_id": 1,
+                "event_type": "support_feature",
+                "feature": "accessibility_contrast",
+                "count": 1,
+                "recorded_at": "2024-09-14T09:55:00"
+            }
+        ],
+        "communication_events": [
+            {
+                "event_id": 801,
+                "user_id": 1,
+                "interaction_type": "avatar_chat",
+                "initiated_by": "student",
+                "turns": 3,
+                "message_length": 210,
+                "timestamp": "2024-09-10T09:25:00"
+            },
+            {
+                "event_id": 802,
+                "user_id": 1,
+                "interaction_type": "text_message",
+                "initiated_by": "student",
+                "turns": 1,
+                "message_length": 96,
+                "timestamp": "2024-09-12T10:07:00"
+            },
+            {
+                "event_id": 803,
+                "user_id": 1,
+                "interaction_type": "avatar_chat",
+                "initiated_by": "system",
+                "turns": 4,
+                "message_length": 260,
+                "timestamp": "2024-09-14T10:05:00"
+            }
         ]
     },
     {

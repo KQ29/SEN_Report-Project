@@ -87,6 +87,10 @@ def build_report(d: Dict[str, Any]) -> str:
     acc = d.get("accuracy_mastery", {})
     spd = d.get("processing_speed", {})
     ai = d.get("ai_literacy", {})
+    independence = d.get("independence", {})
+    communication = d.get("communication", {})
+    emotion = d.get("emotional_regulation", {})
+    activity_perf = d.get("activity_performance", {})
 
     focus_score = focus.get("focus_score")
     focus_delta = focus.get("focus_score_delta")
@@ -252,20 +256,63 @@ def build_report(d: Dict[str, Any]) -> str:
     else:
         out.append(_list_line("⚪", "No AI literacy assessments recorded in the selected window."))
 
-    out.append(_section("COMMUNICATION & SUPPORT"))
-    out.append(
-        _list_line(
-            "🤖",
-            "Derived from hints and retries; native AI interaction fields are not available in this dataset.",
-        )
-    )
-    out.append(
-        _info_line(
-            "💡",
-            "Hints per attempt",
-            _fmt(learning.get("perseverance_index")),
-        )
-    )
+    out.append(_section("EMOTIONAL REGULATION"))
+    out.append(_list_line("📌", "Data points: Zones of Regulation, mood indicators, and sensory adjustments (contrast, font, overlays)."))
+    if emotion and emotion.get("records"):
+        zone_counts = emotion.get("zone_counts", {})
+        zone_summary = ", ".join(f"{k}:{v}" for k, v in zone_counts.items()) if zone_counts else "—"
+        out.append(_info_line("🧘", "Current zone", emotion.get("latest_zone", "—")))
+        out.append(_info_line("🌡️", "Zone summary", zone_summary))
+        out.append(_info_line("🌱", "Green time", _fmt(emotion.get("green_pct"), "%")))
+        out.append(_info_line("📈", "Stability index", _fmt(emotion.get("stability_index"), "%")))
+        adjustments = emotion.get("top_adjustments") or []
+        if adjustments:
+            out.append(_list_line("🎚️", "Sensory adjustments used: " + ", ".join(adjustments)))
+        timeline = emotion.get("timeline") or []
+        if timeline:
+            timeline_txt = ", ".join(f"{t['date']} ({t['zone']})" for t in timeline)
+            out.append(_list_line("🗓️", "Recent entries: " + timeline_txt))
+    else:
+        out.append(_list_line("⚪", "No emotional regulation entries in the selected window."))
+    out.append(_list_line("ℹ️", "Why it matters: Tracks how emotional and sensory stability is influencing learning performance."))
+
+    out.append(_section("INDEPENDENCE & SELF-ADVOCACY"))
+    out.append(_list_line("📌", "Data points: Help requests, retries, and use of support features (hints, accessibility tools)."))
+    out.append(_info_line("💡", "Hint rate", _fmt(independence.get("hint_rate"), "%")))
+    out.append(_info_line("🔁", "Retry rate", _fmt(independence.get("retry_rate"), "%")))
+    out.append(_info_line("🛠️", "Support features used", _fmt(independence.get("support_feature_uses"))))
+    out.append(_info_line("♿", "Accessibility toggles", _fmt(independence.get("accessibility_uses"))))
+    out.append(_info_line("🧩", "Perseverance (hints per attempt)", _fmt(learning.get("perseverance_index"))))
+    out.append(_info_line("🧗", "Independence index", _fmt(independence.get("independence"))))
+    out.append(_list_line("ℹ️", "Why it matters: Measures of confidence, autonomy, and self-advocacy."))
+
+    out.append(_section("COMMUNICATION & SOCIAL INTERACTION"))
+    out.append(_list_line("📌", "Data points: Frequency, initiation, length of avatar/text exchanges, conversational turns."))
+    if communication and communication.get("interactions"):
+        out.append(_info_line("💬", "Messages", _fmt(communication.get("messages"))))
+        out.append(_info_line("🗣️", "Avatar/text interactions", _fmt(communication.get("interactions"))))
+        out.append(_info_line("🙋", "Student-initiated", _fmt(communication.get("student_initiated"))))
+        out.append(_info_line("✍️", "Avg message length", _fmt(communication.get("avg_length"))))
+        out.append(_info_line("🔄", "Avg conversational turns", _fmt(communication.get("avg_turns"))))
+    else:
+        out.append(_list_line("⚪", "No avatar or text-based interactions recorded in the selected window."))
+    out.append(_list_line("ℹ️", "Why it matters: Reflects growth in confidence, social understanding, and expressive language—key for EHCP outcomes and independence."))
+
+    out.append(_section("ACTIVITY PERFORMANCE"))
+    out.append(_list_line("📌", "Data points: Attempts per activity, final correctness, and progression across retries."))
+    out.append(_info_line("🧮", "Activities logged", _fmt(activity_perf.get("activities_recorded"))))
+    out.append(_info_line("✅", "MCQ accuracy", _fmt(activity_perf.get("mcq_correct_pct"), "%")))
+    out.append(_info_line("🔢", "Avg attempts (MCQ)", _fmt(activity_perf.get("mcq_avg_attempts"))))
+    out.append(_info_line("🥇", "First-try success", _fmt(activity_perf.get("mcq_first_try_success_pct"), "%")))
+    latest_attempt = (activity_perf.get("attempt_details") or [])[-1:] or []
+    if latest_attempt:
+        latest = latest_attempt[0]
+        status = "correct" if latest.get("is_right") else "incorrect"
+        summary = f"{latest.get('activity_type','activity')} {status} in {latest.get('attempts','—')} attempt(s)"
+        out.append(_list_line("📝", "Latest sample: " + summary))
+    else:
+        out.append(_list_line("⚪", "No activity attempts recorded in this reporting window."))
+    out.append(_list_line("ℹ️", "Why it matters: Shows whether learners reach correct answers quickly or through retries, informing support as activity types expand beyond MCQs."))
 
     out.append(_section("TECHNOLOGY & ACCESSIBILITY"))
     out.append(_list_line("💻", "Device telemetry is incomplete in the supplied dataset."))
