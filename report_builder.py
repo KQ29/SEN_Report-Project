@@ -265,6 +265,12 @@ def build_report(d: Dict[str, Any]) -> str:
         out.append(_info_line("🌡️", "Zone summary", zone_summary))
         out.append(_info_line("🌱", "Green time", _fmt(emotion.get("green_pct"), "%")))
         out.append(_info_line("📈", "Stability index", _fmt(emotion.get("stability_index"), "%")))
+        out.append(_info_line("🧑‍🎨", "Avatar changes", _fmt(emotion.get("avatar_changes"))))
+        fav_avatar = emotion.get("favorite_avatar") or "—"
+        out.append(_info_line("🎭", "Preferred avatar", fav_avatar))
+        out.append(_info_line("🖼️", "Background changes", _fmt(emotion.get("background_changes"))))
+        fav_bg = emotion.get("favorite_background") or "—"
+        out.append(_info_line("🌌", "Preferred background", fav_bg))
         adjustments = emotion.get("top_adjustments") or []
         if adjustments:
             out.append(_list_line("🎚️", "Sensory adjustments used: " + ", ".join(adjustments)))

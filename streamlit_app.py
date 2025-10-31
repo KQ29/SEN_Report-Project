@@ -295,6 +295,10 @@ def render_sen_report(report: dict) -> None:
         metric("Latest mood", emotional.get("latest_mood") or "—"),
         metric("Green time", fmt_metric(emotional.get("green_pct"), unit="%", decimals=1)),
         metric("Stability index", fmt_metric(emotional.get("stability_index"), unit="%", decimals=1), emphasize=True),
+        metric("Avatar changes", fmt_metric(emotional.get("avatar_changes"), decimals=0)),
+        metric("Fav avatar", emotional.get("favorite_avatar") or "—"),
+        metric("Background changes", fmt_metric(emotional.get("background_changes"), decimals=0)),
+        metric("Fav background", emotional.get("favorite_background") or "—"),
         metric("Sensory adjustments", adjustments_text),
         metric("Recent timeline", timeline_text),
     ])

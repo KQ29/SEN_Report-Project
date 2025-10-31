@@ -576,6 +576,52 @@ def emotional_regulation_summary(
     """
     Summarise mood and sensory regulation data captured as Zones of Regulation entries.
     """
+    idx = build_indexes(data)
+
+    chapter_to_user: Dict[Any, Any] = {}
+    for cs in idx["chapter_sessions"]:
+        cs_id = cs.get("chapter_session_id")
+        if cs_id is None:
+            continue
+        try:
+            uid = chapter_session_user_id(cs, idx)
+        except Exception:
+            uid = None
+        if uid is not None:
+            chapter_to_user[cs_id] = uid
+
+    def _collect_events(collection: str) -> List[Dict[str, Any]]:
+        events: List[Dict[str, Any]] = []
+        for evt in data.get(collection, []):
+            evt_user = evt.get("user_id")
+            if evt_user is None:
+                cs_id = evt.get("chapter_session_id")
+                if cs_id is None or chapter_to_user.get(cs_id) != user_id:
+                    continue
+            elif evt_user != user_id:
+                continue
+            dt = parse_ts(
+                evt.get("selected_at")
+                or evt.get("recorded_at")
+                or evt.get("timestamp")
+                or evt.get("created_at")
+                or evt.get("updated_at")
+            )
+            if dt and start_dt <= dt <= end_dt:
+                events.append({**evt, "_dt": dt})
+        return events
+
+    avatar_events = _collect_events("avatar_change")
+    background_events = _collect_events("background_change")
+    avatar_counter = Counter(
+        str(evt.get("avatar_name") or evt.get("avatar") or "Unknown") for evt in avatar_events
+    )
+    background_counter = Counter(
+        str(evt.get("background_option") or evt.get("background") or "Unknown") for evt in background_events
+    )
+    latest_avatar = max(avatar_events, key=lambda e: e["_dt"], default=None)
+    latest_background = max(background_events, key=lambda e: e["_dt"], default=None)
+
     entries: List[Dict[str, Any]] = []
     for rec in data.get("emotional_regulation_log", []):
         if rec.get("user_id") != user_id:
@@ -594,6 +640,12 @@ def emotional_regulation_summary(
             "latest_mood": None,
             "top_adjustments": [],
             "timeline": [],
+            "avatar_changes": float(len(avatar_events)),
+            "favorite_avatar": avatar_counter.most_common(1)[0][0] if avatar_counter else None,
+            "last_avatar": latest_avatar.get("avatar_name") if latest_avatar else None,
+            "background_changes": float(len(background_events)),
+            "favorite_background": background_counter.most_common(1)[0][0] if background_counter else None,
+            "last_background": latest_background.get("background_option") if latest_background else None,
         }
 
     zone_counts = Counter(
@@ -635,6 +687,12 @@ def emotional_regulation_summary(
         "latest_mood": latest.get("mood_indicator"),
         "top_adjustments": top_adjustments,
         "timeline": timeline,
+        "avatar_changes": float(len(avatar_events)),
+        "favorite_avatar": avatar_counter.most_common(1)[0][0] if avatar_counter else None,
+        "last_avatar": latest_avatar.get("avatar_name") if latest_avatar else None,
+        "background_changes": float(len(background_events)),
+        "favorite_background": background_counter.most_common(1)[0][0] if background_counter else None,
+        "last_background": latest_background.get("background_option") if latest_background else None,
     }
 
 
