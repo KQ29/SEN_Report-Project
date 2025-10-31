@@ -179,6 +179,9 @@ def build_report(d: Dict[str, Any]) -> str:
             str(dropoff_risk).capitalize() if isinstance(dropoff_risk, str) else _fmt(dropoff_risk),
         )
     )
+    out.append(_info_line("📆", "Active days (course)", _fmt(routine.get("active_days_total"))))
+    out.append(_info_line("🎯", "Completion (course)", _fmt(routine.get("completion_pct_all"), "%")))
+    out.append(_info_line("⌛", "Avg session (course)", _fmt(routine.get("avg_session_all"), " mins")))
 
     out.append(_section("FOCUS & ATTENTION"))
     out.append(
@@ -280,7 +283,6 @@ def build_report(d: Dict[str, Any]) -> str:
             out.append(_list_line("🗓️", "Recent entries: " + timeline_txt))
     else:
         out.append(_list_line("⚪", "No emotional regulation entries in the selected window."))
-    out.append(_list_line("ℹ️", "Why it matters: Tracks how emotional and sensory stability is influencing learning performance."))
 
     out.append(_section("INDEPENDENCE & SELF-ADVOCACY"))
     out.append(_list_line("📌", "Data points: Help requests, retries, and use of support features (hints, accessibility tools)."))
@@ -290,7 +292,6 @@ def build_report(d: Dict[str, Any]) -> str:
     out.append(_info_line("♿", "Accessibility toggles", _fmt(independence.get("accessibility_uses"))))
     out.append(_info_line("🧩", "Perseverance (hints per attempt)", _fmt(learning.get("perseverance_index"))))
     out.append(_info_line("🧗", "Independence index", _fmt(independence.get("independence"))))
-    out.append(_list_line("ℹ️", "Why it matters: Measures of confidence, autonomy, and self-advocacy."))
 
     out.append(_section("COMMUNICATION & SOCIAL INTERACTION"))
     out.append(_list_line("📌", "Data points: Frequency, initiation, length of avatar/text exchanges, conversational turns."))
@@ -302,7 +303,6 @@ def build_report(d: Dict[str, Any]) -> str:
         out.append(_info_line("🔄", "Avg conversational turns", _fmt(communication.get("avg_turns"))))
     else:
         out.append(_list_line("⚪", "No avatar or text-based interactions recorded in the selected window."))
-    out.append(_list_line("ℹ️", "Why it matters: Reflects growth in confidence, social understanding, and expressive language—key for EHCP outcomes and independence."))
 
     out.append(_section("ACTIVITY PERFORMANCE"))
     out.append(_list_line("📌", "Data points: Attempts per activity, final correctness, and progression across retries."))
@@ -318,7 +318,6 @@ def build_report(d: Dict[str, Any]) -> str:
         out.append(_list_line("📝", "Latest sample: " + summary))
     else:
         out.append(_list_line("⚪", "No activity attempts recorded in this reporting window."))
-    out.append(_list_line("ℹ️", "Why it matters: Shows whether learners reach correct answers quickly or through retries, informing support as activity types expand beyond MCQs."))
 
     out.append(_section("TECHNOLOGY & ACCESSIBILITY"))
     out.append(_list_line("💻", "Device telemetry is incomplete in the supplied dataset."))

@@ -13,6 +13,15 @@ def aggregate_student(data: Dict[str, Any], user_id: int) -> Dict[str, Any]:
     total_points = 0.0
     total_time = 0.0
     all_session_lengths: List[float] = []
+    active_dates = set()
+
+    def _register_dates(record: Dict[str, Any], keys: Tuple[str, ...]) -> None:
+        for key in keys:
+            if key not in record:
+                continue
+            dt = parse_ts(record.get(key))
+            if dt:
+                active_dates.add(dt.date())
 
     ts_for_user = []
     for ts in data.get("topic_session", []):
@@ -22,6 +31,7 @@ def aggregate_student(data: Dict[str, Any], user_id: int) -> Dict[str, Any]:
             t = get_time_spent(ts); total_time += t
             if t > 0: all_session_lengths.append(t)
             total_points += float(ts.get("points_earned", 0) or 0)
+            _register_dates(ts, ("started_at", "completed_at", "created_at", "timestamp", "date"))
 
     cs_for_user = []
     for cs in idx["chapter_sessions"]:
@@ -31,17 +41,20 @@ def aggregate_student(data: Dict[str, Any], user_id: int) -> Dict[str, Any]:
             t = get_time_spent(cs); total_time += t
             if t > 0: all_session_lengths.append(t)
             total_points += float(cs.get("points_earned", 0) or 0)
+            _register_dates(cs, ("started_at", "completed_at", "created_at", "timestamp", "date"))
 
     for d in idx["daily_logs"]:
         if d.get("user_id") == user_id:
             total_time += float(d.get("time_spent", 0) or 0)
             total_points += float(d.get("points_earned", 0) or 0)
             if d.get("time_spent"): all_session_lengths.append(float(d["time_spent"]))
+            _register_dates(d, ("login_timestamp", "created_at", "timestamp", "date"))
 
     lesson_sessions = [l for l in idx["lesson_sessions"] if l.get("user_id") == user_id]
     for l in lesson_sessions:
         t = get_time_spent(l); total_time += t
         if t > 0: all_session_lengths.append(t)
+        _register_dates(l, ("created_at", "started_at", "completed_at", "timestamp", "date"))
 
     perf_rows = [ap for ap in idx["activity_perf"] if perf_user_id(ap, idx) == user_id]
     scores = [float(p.get("score")) if p.get("score") not in (None, "") else (100.0 if p.get("is_right") else 0.0)
@@ -50,6 +63,8 @@ def aggregate_student(data: Dict[str, Any], user_id: int) -> Dict[str, Any]:
 
     hints_used = [1.0 if (p.get("used_hint") in (True, 1, "true", "True")) else 0.0 for p in perf_rows]
     avg_hints_used = mean(hints_used) if hints_used else 0.0
+    for p in perf_rows:
+        _register_dates(p, ("submitted_at", "created_at", "timestamp", "date"))
 
     topics_completed = sum(1 for ts in ts_for_user if float(ts.get("completion_percent") or 0) >= 80)
     topics_total = len(ts_for_user)
@@ -98,5 +113,6 @@ def aggregate_student(data: Dict[str, Any], user_id: int) -> Dict[str, Any]:
         "cs_for_user": cs_for_user,
         "lesson_sessions": lesson_sessions,
         "perf_rows": perf_rows,
+        "active_days_total": len(active_dates),
     }
     return aggregated

@@ -15,6 +15,7 @@ from metrics_period import (
     available_date_range_for_user,
     compute_trend,
     compute_focus_score,
+    compute_dropoff_risk,
     accuracy_and_mastery,
     response_time_stats,
     engagement_consistency,
@@ -265,6 +266,9 @@ def render_sen_report(report: dict) -> None:
 
     routine_card = "".join([
         metric("Drop-off risk", dropoff_html, raw=True, emphasize=True),
+        metric("All-time active days", fmt_metric(routine.get("active_days_total"), decimals=0)),
+        metric("Course completion", fmt_metric(routine.get("completion_pct_all"), unit="%", decimals=0)),
+        metric("Avg session (all-time)", fmt_metric(routine.get("avg_session_all"), unit=" mins")),
         metric("Devices noted", fmt_metric(len(report.get("devices", {})), decimals=0)),
     ])
 
@@ -666,10 +670,10 @@ def main():
         focus_score_now = compute_focus_score(curr["completion_pct"], curr["avg_session_mins"])
         focus_score_prev = compute_focus_score(prev["completion_pct"], prev["avg_session_mins"])
         focus_delta = focus_score_now - focus_score_prev
-        dropoff_risk = (
-            "high" if (curr.get("active_days", 0) <= 2 or curr["completion_pct"] < 30)
-            else ("medium" if curr["completion_pct"] < 60 else "low")
-        )
+        active_days_total = agg.get("active_days_total", 0)
+        completion_pct_all = agg.get("lesson_completion_rate", 0)
+        avg_time_all = agg.get("avg_session_length", 0)
+        dropoff_risk = compute_dropoff_risk(active_days_total, completion_pct_all, avg_time_all)
 
         report_data = {
             "student": {"name": agg["name"], "id": user_id, "class": agg.get("class_level", "—"), "year": agg.get("class_level", "—")},
@@ -695,7 +699,12 @@ def main():
             "learning": {"skills": [], "perseverance_index": agg.get("avg_hints_used", "—")},
             "language": {},
             "ai_support": {"hints_per_activity": agg.get("avg_hints_used", "—")},
-            "routine": {"dropoff_risk": dropoff_risk},
+            "routine": {
+                "dropoff_risk": dropoff_risk,
+                "active_days_total": active_days_total,
+                "completion_pct_all": completion_pct_all,
+                "avg_session_all": avg_time_all,
+            },
             "goals": [],
             "recommendations": [],
             "questions": {},

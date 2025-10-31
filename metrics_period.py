@@ -236,6 +236,30 @@ def compute_focus_score(completion_pct: float, avg_session_mins: float) -> int:
     return int(_clamp(base, 0, 100))
 
 
+def compute_dropoff_risk(active_days: float, completion_pct: float, avg_time_spent: float) -> str:
+    """
+    Determine drop-off risk category using engagement thresholds.
+    """
+    try:
+        active = float(active_days or 0.0)
+    except Exception:
+        active = 0.0
+    try:
+        completion = float(completion_pct or 0.0)
+    except Exception:
+        completion = 0.0
+    try:
+        avg_time = float(avg_time_spent or 0.0)
+    except Exception:
+        avg_time = 0.0
+
+    if active <= 2 or completion < 30 or avg_time < 5:
+        return "high"
+    if completion < 60 or active <= 5 or avg_time < 10:
+        return "medium"
+    return "low"
+
+
 # ============================================================
 # Advanced Learning KPIs
 # ============================================================
