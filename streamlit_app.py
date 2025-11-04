@@ -5,6 +5,7 @@ import pandas as pd
 import plotly.graph_objects as go
 from datetime import datetime, date, timedelta
 from html import escape
+from typing import List
 
 from constants import PRIMARY_JSON_PATH, SECONDARY_JSON_PATH
 from loaders import load_json, extract_user_id_and_audience, merge_data
@@ -449,6 +450,92 @@ def bar_period_kpis(labels, values, units):
     return fig
 
 
+def derive_goals_and_recommendations(curr, acc, spd, indep, emo, attempts, focus_score, dropoff):
+    """Construct personalised goals and recommendations based on current period metrics."""
+    goals: List[str] = []
+    recs: List[str] = []
+
+    def f(val, default=0.0) -> float:
+        try:
+            return float(val)
+        except Exception:
+            return default
+
+    # --- Accuracy insights ---
+    overall = f((acc or {}).get("overall"))
+    subs = (acc or {}).get("subjects") or {}
+    weakest_subj = min(subs, key=subs.get) if subs else None
+    if overall and overall < 60:
+        if weakest_subj:
+            target = min(65, int(overall) + 5)
+            recs.append(f"Prioritise {weakest_subj} with two short practice blocks this week.")
+            goals.append(f"Raise {weakest_subj} accuracy to {target}%.")
+        else:
+            recs.append("Focus on core misconceptions; review missed answers right after each session.")
+            goals.append("Lift overall accuracy by at least 5%.")
+    elif overall:
+        recs.append("Maintain accuracy by mixing new items with quick review questions.")
+        goals.append("Hold accuracy within ±5% of the current level.")
+
+    # --- Engagement & focus ---
+    avg_session = f(curr.get("avg_session_mins"))
+    dropoff = (dropoff or "").lower()
+    if dropoff == "high" or avg_session < 5:
+        recs.append("Schedule three 5–7 minute sessions on priority topics this week.")
+        goals.append("Complete three short sessions before the next check-in.")
+    elif dropoff == "medium" or avg_session < 10:
+        recs.append("Use consistent ≤10 minute sessions to build routine momentum.")
+        goals.append("Log activity on at least five days this week.")
+
+    if focus_score and focus_score < 55:
+        recs.append("Reduce distractions and start each session with one warm-up item.")
+        goals.append("Raise focus score by 10 points.")
+
+    # --- Independence cues ---
+    hint_rate = f((indep or {}).get("hint_rate"))
+    retry_rate = f((indep or {}).get("retry_rate"))
+    if hint_rate > 30:
+        recs.append("Try each item for 30 seconds unaided before opening a hint.")
+        goals.append("Lower hint usage below 20%.")
+    if retry_rate > 40:
+        recs.append("Pause between retries; review a worked example before re-attempting.")
+        goals.append("Keep average attempts per MCQ at or below 1.5.")
+
+    # --- Activity attempts ---
+    ft_success = f((attempts or {}).get("mcq_first_try_success_pct"))
+    mcq_attempted = f((attempts or {}).get("mcq_attempted"))
+    if ft_success and ft_success < 50 and mcq_attempted >= 5:
+        recs.append("Add quick retrieval practice focused on first attempts for MCQs.")
+        goals.append("Reach 60% first-try success.")
+
+    # --- Processing speed ---
+    median_rt = f((spd or {}).get("median"))
+    if median_rt and median_rt > 2.0:
+        recs.append("Use three-item timed drills (2–3 mins) to build fluency.")
+        goals.append("Cut median response time by 20%.")
+
+    # --- Emotional regulation ---
+    green_pct = f((emo or {}).get("green_pct"))
+    stability_idx = f((emo or {}).get("stability_index"))
+    if (green_pct and green_pct < 40) or (stability_idx and stability_idx < 60):
+        adjustments = ", ".join((emo or {}).get("top_adjustments") or []) or "preferred adjustments"
+        recs.append(f"Open sessions with a regulation check-in; keep {adjustments} enabled.")
+        goals.append("Achieve Green zone coverage of at least 50%.")
+
+    # Fallback to ensure actionable output
+    if not recs:
+        recs.append("Keep regular, short sessions and review missed items together.")
+    if not goals:
+        goals.append("Complete two short sessions before the next review.")
+
+    # Deduplicate while preserving order and cap list length
+    seen = set()
+    recs = [text for text in recs if not (text in seen or seen.add(text))][:5]
+    seen.clear()
+    goals = [text for text in goals if not (text in seen or seen.add(text))][:5]
+    return goals, recs
+
+
 def main():
     st.title("Student Report Generator (merged datasets)")
 
@@ -687,6 +774,16 @@ def main():
         completion_pct_all = agg.get("lesson_completion_rate", 0)
         avg_time_all = agg.get("avg_session_length", 0)
         dropoff_risk = compute_dropoff_risk(active_days_total, completion_pct_all, avg_time_all)
+        goals, recs = derive_goals_and_recommendations(
+            curr=curr,
+            acc=acc_block,
+            spd=spd_block,
+            indep=indep_block,
+            emo=emo_block,
+            attempts=attempts_block,
+            focus_score=focus_score_now,
+            dropoff=dropoff_risk,
+        )
 
         report_data = {
             "student": {"name": agg["name"], "id": user_id, "class": agg.get("class_level", "missed"), "year": agg.get("class_level", "missed")},
@@ -718,8 +815,8 @@ def main():
                 "completion_pct_all": completion_pct_all,
                 "avg_session_all": avg_time_all,
             },
-            "goals": [],
-            "recommendations": [],
+            "goals": goals,
+            "recommendations": recs,
             "questions": {},
             # report drivers
             "accuracy_mastery": acc_block,

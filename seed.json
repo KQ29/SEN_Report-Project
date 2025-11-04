@@ -43,7 +43,7 @@
   ],
   "user": [
     {
-      "user_id": 201,
+      "user_id": 1,
       "name": "Rin Okada",
       "email": "rin.okada@novalearn.example.org",
       "grade_level": "UG-2",
@@ -123,7 +123,7 @@
     {
       "org_user_id": 2,
       "org_id": 1,
-      "user_id": 201,
+      "user_id": 1,
       "created_at": "2025-11-01T10:48:00Z"
     },
     {
@@ -161,7 +161,7 @@
     {
       "user_role_id": 3,
       "created_at": "2025-11-01T12:38:00Z",
-      "user_id": 201,
+      "user_id": 1,
       "role_id": 3
     },
     {
@@ -360,7 +360,7 @@
   "enrollment": [
     {
       "enrollment_id": "deed8562-d2c5-49e5-8e8e-4b4f131a7d8b",
-      "user_id": 201,
+      "user_id": 1,
       "topic_id": "1fb0f4d2-210f-4f4f-a6b9-8efe3e19d733",
       "enrolled_at": "2025-11-02T17:58:00Z",
       "repeat_count": 0,
@@ -680,7 +680,7 @@
   "daily_activity_log": [
     {
       "daily_activity_id": "0536bd26-85f0-4b2f-b469-8174f2813d04",
-      "user_id": 201,
+      "user_id": 1,
       "login": "2025-11-02T16:38:00Z",
       "logout": "2025-11-02T17:18:00Z",
       "time_spent": 40.0,
@@ -700,7 +700,7 @@
   "daily_streak": [
     {
       "streak_id": "42e8e321-4e75-436d-b711-a12dfe764999",
-      "user_id": 201,
+      "user_id": 1,
       "current_streak": 6,
       "date": "2025-11-02T19:57:00Z",
       "points_earned": 5,
@@ -747,7 +747,7 @@
   "point": [
     {
       "point_id": "7a81d3f1-3b8f-4eed-a6d4-afb4196e4917",
-      "user_id": 201,
+      "user_id": 1,
       "source": "challenge",
       "total_points": 20,
       "earned_at": "2025-11-02T17:08:00Z",
@@ -755,7 +755,7 @@
     },
     {
       "point_id": "756cf4b1-031d-401e-8efa-9ebd2c214277",
-      "user_id": 201,
+      "user_id": 1,
       "source": "session",
       "total_points": 11,
       "earned_at": "2025-11-02T18:03:00Z",
