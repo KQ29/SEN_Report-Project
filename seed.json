@@ -1,0 +1,910 @@
+{
+  "org": [
+    {
+      "org_id": 1,
+      "created_at": "2025-11-01T19:58:00Z",
+      "name": "NovaLearn Labs",
+      "domain": "novalearn.example.org",
+      "is_active": true,
+      "parent_org": null,
+      "description": "Fictional e-learning studio",
+      "org_logo": "https://assets.example.org/novalearn.png"
+    },
+    {
+      "org_id": 2,
+      "created_at": "2025-11-01T20:08:00Z",
+      "name": "Cobalt Academy",
+      "domain": "cobalt.example.edu",
+      "is_active": true,
+      "parent_org": null,
+      "description": "Fictional computer science academy",
+      "org_logo": "https://assets.example.org/cobalt.png"
+    }
+  ],
+  "role": [
+    {
+      "role_id": 1,
+      "created_at": "2025-11-01T20:38:00Z",
+      "name": "Admin",
+      "type": "system"
+    },
+    {
+      "role_id": 2,
+      "created_at": "2025-11-01T20:38:00Z",
+      "name": "Instructor",
+      "type": "staff"
+    },
+    {
+      "role_id": 3,
+      "created_at": "2025-11-01T20:38:00Z",
+      "name": "Learner",
+      "type": "student"
+    }
+  ],
+  "user": [
+    {
+      "user_id": 201,
+      "name": "Rin Okada",
+      "email": "rin.okada@novalearn.example.org",
+      "grade_level": "UG-2",
+      "password_hashed": "hash$A",
+      "gender": "F",
+      "country": "UK",
+      "dob": "2004-04-14T00:00:00Z",
+      "created_at": "2025-10-31T17:58:00Z",
+      "geolocation": "51.500,-0.100",
+      "device_type": "web",
+      "reading_level": "B2"
+    },
+    {
+      "user_id": 202,
+      "name": "Leo Martins",
+      "email": "leo.martins@novalearn.example.org",
+      "grade_level": null,
+      "password_hashed": "hash$B",
+      "gender": "M",
+      "country": "UK",
+      "dob": "1996-09-09T00:00:00Z",
+      "created_at": "2025-10-31T18:08:00Z",
+      "geolocation": "51.505,-0.102",
+      "device_type": "ios",
+      "reading_level": "C1"
+    },
+    {
+      "user_id": 203,
+      "name": "Amina Farooq",
+      "email": "amina.farooq@cobalt.example.edu",
+      "grade_level": null,
+      "password_hashed": "hash$C",
+      "gender": "F",
+      "country": "UK",
+      "dob": "1993-02-25T00:00:00Z",
+      "created_at": "2025-10-31T18:18:00Z",
+      "geolocation": "51.507,-0.120",
+      "device_type": "android",
+      "reading_level": "C1"
+    },
+    {
+      "user_id": 204,
+      "name": "Kai Henderson",
+      "email": "kai.henderson@cobalt.example.edu",
+      "grade_level": "UG-3",
+      "password_hashed": "hash$D",
+      "gender": "M",
+      "country": "UK",
+      "dob": "2003-11-02T00:00:00Z",
+      "created_at": "2025-10-31T21:18:00Z",
+      "geolocation": "51.510,-0.130",
+      "device_type": "web",
+      "reading_level": "B2"
+    },
+    {
+      "user_id": 205,
+      "name": "Nia Owusu",
+      "email": "nia.owusu@novalearn.example.org",
+      "grade_level": "A-Level",
+      "password_hashed": "hash$E",
+      "gender": "F",
+      "country": "GH",
+      "dob": "2006-07-01T00:00:00Z",
+      "created_at": "2025-10-31T22:58:00Z",
+      "geolocation": "5.560,-0.200",
+      "device_type": "android",
+      "reading_level": "B1"
+    }
+  ],
+  "org_user": [
+    {
+      "org_user_id": 1,
+      "org_id": 1,
+      "user_id": 202,
+      "created_at": "2025-11-01T10:38:00Z"
+    },
+    {
+      "org_user_id": 2,
+      "org_id": 1,
+      "user_id": 201,
+      "created_at": "2025-11-01T10:48:00Z"
+    },
+    {
+      "org_user_id": 3,
+      "org_id": 2,
+      "user_id": 203,
+      "created_at": "2025-11-01T10:58:00Z"
+    },
+    {
+      "org_user_id": 4,
+      "org_id": 2,
+      "user_id": 204,
+      "created_at": "2025-11-01T11:08:00Z"
+    },
+    {
+      "org_user_id": 5,
+      "org_id": 1,
+      "user_id": 205,
+      "created_at": "2025-11-01T11:18:00Z"
+    }
+  ],
+  "user_role": [
+    {
+      "user_role_id": 1,
+      "created_at": "2025-11-01T12:18:00Z",
+      "user_id": 202,
+      "role_id": 1
+    },
+    {
+      "user_role_id": 2,
+      "created_at": "2025-11-01T12:28:00Z",
+      "user_id": 203,
+      "role_id": 2
+    },
+    {
+      "user_role_id": 3,
+      "created_at": "2025-11-01T12:38:00Z",
+      "user_id": 201,
+      "role_id": 3
+    },
+    {
+      "user_role_id": 4,
+      "created_at": "2025-11-01T12:48:00Z",
+      "user_id": 204,
+      "role_id": 3
+    },
+    {
+      "user_role_id": 5,
+      "created_at": "2025-11-01T12:58:00Z",
+      "user_id": 205,
+      "role_id": 3
+    }
+  ],
+  "topics": [
+    {
+      "topic_id": "1fb0f4d2-210f-4f4f-a6b9-8efe3e19d733",
+      "user_id": 203,
+      "title": "Intro to Machine Minds",
+      "subject": "AI",
+      "class_level": "GCSE",
+      "duration": 45,
+      "created_at": "2025-11-01T15:38:00Z",
+      "updated_at": null,
+      "deleted_at": null,
+      "total_point": 100
+    },
+    {
+      "topic_id": "12a9c285-657a-4342-9354-96106602be01",
+      "user_id": 204,
+      "title": "Python Playbook",
+      "subject": "CS",
+      "class_level": "UG",
+      "duration": 60,
+      "created_at": "2025-11-01T15:48:00Z",
+      "updated_at": null,
+      "deleted_at": null,
+      "total_point": 120
+    }
+  ],
+  "lesson_sections": [
+    {
+      "lesson_section_id": "84b0a8f1-64af-4601-b26a-c162bdda6faa",
+      "topic_id": "1fb0f4d2-210f-4f4f-a6b9-8efe3e19d733",
+      "user_id": 203,
+      "title": "Section 1: Intro to Machine Minds",
+      "api_heading_id": "H1",
+      "section_index": 1,
+      "image_path": null,
+      "created_at": "2025-11-01T17:19:00Z",
+      "updated_at": null,
+      "deleted_at": null,
+      "order_index": 1,
+      "total_point": 10
+    },
+    {
+      "lesson_section_id": "09b02594-d7a4-4d23-84e7-f011a6d147f5",
+      "topic_id": "1fb0f4d2-210f-4f4f-a6b9-8efe3e19d733",
+      "user_id": 203,
+      "title": "Section 2: Intro to Machine Minds",
+      "api_heading_id": "H2",
+      "section_index": 2,
+      "image_path": null,
+      "created_at": "2025-11-01T17:20:00Z",
+      "updated_at": null,
+      "deleted_at": null,
+      "order_index": 2,
+      "total_point": 20
+    },
+    {
+      "lesson_section_id": "5c9687c7-a6a2-4e1f-8294-a3bc46338d3f",
+      "topic_id": "1fb0f4d2-210f-4f4f-a6b9-8efe3e19d733",
+      "user_id": 203,
+      "title": "Section 3: Intro to Machine Minds",
+      "api_heading_id": "H3",
+      "section_index": 3,
+      "image_path": null,
+      "created_at": "2025-11-01T17:21:00Z",
+      "updated_at": null,
+      "deleted_at": null,
+      "order_index": 3,
+      "total_point": 30
+    },
+    {
+      "lesson_section_id": "ba326027-7467-4bda-9add-b862066cf8a7",
+      "topic_id": "12a9c285-657a-4342-9354-96106602be01",
+      "user_id": 204,
+      "title": "Section 1: Python Playbook",
+      "api_heading_id": "H1",
+      "section_index": 1,
+      "image_path": null,
+      "created_at": "2025-11-01T17:19:00Z",
+      "updated_at": null,
+      "deleted_at": null,
+      "order_index": 1,
+      "total_point": 10
+    },
+    {
+      "lesson_section_id": "94737738-ed9b-4798-95ad-a26d94ceabfb",
+      "topic_id": "12a9c285-657a-4342-9354-96106602be01",
+      "user_id": 204,
+      "title": "Section 2: Python Playbook",
+      "api_heading_id": "H2",
+      "section_index": 2,
+      "image_path": null,
+      "created_at": "2025-11-01T17:20:00Z",
+      "updated_at": null,
+      "deleted_at": null,
+      "order_index": 2,
+      "total_point": 20
+    },
+    {
+      "lesson_section_id": "7a3740ee-ca59-4e7f-a7ef-9b4c4480f4ac",
+      "topic_id": "12a9c285-657a-4342-9354-96106602be01",
+      "user_id": 204,
+      "title": "Section 3: Python Playbook",
+      "api_heading_id": "H3",
+      "section_index": 3,
+      "image_path": null,
+      "created_at": "2025-11-01T17:21:00Z",
+      "updated_at": null,
+      "deleted_at": null,
+      "order_index": 3,
+      "total_point": 30
+    }
+  ],
+  "section_contents": [
+    {
+      "section_content_id": "430470ac-2106-45e7-a637-e12eaab19c06",
+      "lesson_section_id": "84b0a8f1-64af-4601-b26a-c162bdda6faa",
+      "reading_level": "B2",
+      "paragraph_delta_json": "{\"ops\":[{\"insert\":\"Fictional content...\"}]}",
+      "api_grade_level": "Y10",
+      "api_reading_level": "B2",
+      "created_at": "2025-11-01T18:59:00Z",
+      "updated_at": null,
+      "deleted_at": null
+    },
+    {
+      "section_content_id": "2a1f881d-30df-48c6-aadd-1c0a201fe507",
+      "lesson_section_id": "09b02594-d7a4-4d23-84e7-f011a6d147f5",
+      "reading_level": "B2",
+      "paragraph_delta_json": "{\"ops\":[{\"insert\":\"Fictional content...\"}]}",
+      "api_grade_level": "Y10",
+      "api_reading_level": "B2",
+      "created_at": "2025-11-01T19:00:00Z",
+      "updated_at": null,
+      "deleted_at": null
+    },
+    {
+      "section_content_id": "06c4ff80-c9ee-40ad-8b73-6ea3879a5422",
+      "lesson_section_id": "5c9687c7-a6a2-4e1f-8294-a3bc46338d3f",
+      "reading_level": "B2",
+      "paragraph_delta_json": "{\"ops\":[{\"insert\":\"Fictional content...\"}]}",
+      "api_grade_level": "Y10",
+      "api_reading_level": "B2",
+      "created_at": "2025-11-01T19:01:00Z",
+      "updated_at": null,
+      "deleted_at": null
+    },
+    {
+      "section_content_id": "07cc4997-56c3-46b1-a0c6-a439c651adb8",
+      "lesson_section_id": "ba326027-7467-4bda-9add-b862066cf8a7",
+      "reading_level": "B2",
+      "paragraph_delta_json": "{\"ops\":[{\"insert\":\"Fictional content...\"}]}",
+      "api_grade_level": "Y10",
+      "api_reading_level": "B2",
+      "created_at": "2025-11-01T18:59:00Z",
+      "updated_at": null,
+      "deleted_at": null
+    },
+    {
+      "section_content_id": "8bbf38e2-02cd-49a5-ab96-e5f27313796f",
+      "lesson_section_id": "94737738-ed9b-4798-95ad-a26d94ceabfb",
+      "reading_level": "B2",
+      "paragraph_delta_json": "{\"ops\":[{\"insert\":\"Fictional content...\"}]}",
+      "api_grade_level": "Y10",
+      "api_reading_level": "B2",
+      "created_at": "2025-11-01T19:00:00Z",
+      "updated_at": null,
+      "deleted_at": null
+    },
+    {
+      "section_content_id": "6d6c319e-d2cf-47cc-b651-06cf6c26d8bb",
+      "lesson_section_id": "7a3740ee-ca59-4e7f-a7ef-9b4c4480f4ac",
+      "reading_level": "B2",
+      "paragraph_delta_json": "{\"ops\":[{\"insert\":\"Fictional content...\"}]}",
+      "api_grade_level": "Y10",
+      "api_reading_level": "B2",
+      "created_at": "2025-11-01T19:01:00Z",
+      "updated_at": null,
+      "deleted_at": null
+    }
+  ],
+  "enrollment": [
+    {
+      "enrollment_id": "deed8562-d2c5-49e5-8e8e-4b4f131a7d8b",
+      "user_id": 201,
+      "topic_id": "1fb0f4d2-210f-4f4f-a6b9-8efe3e19d733",
+      "enrolled_at": "2025-11-02T17:58:00Z",
+      "repeat_count": 0,
+      "join_way": "suggested",
+      "is_completed": true,
+      "have_certificate": true
+    },
+    {
+      "enrollment_id": "31198336-a52d-4b0e-9066-f43f339694ee",
+      "user_id": 204,
+      "topic_id": "12a9c285-657a-4342-9354-96106602be01",
+      "enrolled_at": "2025-11-02T18:28:00Z",
+      "repeat_count": 0,
+      "join_way": "suggested",
+      "is_completed": false,
+      "have_certificate": false
+    },
+    {
+      "enrollment_id": "eb76a243-8b41-4a12-84fd-d06418b6bc8d",
+      "user_id": 205,
+      "topic_id": "1fb0f4d2-210f-4f4f-a6b9-8efe3e19d733",
+      "enrolled_at": "2025-11-02T18:58:00Z",
+      "repeat_count": 0,
+      "join_way": "suggested",
+      "is_completed": false,
+      "have_certificate": false
+    }
+  ],
+  "topic_session": [
+    {
+      "topic_session_id": "58a39c9c-754e-47e1-ba9b-a7eb2059b524",
+      "enrollment_id": "deed8562-d2c5-49e5-8e8e-4b4f131a7d8b",
+      "started_at": "2025-11-02T18:08:00Z",
+      "completed_at": "2025-11-02T19:18:00Z",
+      "total_time_spent": 66.0,
+      "completion_percent": 85.0,
+      "geo_location": "51.501,-0.141",
+      "device_type": "web"
+    },
+    {
+      "topic_session_id": "7f399a3f-2bf8-45a7-942b-e43011dc4723",
+      "enrollment_id": "31198336-a52d-4b0e-9066-f43f339694ee",
+      "started_at": "2025-11-02T18:38:00Z",
+      "completed_at": null,
+      "total_time_spent": 29.0,
+      "completion_percent": 42.0,
+      "geo_location": "51.501,-0.141",
+      "device_type": "web"
+    },
+    {
+      "topic_session_id": "a0179fcb-b4db-4ab6-99ff-2c7a025bfc67",
+      "enrollment_id": "eb76a243-8b41-4a12-84fd-d06418b6bc8d",
+      "started_at": "2025-11-02T19:08:00Z",
+      "completed_at": null,
+      "total_time_spent": 29.0,
+      "completion_percent": 42.0,
+      "geo_location": "51.501,-0.141",
+      "device_type": "web"
+    }
+  ],
+  "chapter_session": [
+    {
+      "chapter_session_id": "cf7be690-9489-4f7e-9f63-338fc4eb039b",
+      "topic_session_id": "58a39c9c-754e-47e1-ba9b-a7eb2059b524",
+      "section_content_id": "430470ac-2106-45e7-a637-e12eaab19c06",
+      "started_at": "2025-11-02T18:10:00Z",
+      "completed_at": "2025-11-02T18:19:00Z",
+      "progress_percent": 100.0,
+      "time_spent": 8.0,
+      "points_earned": 4,
+      "replay_count": 0,
+      "skipped_content": false
+    },
+    {
+      "chapter_session_id": "7954029d-a8d2-4642-a5b0-139d2e3b2852",
+      "topic_session_id": "58a39c9c-754e-47e1-ba9b-a7eb2059b524",
+      "section_content_id": "2a1f881d-30df-48c6-aadd-1c0a201fe507",
+      "started_at": "2025-11-02T18:16:00Z",
+      "completed_at": "2025-11-02T18:28:00Z",
+      "progress_percent": 100.0,
+      "time_spent": 10.0,
+      "points_earned": 6,
+      "replay_count": 1,
+      "skipped_content": false
+    },
+    {
+      "chapter_session_id": "68b176aa-ab35-4a31-ac46-7e862340cc4f",
+      "topic_session_id": "7f399a3f-2bf8-45a7-942b-e43011dc4723",
+      "section_content_id": "07cc4997-56c3-46b1-a0c6-a439c651adb8",
+      "started_at": "2025-11-02T18:40:00Z",
+      "completed_at": "2025-11-02T18:49:00Z",
+      "progress_percent": 100.0,
+      "time_spent": 8.0,
+      "points_earned": 4,
+      "replay_count": 0,
+      "skipped_content": false
+    },
+    {
+      "chapter_session_id": "03808362-e2f5-492b-a91a-43d7811c535d",
+      "topic_session_id": "7f399a3f-2bf8-45a7-942b-e43011dc4723",
+      "section_content_id": "8bbf38e2-02cd-49a5-ab96-e5f27313796f",
+      "started_at": "2025-11-02T18:46:00Z",
+      "completed_at": "2025-11-02T18:58:00Z",
+      "progress_percent": 100.0,
+      "time_spent": 10.0,
+      "points_earned": 6,
+      "replay_count": 1,
+      "skipped_content": false
+    },
+    {
+      "chapter_session_id": "7097a974-436e-4986-9291-22a5c036c491",
+      "topic_session_id": "a0179fcb-b4db-4ab6-99ff-2c7a025bfc67",
+      "section_content_id": "430470ac-2106-45e7-a637-e12eaab19c06",
+      "started_at": "2025-11-02T19:10:00Z",
+      "completed_at": "2025-11-02T19:19:00Z",
+      "progress_percent": 100.0,
+      "time_spent": 8.0,
+      "points_earned": 4,
+      "replay_count": 0,
+      "skipped_content": false
+    },
+    {
+      "chapter_session_id": "d8875e03-d139-4038-b966-c8f1ca880bbb",
+      "topic_session_id": "a0179fcb-b4db-4ab6-99ff-2c7a025bfc67",
+      "section_content_id": "2a1f881d-30df-48c6-aadd-1c0a201fe507",
+      "started_at": "2025-11-02T19:16:00Z",
+      "completed_at": "2025-11-02T19:28:00Z",
+      "progress_percent": 100.0,
+      "time_spent": 10.0,
+      "points_earned": 6,
+      "replay_count": 1,
+      "skipped_content": false
+    }
+  ],
+  "activity_performance": [
+    {
+      "performance_id": "6ba19b6e-b821-4a44-a1a4-f546107d7203",
+      "chapter_session_id": "cf7be690-9489-4f7e-9f63-338fc4eb039b",
+      "activity_type": "mcq",
+      "activity_id": "aeb3a1a1-0fef-4fb7-8506-5aecbbb5eddb",
+      "user_answer": "B",
+      "used_hint": false,
+      "input_method": "keyboard",
+      "attempts": 1,
+      "is_right": true,
+      "time_spent": 28.0,
+      "submitted_at": "2025-11-02T18:21:00Z",
+      "activity_skip": false,
+      "points_earned": 2
+    },
+    {
+      "performance_id": "7e10e616-a8c5-49f5-8cc5-d632ff9aa876",
+      "chapter_session_id": "cf7be690-9489-4f7e-9f63-338fc4eb039b",
+      "activity_type": "open",
+      "activity_id": "524056dd-e516-406a-8fd4-2914bb221a17",
+      "user_answer": "Free-form text",
+      "used_hint": true,
+      "input_method": "keyboard",
+      "attempts": 2,
+      "is_right": false,
+      "time_spent": 37.0,
+      "submitted_at": "2025-11-02T18:22:00Z",
+      "activity_skip": false,
+      "points_earned": 1
+    },
+    {
+      "performance_id": "8434a59b-9b4f-4b28-b909-685f898a7c58",
+      "chapter_session_id": "7954029d-a8d2-4642-a5b0-139d2e3b2852",
+      "activity_type": "mcq",
+      "activity_id": "0504427b-9e38-46a6-9697-98c5eeff367b",
+      "user_answer": "B",
+      "used_hint": false,
+      "input_method": "keyboard",
+      "attempts": 1,
+      "is_right": true,
+      "time_spent": 28.0,
+      "submitted_at": "2025-11-02T18:31:00Z",
+      "activity_skip": false,
+      "points_earned": 2
+    },
+    {
+      "performance_id": "0f8bdb46-d00b-469d-9096-297704b97a6d",
+      "chapter_session_id": "7954029d-a8d2-4642-a5b0-139d2e3b2852",
+      "activity_type": "open",
+      "activity_id": "2335fa6a-1f64-4f8b-af3d-00fa5828b343",
+      "user_answer": "Free-form text",
+      "used_hint": true,
+      "input_method": "keyboard",
+      "attempts": 2,
+      "is_right": false,
+      "time_spent": 37.0,
+      "submitted_at": "2025-11-02T18:32:00Z",
+      "activity_skip": false,
+      "points_earned": 1
+    },
+    {
+      "performance_id": "6afcc622-401f-4d5d-84dc-6d13f0662bd0",
+      "chapter_session_id": "68b176aa-ab35-4a31-ac46-7e862340cc4f",
+      "activity_type": "mcq",
+      "activity_id": "4eba8e45-f30c-49b0-939f-457361840081",
+      "user_answer": "B",
+      "used_hint": false,
+      "input_method": "keyboard",
+      "attempts": 1,
+      "is_right": true,
+      "time_spent": 28.0,
+      "submitted_at": "2025-11-02T18:51:00Z",
+      "activity_skip": false,
+      "points_earned": 2
+    },
+    {
+      "performance_id": "b04bde5f-87f4-4c61-9ac8-e363a85c8413",
+      "chapter_session_id": "68b176aa-ab35-4a31-ac46-7e862340cc4f",
+      "activity_type": "open",
+      "activity_id": "84bb6b4d-85c2-4a7c-a5bc-753a99d13b89",
+      "user_answer": "Free-form text",
+      "used_hint": true,
+      "input_method": "keyboard",
+      "attempts": 2,
+      "is_right": false,
+      "time_spent": 37.0,
+      "submitted_at": "2025-11-02T18:52:00Z",
+      "activity_skip": false,
+      "points_earned": 1
+    },
+    {
+      "performance_id": "ad90ec67-1cfb-4551-8aa8-ceed60b91df1",
+      "chapter_session_id": "03808362-e2f5-492b-a91a-43d7811c535d",
+      "activity_type": "mcq",
+      "activity_id": "deb7cdfd-ae60-477b-b2e7-4328f8d67692",
+      "user_answer": "B",
+      "used_hint": false,
+      "input_method": "keyboard",
+      "attempts": 1,
+      "is_right": true,
+      "time_spent": 28.0,
+      "submitted_at": "2025-11-02T19:01:00Z",
+      "activity_skip": false,
+      "points_earned": 2
+    },
+    {
+      "performance_id": "13964feb-95c3-471f-b3d1-42b744b1dfef",
+      "chapter_session_id": "03808362-e2f5-492b-a91a-43d7811c535d",
+      "activity_type": "open",
+      "activity_id": "6ba7b813-07b8-4dc6-9841-ef0de9526670",
+      "user_answer": "Free-form text",
+      "used_hint": true,
+      "input_method": "keyboard",
+      "attempts": 2,
+      "is_right": false,
+      "time_spent": 37.0,
+      "submitted_at": "2025-11-02T19:02:00Z",
+      "activity_skip": false,
+      "points_earned": 1
+    },
+    {
+      "performance_id": "4bde27ef-efd6-46ee-a087-116e3ce6a462",
+      "chapter_session_id": "7097a974-436e-4986-9291-22a5c036c491",
+      "activity_type": "mcq",
+      "activity_id": "f5ab5d23-b4d2-438c-bed2-4cf12808f532",
+      "user_answer": "B",
+      "used_hint": false,
+      "input_method": "keyboard",
+      "attempts": 1,
+      "is_right": true,
+      "time_spent": 28.0,
+      "submitted_at": "2025-11-02T19:21:00Z",
+      "activity_skip": false,
+      "points_earned": 2
+    },
+    {
+      "performance_id": "a4fcbee1-ba79-409d-8d36-41413b27492e",
+      "chapter_session_id": "7097a974-436e-4986-9291-22a5c036c491",
+      "activity_type": "open",
+      "activity_id": "02805935-5e14-43a0-8a86-32831627461c",
+      "user_answer": "Free-form text",
+      "used_hint": true,
+      "input_method": "keyboard",
+      "attempts": 2,
+      "is_right": false,
+      "time_spent": 37.0,
+      "submitted_at": "2025-11-02T19:22:00Z",
+      "activity_skip": false,
+      "points_earned": 1
+    },
+    {
+      "performance_id": "e066e4a0-9495-42c8-91bc-89312aeb263f",
+      "chapter_session_id": "d8875e03-d139-4038-b966-c8f1ca880bbb",
+      "activity_type": "mcq",
+      "activity_id": "6d1380e6-d619-462d-9d38-d276554d48c4",
+      "user_answer": "B",
+      "used_hint": false,
+      "input_method": "keyboard",
+      "attempts": 1,
+      "is_right": true,
+      "time_spent": 28.0,
+      "submitted_at": "2025-11-02T19:31:00Z",
+      "activity_skip": false,
+      "points_earned": 2
+    },
+    {
+      "performance_id": "d5d6c184-f2e8-4af1-819b-9bcce5248e2b",
+      "chapter_session_id": "d8875e03-d139-4038-b966-c8f1ca880bbb",
+      "activity_type": "open",
+      "activity_id": "10c9648b-41ec-4e28-a00e-5786eace41f7",
+      "user_answer": "Free-form text",
+      "used_hint": true,
+      "input_method": "keyboard",
+      "attempts": 2,
+      "is_right": false,
+      "time_spent": 37.0,
+      "submitted_at": "2025-11-02T19:32:00Z",
+      "activity_skip": false,
+      "points_earned": 1
+    }
+  ],
+  "daily_activity_log": [
+    {
+      "daily_activity_id": "0536bd26-85f0-4b2f-b469-8174f2813d04",
+      "user_id": 201,
+      "login": "2025-11-02T16:38:00Z",
+      "logout": "2025-11-02T17:18:00Z",
+      "time_spent": 40.0,
+      "points_earned": 14,
+      "activities_completed": 6
+    },
+    {
+      "daily_activity_id": "f44ae6ed-1fe2-4d3c-aeba-13ccee10487c",
+      "user_id": 204,
+      "login": "2025-11-02T16:48:00Z",
+      "logout": "2025-11-02T17:28:00Z",
+      "time_spent": 38.0,
+      "points_earned": 9,
+      "activities_completed": 4
+    }
+  ],
+  "daily_streak": [
+    {
+      "streak_id": "42e8e321-4e75-436d-b711-a12dfe764999",
+      "user_id": 201,
+      "current_streak": 6,
+      "date": "2025-11-02T19:57:00Z",
+      "points_earned": 5,
+      "last_active": "2025-11-02T19:57:00Z"
+    },
+    {
+      "streak_id": "03c9d394-163a-4590-b441-f1c81a2fed8e",
+      "user_id": 204,
+      "current_streak": 3,
+      "date": "2025-11-02T19:57:00Z",
+      "points_earned": 3,
+      "last_active": "2025-11-02T19:57:00Z"
+    }
+  ],
+  "daily_challenge": [
+    {
+      "challenge_id": "7ca304a7-1b12-4439-b9d5-46141f8aa892",
+      "title": "Finish two sections",
+      "description": "Complete any 2 sections",
+      "points_reward": 20,
+      "due_date": "2025-11-02T20:58:00Z",
+      "date": "2025-11-02T19:58:00Z"
+    },
+    {
+      "challenge_id": "b540f307-2c93-4b3b-bd58-92401d3f0df3",
+      "title": "Score 80%+",
+      "description": "Get \u226580% on an MCQ",
+      "points_reward": 15,
+      "due_date": "2025-11-02T20:58:00Z",
+      "date": "2025-11-02T19:58:00Z"
+    }
+  ],
+  "user_challenge": [
+    {
+      "daily_activity_id": "0536bd26-85f0-4b2f-b469-8174f2813d04",
+      "challenge_id": "7ca304a7-1b12-4439-b9d5-46141f8aa892",
+      "completed_at": "2025-11-02T17:08:00Z",
+      "points_earned": 20,
+      "started_at": "2025-11-02T16:38:00Z",
+      "time_spent": 24.0,
+      "has_skipped": false
+    }
+  ],
+  "point": [
+    {
+      "point_id": "7a81d3f1-3b8f-4eed-a6d4-afb4196e4917",
+      "user_id": 201,
+      "source": "challenge",
+      "total_points": 20,
+      "earned_at": "2025-11-02T17:08:00Z",
+      "spent_on": null
+    },
+    {
+      "point_id": "756cf4b1-031d-401e-8efa-9ebd2c214277",
+      "user_id": 201,
+      "source": "session",
+      "total_points": 11,
+      "earned_at": "2025-11-02T18:03:00Z",
+      "spent_on": null
+    },
+    {
+      "point_id": "c6085393-f068-4388-9dba-c8de02d3a362",
+      "user_id": 204,
+      "source": "session",
+      "total_points": 7,
+      "earned_at": "2025-11-02T18:38:00Z",
+      "spent_on": null
+    }
+  ],
+  "background_change": [
+    {
+      "bg_change_id": "c613a7d7-4b1e-4502-9143-9d171f60f3d3",
+      "chapter_session_id": "cf7be690-9489-4f7e-9f63-338fc4eb039b",
+      "selected_at": "2025-11-02T18:00:00Z",
+      "background_option": "night",
+      "time_spent": 0.5
+    }
+  ],
+  "avatar_change": [
+    {
+      "avatar_change_id": "7cba7375-b962-4fd4-bc8f-f1bc8bd312b3",
+      "chapter_session_id": "cf7be690-9489-4f7e-9f63-338fc4eb039b",
+      "selected_at": "2025-11-02T18:01:00Z",
+      "clothes_set": "runner",
+      "time_spent": 0.4,
+      "accessory": "cap"
+    }
+  ],
+  "font_change": [
+    {
+      "font_change_id": "4ab35a45-24ee-4325-b972-bf1e146add80",
+      "chapter_session_id": "cf7be690-9489-4f7e-9f63-338fc4eb039b",
+      "selected_at": "2025-11-02T18:02:00Z",
+      "font_size": 16,
+      "font_style": "sans",
+      "time_spent": 0.2
+    }
+  ],
+  "ai_chat": [
+    {
+      "ai_chat_id": "66454341-b27f-4530-b824-1e797a783c99",
+      "chapter_session_id": "cf7be690-9489-4f7e-9f63-338fc4eb039b",
+      "message": "What is a vector space?",
+      "ai_response": "A set with vector addition and scalar multiplication.",
+      "input_method": "keyboard",
+      "date_time": "2025-11-02T18:03:00Z",
+      "time_spent": 11.0
+    }
+  ],
+  "resource_click": [
+    {
+      "click_id": "9ea2148c-8518-493d-8580-2c2c6f7a9cba",
+      "chapter_session_id": "cf7be690-9489-4f7e-9f63-338fc4eb039b",
+      "image_path": "/res/fictional-intro.png",
+      "click_count": 3,
+      "last_click": "2025-11-02T18:04:00Z",
+      "created_on": "2025-11-02T18:00:00Z",
+      "updated_on": "2025-11-02T18:04:00Z"
+    }
+  ],
+  "mcqs": [
+    {
+      "mcq_id": "04629a6e-f058-4965-ae88-f31e5d46b3d5",
+      "section_content_id": "430470ac-2106-45e7-a637-e12eaab19c06",
+      "question": "Which option best expands the acronym AI?",
+      "image_path": null,
+      "correct_option_ui_id": "opt_b",
+      "created_at": "2025-11-01T18:59:00Z"
+    },
+    {
+      "mcq_id": "1116b7c6-332c-4164-b48b-a907f322b2a6",
+      "section_content_id": "2a1f881d-30df-48c6-aadd-1c0a201fe507",
+      "question": "Which option best expands the acronym AI?",
+      "image_path": null,
+      "correct_option_ui_id": "opt_b",
+      "created_at": "2025-11-01T18:59:00Z"
+    }
+  ],
+  "mcq_options": [
+    {
+      "option_id": "0e9824d8-9e05-4835-a1cf-c0953e55f6de",
+      "mcq_id": "04629a6e-f058-4965-ae88-f31e5d46b3d5",
+      "is_correct": false,
+      "text_value": "Active Imagination"
+    },
+    {
+      "option_id": "35c7fe4f-2969-4384-8190-571b6cf5f29d",
+      "mcq_id": "04629a6e-f058-4965-ae88-f31e5d46b3d5",
+      "is_correct": true,
+      "text_value": "Artificial Intelligence"
+    },
+    {
+      "option_id": "993f3308-0582-434f-ba3f-8848ef636777",
+      "mcq_id": "04629a6e-f058-4965-ae88-f31e5d46b3d5",
+      "is_correct": false,
+      "text_value": "Analog Interface"
+    },
+    {
+      "option_id": "87ce5f46-60bb-4f8c-b02e-0ad6a9e014e3",
+      "mcq_id": "1116b7c6-332c-4164-b48b-a907f322b2a6",
+      "is_correct": false,
+      "text_value": "Active Imagination"
+    },
+    {
+      "option_id": "2b75e679-23fb-41c9-b2cf-76639fc664de",
+      "mcq_id": "1116b7c6-332c-4164-b48b-a907f322b2a6",
+      "is_correct": true,
+      "text_value": "Artificial Intelligence"
+    },
+    {
+      "option_id": "89532f93-eac6-4ae0-a8d4-6b10febfaaef",
+      "mcq_id": "1116b7c6-332c-4164-b48b-a907f322b2a6",
+      "is_correct": false,
+      "text_value": "Analog Interface"
+    }
+  ],
+  "mcq_click": [
+    {
+      "click_id": "974982a0-6cf0-4f66-afc0-ad656537d6cf",
+      "mcq_id": "04629a6e-f058-4965-ae88-f31e5d46b3d5",
+      "image_path": null,
+      "click_count": 5,
+      "last_click": "2025-11-02T18:05:00Z",
+      "created_on": "2025-11-02T18:00:00Z",
+      "updated_on": "2025-11-02T18:05:00Z"
+    },
+    {
+      "click_id": "bc04661c-387b-4b10-8dac-bd7ead096be4",
+      "mcq_id": "1116b7c6-332c-4164-b48b-a907f322b2a6",
+      "image_path": null,
+      "click_count": 5,
+      "last_click": "2025-11-02T18:05:00Z",
+      "created_on": "2025-11-02T18:00:00Z",
+      "updated_on": "2025-11-02T18:05:00Z"
+    }
+  ],
+  "open_questions": [
+    {
+      "question_id": "6e93ff6a-7986-479b-b50c-0f830733ee4a",
+      "section_content_id": "430470ac-2106-45e7-a637-e12eaab19c06",
+      "question": "Describe tokenization in your own words.",
+      "hint": "Consider splitting text into smaller pieces.",
+      "answer": null,
+      "created_on": "2025-11-01T19:00:00Z"
+    }
+  ]
+}

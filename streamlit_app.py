@@ -176,11 +176,11 @@ def render_sen_report(report: dict) -> None:
     _inject_sen_report_css()
 
     def fmt_metric(value, unit="", decimals=1, plus_sign=False):
-        if value in (None, "", "—"):
-            return "—"
+        if value in (None, "", "—", "missed"):
+            return "missed"
         if isinstance(value, (int, float)):
             if isinstance(value, float) and (math.isnan(value) or math.isinf(value)):
-                return "—"
+                return "missed"
             decimals_to_use = decimals
             if isinstance(value, int) or decimals == 0:
                 decimals_to_use = 0
@@ -198,7 +198,8 @@ def render_sen_report(report: dict) -> None:
         if raw:
             value_html = value
         else:
-            value_html = escape(value if value not in (None, "") else "—")
+            value_str = value if value not in (None, "", "—") else "missed"
+            value_html = escape(value_str)
         value_class = "sen-metric__value sen-metric__value--emph" if emphasize else "sen-metric__value"
         return f"<div class='sen-metric'><span class='sen-metric__label'>{label_html}</span><span class='{value_class}'>{value_html}</span></div>"
 
@@ -222,24 +223,27 @@ def render_sen_report(report: dict) -> None:
         "AI Literacy": report.get("ai_literacy"),
     }
 
-    dropoff = (routine.get("dropoff_risk") or "—").lower()
-    dropoff_class = f"sen-tag sen-tag--{dropoff}" if dropoff in {"low", "medium", "high"} else "sen-tag"
-    dropoff_copy = dropoff.capitalize() if dropoff not in {"", "—"} else "—"
-    dropoff_html = f"<span class='{dropoff_class}'>{escape(dropoff_copy)}</span>" if dropoff_copy != "—" else escape(dropoff_copy)
+    dropoff_raw = routine.get("dropoff_risk")
+    dropoff_value = str(dropoff_raw).lower() if dropoff_raw else "missed"
+    if dropoff_value in {"low", "medium", "high"}:
+        dropoff_class = f"sen-tag sen-tag--{dropoff_value}"
+        dropoff_html = f"<span class='{dropoff_class}'>{escape(dropoff_value.capitalize())}</span>"
+    else:
+        dropoff_html = "missed"
 
     lessons_done = usage.get("lessons_done")
     lessons_total = usage.get("lessons_total")
 
     def safe_value(val):
-        if val in (None, ""):
-            return "—"
+        if val in (None, "", "—"):
+            return "missed"
         return val
 
     lessons_summary = f"{safe_value(lessons_done)} / {safe_value(lessons_total)}"
 
-    period_range = f"{escape(period.get('start', '—'))} → {escape(period.get('end', '—'))}"
-    generated_on = escape(period.get("generated_on", "—"))
-    prepared_for = report.get("prepared_for", "—")
+    period_range = f"{escape(period.get('start') or 'missed')} → {escape(period.get('end') or 'missed')}"
+    generated_on = escape(period.get("generated_on") or "missed")
+    prepared_for = report.get("prepared_for") or "missed"
 
     usage_card = "".join([
         metric("Active days", fmt_metric(usage.get("active_days"), decimals=0)),
@@ -286,34 +290,34 @@ def render_sen_report(report: dict) -> None:
         metric("Student initiated", fmt_metric(communication.get("student_initiated"), decimals=0)),
         metric("Avg length", fmt_metric(communication.get("avg_length"), decimals=1)),
         metric("Avg turns", fmt_metric(communication.get("avg_turns"), decimals=1)),
-        metric("Last interaction", communication.get("last_interaction_type") or "—"),
+        metric("Last interaction", communication.get("last_interaction_type") or "missed"),
     ])
 
     adjustments_text = ", ".join(emotional.get("top_adjustments") or [])
-    adjustments_text = adjustments_text if adjustments_text else "—"
+    adjustments_text = adjustments_text if adjustments_text else "missed"
     timeline_entries = emotional.get("timeline") or []
-    timeline_text = ", ".join(f"{item['date']} ({item['zone']})" for item in timeline_entries) if timeline_entries else "—"
+    timeline_text = ", ".join(f"{item['date']} ({item['zone']})" for item in timeline_entries) if timeline_entries else "missed"
     emotional_card = "".join([
         metric("Entries", fmt_metric(emotional.get("records"), decimals=0)),
-        metric("Current zone", emotional.get("latest_zone") or "—"),
-        metric("Latest mood", emotional.get("latest_mood") or "—"),
+        metric("Current zone", emotional.get("latest_zone") or "missed"),
+        metric("Latest mood", emotional.get("latest_mood") or "missed"),
         metric("Green time", fmt_metric(emotional.get("green_pct"), unit="%", decimals=1)),
         metric("Stability index", fmt_metric(emotional.get("stability_index"), unit="%", decimals=1), emphasize=True),
         metric("Avatar changes", fmt_metric(emotional.get("avatar_changes"), decimals=0)),
-        metric("Fav avatar", emotional.get("favorite_avatar") or "—"),
+        metric("Fav avatar", emotional.get("favorite_avatar") or "missed"),
         metric("Background changes", fmt_metric(emotional.get("background_changes"), decimals=0)),
-        metric("Fav background", emotional.get("favorite_background") or "—"),
+        metric("Fav background", emotional.get("favorite_background") or "missed"),
         metric("Sensory adjustments", adjustments_text),
         metric("Recent timeline", timeline_text),
     ])
 
     attempt_details = activity_profile.get("attempt_details") or []
-    recent_attempt_text = "—"
+    recent_attempt_text = "missed"
     if attempt_details:
         last_attempt = attempt_details[-1]
         status = "✅" if last_attempt.get("is_right") else "❌"
         recent_attempt_text = (
-            f"{status} {last_attempt.get('activity_type', 'activity')} in {last_attempt.get('attempts', '—')} attempt(s)"
+            f"{status} {last_attempt.get('activity_type', 'activity')} in {last_attempt.get('attempts') or 'missed'} attempt(s)"
         )
     activity_card = "".join([
         metric("Logged activities", fmt_metric(activity_profile.get("activities_recorded"), decimals=0)),
@@ -338,7 +342,7 @@ def render_sen_report(report: dict) -> None:
         ai = drivers["AI Literacy"]
         if ai.get("available"):
             driver_rows.append(metric("Learning gain", fmt_metric(ai.get("learning_gain"), unit="%", decimals=0, plus_sign=True)))
-            lv = f"{ai.get('level_before', '—')} → {ai.get('level_after', '—')}"
+            lv = f"{ai.get('level_before', 'missed')} → {ai.get('level_after', 'missed')}"
             driver_rows.append(metric("Level change", lv))
         else:
             driver_rows.append(metric("Learning gain", "Assessment not available"))
@@ -362,7 +366,7 @@ def render_sen_report(report: dict) -> None:
                 continue
             rows.append(
                 f"<div class='sen-metric'><span class='sen-metric__label'>{escape(str(prompt or 'Question'))}</span>"
-                f"<span class='sen-metric__value'>{escape(str(answer or '—'))}</span></div>"
+                f"<span class='sen-metric__value'>{escape(str(answer or 'missed'))}</span></div>"
             )
         if not rows:
             return ""
@@ -370,14 +374,14 @@ def render_sen_report(report: dict) -> None:
 
     grid_cards = [
         f"<div class='sen-card'><h4>Student</h4>"
-        f"{metric('Name', student.get('name', '—'), emphasize=True)}"
-        f"{metric('ID', str(student.get('id', '—')))}"
-        f"{metric('Class', student.get('class', '—'))}"
-        f"{metric('Year', student.get('year', '—'))}"
+        f"{metric('Name', student.get('name') or 'missed', emphasize=True)}"
+        f"{metric('ID', str(student.get('id') or 'missed'))}"
+        f"{metric('Class', student.get('class') or 'missed')}"
+        f"{metric('Year', student.get('year') or 'missed')}"
         f"</div>",
         f"<div class='sen-card'><h4>Usage</h4>{usage_card}</div>",
         f"<div class='sen-card'><h4>Focus</h4>{focus_card}</div>",
-        f"<div class='sen-card'><h4>Learning & Support</h4>{learning_card}{metric('Prepared for', prepared_for or '—')}</div>",
+        f"<div class='sen-card'><h4>Learning & Support</h4>{learning_card}{metric('Prepared for', prepared_for or 'missed')}</div>",
         f"<div class='sen-card'><h4>Routine</h4>{routine_card}</div>",
         f"<div class='sen-card'><h4>Emotional Regulation</h4>{emotional_card}</div>",
         f"<div class='sen-card'><h4>Independence & Support</h4>{independence_card}</div>",
@@ -398,7 +402,7 @@ def render_sen_report(report: dict) -> None:
     if footer_sections:
         footer_html = f"<div class='sen-report__footer'>{''.join(footer_sections)}</div>"
 
-    audience_html = escape(prepared_for or "—")
+    audience_html = escape(prepared_for or "missed")
 
     report_html = f"""
     <div class="sen-report">
@@ -455,19 +459,28 @@ def main():
         data = merge_data(*datasets)
         data_label = " + ".join([u.name for u in uploaded])
     else:
+        datasets = []
+        labels = []
         try:
             ds1 = load_json(PRIMARY_JSON_PATH)
         except Exception:
             ds1 = {}
-        try:
-            ds2 = load_json(SECONDARY_JSON_PATH)
-        except Exception:
-            ds2 = {}
-        if not ds1 and not ds2:
+        if ds1:
+            datasets.append(ds1)
+            labels.append(PRIMARY_JSON_PATH or "missed")
+        if SECONDARY_JSON_PATH:
+            try:
+                ds2 = load_json(SECONDARY_JSON_PATH)
+            except Exception:
+                ds2 = {}
+            if ds2:
+                datasets.append(ds2)
+                labels.append(SECONDARY_JSON_PATH)
+        if not datasets:
             st.error("No data loaded. Upload JSON files or set valid defaults.")
             return
-        data = merge_data(ds1, ds2)
-        data_label = f"{PRIMARY_JSON_PATH} + {SECONDARY_JSON_PATH}"
+        data = merge_data(*datasets)
+        data_label = " + ".join(labels) if labels else "missed"
     st.sidebar.success(f"Loaded: {data_label}")
 
     # -------- Query / user selection --------
@@ -610,17 +623,17 @@ def main():
             st.write("Student-initiated:", comm_block["student_initiated"])
             st.write("Avg length (chars):", comm_block["avg_length"])
             st.write("Avg turns:", comm_block["avg_turns"])
-            st.write("Last interaction type:", comm_block.get("last_interaction_type") or "—")
+            st.write("Last interaction type:", comm_block.get("last_interaction_type") or "missed")
 
         with tab6:
             if emo_block["records"]:
                 st.write("Entries captured:", int(emo_block["records"]))
-                st.write("Latest zone:", emo_block.get("latest_zone") or "—")
-                st.write("Latest mood:", emo_block.get("latest_mood") or "—")
+                st.write("Latest zone:", emo_block.get("latest_zone") or "missed")
+                st.write("Latest mood:", emo_block.get("latest_mood") or "missed")
                 st.write("Green time:", f"{emo_block['green_pct']}%")
                 st.write("Stability index:", f"{emo_block['stability_index']}%")
                 adjustments = emo_block.get("top_adjustments") or []
-                st.write("Top sensory adjustments:", ", ".join(adjustments) if adjustments else "—")
+                st.write("Top sensory adjustments:", ", ".join(adjustments) if adjustments else "missed")
                 timeline = emo_block.get("timeline") or []
                 if timeline:
                     timeline_text = ", ".join(f"{item['date']} ({item['zone']})" for item in timeline)
@@ -642,10 +655,10 @@ def main():
 
         with tab8:
             if ai_block.get("available"):
-                st.write(f"Pre-test: {ai_block.get('pre_score','—')} / {int(ai_block.get('max_score') or 100)}")
-                st.write(f"Post-test: {ai_block.get('post_score','—')} / {int(ai_block.get('max_score') or 100)}")
-                st.write(f"Learning Gain: {ai_block.get('learning_gain','—')}%")
-                st.write(f"Level (before → after): {ai_block.get('level_before','—')} → {ai_block.get('level_after','—')}")
+                st.write(f"Pre-test: {ai_block.get('pre_score', 'missed')} / {int(ai_block.get('max_score') or 100)}")
+                st.write(f"Post-test: {ai_block.get('post_score', 'missed')} / {int(ai_block.get('max_score') or 100)}")
+                st.write(f"Learning Gain: {ai_block.get('learning_gain', 'missed')}%")
+                st.write(f"Level (before → after): {ai_block.get('level_before', 'missed')} → {ai_block.get('level_after', 'missed')}")
                 concepts = ai_block.get("concepts_mastered") or []
                 apps = ai_block.get("applications") or []
                 if concepts:
@@ -676,12 +689,12 @@ def main():
         dropoff_risk = compute_dropoff_risk(active_days_total, completion_pct_all, avg_time_all)
 
         report_data = {
-            "student": {"name": agg["name"], "id": user_id, "class": agg.get("class_level", "—"), "year": agg.get("class_level", "—")},
+            "student": {"name": agg["name"], "id": user_id, "class": agg.get("class_level", "missed"), "year": agg.get("class_level", "missed")},
             "period": {"start": start_date.isoformat(), "end": end_date.isoformat(), "generated_on": date.today().isoformat()},
             "prepared_for": "Teacher" if audience == "teacher" else "Parent/Carer",
             "devices": {},
             "usage": {
-                "active_days": curr.get("active_days", "—"),
+                "active_days": curr.get("active_days", "missed"),
                 "sessions": curr["sessions"],
                 "avg_session_mins": curr["avg_session_mins"],
                 "lessons_done": curr["lessons_done"],
@@ -696,9 +709,9 @@ def main():
                 "class_median": 62,
                 "avg_sustained_block_mins": curr["avg_session_mins"],
             },
-            "learning": {"skills": [], "perseverance_index": agg.get("avg_hints_used", "—")},
+            "learning": {"skills": [], "perseverance_index": agg.get("avg_hints_used", "missed")},
             "language": {},
-            "ai_support": {"hints_per_activity": agg.get("avg_hints_used", "—")},
+            "ai_support": {"hints_per_activity": agg.get("avg_hints_used", "missed")},
             "routine": {
                 "dropoff_risk": dropoff_risk,
                 "active_days_total": active_days_total,

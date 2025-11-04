@@ -1,6 +1,6 @@
 # utils_time.py
 import pandas as pd
-from datetime import datetime, date
+from datetime import datetime, date, timezone
 from typing import Any, Dict, List, Optional
 
 def parse_ts(ts: Any) -> Optional[datetime]:
@@ -8,7 +8,10 @@ def parse_ts(ts: Any) -> Optional[datetime]:
         return None
     if isinstance(ts, (datetime, pd.Timestamp)):
         try:
-            return pd.to_datetime(ts).to_pydatetime()
+            dt = pd.to_datetime(ts).to_pydatetime()
+            if dt.tzinfo is not None:
+                dt = dt.astimezone(timezone.utc).replace(tzinfo=None)
+            return dt
         except Exception:
             return None
     s = str(ts).strip()
@@ -20,12 +23,20 @@ def parse_ts(ts: Any) -> Optional[datetime]:
     ]
     for f in fmts:
         try:
-            return datetime.strptime(s, f)
+            dt = datetime.strptime(s, f)
+            if dt.tzinfo is not None:
+                dt = dt.astimezone(timezone.utc).replace(tzinfo=None)
+            return dt
         except Exception:
             continue
     try:
         dt = pd.to_datetime(s, errors="coerce")
-        return None if pd.isna(dt) else dt.to_pydatetime()
+        if pd.isna(dt):
+            return None
+        py_dt = dt.to_pydatetime()
+        if py_dt.tzinfo is not None:
+            py_dt = py_dt.astimezone(timezone.utc).replace(tzinfo=None)
+        return py_dt
     except Exception:
         return None
 

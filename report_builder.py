@@ -5,7 +5,7 @@ from typing import Dict, Any, List
 
 def _fmt(value, suffix: str = "") -> str:
     if value is None or value == "":
-        return "—"
+        return "missed"
     try:
         num = float(value)
     except (TypeError, ValueError):
@@ -18,12 +18,12 @@ def _fmt(value, suffix: str = "") -> str:
 
 
 def _fmt_delta(delta, suffix: str = "") -> str:
-    if delta in (None, "", "—"):
-        return "—"
+    if delta in (None, "", "missed", "—"):
+        return "missed"
     try:
         val = float(delta)
     except (TypeError, ValueError):
-        return "—"
+        return "missed"
     sign = "+" if val >= 0 else "-"
     mag = abs(val)
     mag_str = f"{int(mag)}" if mag.is_integer() else f"{mag:.1f}"
@@ -100,9 +100,9 @@ def build_report(d: Dict[str, Any]) -> str:
     total_time = usage.get("total_time_mins")
     trend_vs_prev = usage.get("trend_vs_prev_pct")
     avg_session = usage.get("avg_session_mins")
-    active_days = usage.get("active_days", "—")
-    sessions = usage.get("sessions", "—")
-    dropoff_risk = routine.get("dropoff_risk", "—")
+    active_days = usage.get("active_days", "missed")
+    sessions = usage.get("sessions", "missed")
+    dropoff_risk = routine.get("dropoff_risk", "missed")
 
     focus_badge = _status_icon(focus_score)
     completion_badge = _status_icon(completion_pct)
@@ -119,11 +119,11 @@ def build_report(d: Dict[str, Any]) -> str:
     out.append(title + "\n" + "=" * len(title) + "\n\n")
 
     out.append(_section("STUDENT SNAPSHOT"))
-    out.append(_info_line("👤", "Student", student.get("name", "—")))
-    out.append(_info_line("🆔", "Student ID", student.get("id", "—")))
-    out.append(_info_line("🏫", "Class / Year", f"{student.get('class','—')} / {student.get('year','—')}"))
-    out.append(_info_line("🗓️", "Reporting window", f"{period.get('start','—')} → {period.get('end','—')}"))
-    out.append(_info_line("🎯", "Prepared for", d.get("prepared_for", "—")))
+    out.append(_info_line("👤", "Student", student.get("name") or "missed"))
+    out.append(_info_line("🆔", "Student ID", student.get("id") or "missed"))
+    out.append(_info_line("🏫", "Class / Year", f"{student.get('class') or 'missed'} / {student.get('year') or 'missed'}"))
+    out.append(_info_line("🗓️", "Reporting window", f"{period.get('start') or 'missed'} → {period.get('end') or 'missed'}"))
+    out.append(_info_line("🎯", "Prepared for", d.get("prepared_for") or "missed"))
     out.append(
         _info_line(
             "🕒",
@@ -247,7 +247,7 @@ def build_report(d: Dict[str, Any]) -> str:
             _info_line(
                 "🎓",
                 "Level shift",
-                f"{ai.get('level_before','—')} → {ai.get('level_after','—')}",
+                f"{ai.get('level_before') or 'missed'} → {ai.get('level_after') or 'missed'}",
             )
         )
         concepts = ai.get("concepts_mastered") or []
@@ -263,16 +263,16 @@ def build_report(d: Dict[str, Any]) -> str:
     out.append(_list_line("📌", "Data points: Zones of Regulation, mood indicators, and sensory adjustments (contrast, font, overlays)."))
     if emotion and emotion.get("records"):
         zone_counts = emotion.get("zone_counts", {})
-        zone_summary = ", ".join(f"{k}:{v}" for k, v in zone_counts.items()) if zone_counts else "—"
-        out.append(_info_line("🧘", "Current zone", emotion.get("latest_zone", "—")))
+        zone_summary = ", ".join(f"{k}:{v}" for k, v in zone_counts.items()) if zone_counts else "missed"
+        out.append(_info_line("🧘", "Current zone", emotion.get("latest_zone") or "missed"))
         out.append(_info_line("🌡️", "Zone summary", zone_summary))
         out.append(_info_line("🌱", "Green time", _fmt(emotion.get("green_pct"), "%")))
         out.append(_info_line("📈", "Stability index", _fmt(emotion.get("stability_index"), "%")))
         out.append(_info_line("🧑‍🎨", "Avatar changes", _fmt(emotion.get("avatar_changes"))))
-        fav_avatar = emotion.get("favorite_avatar") or "—"
+        fav_avatar = emotion.get("favorite_avatar") or "missed"
         out.append(_info_line("🎭", "Preferred avatar", fav_avatar))
         out.append(_info_line("🖼️", "Background changes", _fmt(emotion.get("background_changes"))))
-        fav_bg = emotion.get("favorite_background") or "—"
+        fav_bg = emotion.get("favorite_background") or "missed"
         out.append(_info_line("🌌", "Preferred background", fav_bg))
         adjustments = emotion.get("top_adjustments") or []
         if adjustments:
@@ -314,7 +314,7 @@ def build_report(d: Dict[str, Any]) -> str:
     if latest_attempt:
         latest = latest_attempt[0]
         status = "correct" if latest.get("is_right") else "incorrect"
-        summary = f"{latest.get('activity_type','activity')} {status} in {latest.get('attempts','—')} attempt(s)"
+        summary = f"{latest.get('activity_type','activity')} {status} in {latest.get('attempts') or 'missed'} attempt(s)"
         out.append(_list_line("📝", "Latest sample: " + summary))
     else:
         out.append(_list_line("⚪", "No activity attempts recorded in this reporting window."))
