@@ -1,0 +1,2187 @@
+[
+  {
+    "user": [
+      {
+        "userid": 1,
+        "name": "Thomas Mccoy",
+        "email": "thomas@example.com",
+        "grade_level": "KS1",
+        "password_hashed": "hash_0001",
+        "gender": "male",
+        "country": "UK",
+        "DOB": "2009-01-02",
+        "created_at": "2024-09-10T14:00:00",
+        "geolocation": "Leeds",
+        "deviceType": "desktop",
+        "reading_level": "Intermediate"
+      }
+    ],
+    "topics": [
+      {
+        "topic_id": "4ea6f5b0-d19b-43db-906e-4094a00da2ef",
+        "user_id": 1,
+        "title": "English Essentials",
+        "subject": "English",
+        "classLevel": "KS1",
+        "duration": 44,
+        "created_at": "2025-08-12T14:00:00",
+        "updated_at": "2025-08-22T11:00:00",
+        "deleted_at": null,
+        "total_point": 120
+      },
+      {
+        "topic_id": "b5454397-fb58-4069-bf66-f7ea9938cf83",
+        "user_id": 1,
+        "title": "History Essentials",
+        "subject": "History",
+        "classLevel": "KS1",
+        "duration": 25,
+        "created_at": "2025-08-13T12:00:00",
+        "updated_at": "2025-08-23T11:00:00",
+        "deleted_at": null,
+        "total_point": 80
+      }
+    ],
+    "lesson_sections (chapter)": [
+      {
+        "lesson_sections_id": "5d55bb94-4579-4263-b72f-2927ad603153",
+        "topic_id": "4ea6f5b0-d19b-43db-906e-4094a00da2ef",
+        "user_id": 1,
+        "api_heading_id": "heading_1",
+        "title": "English Essentials - Lesson 1",
+        "section_index": 1,
+        "image_path": "illustration.png",
+        "created_at": "2025-08-27T14:00:00",
+        "updated_at": "2025-09-01T11:00:00",
+        "deleted_at": null,
+        "orderIndex": 1,
+        "totalPoint": 100
+      },
+      {
+        "lesson_sections_id": "4d324302-2708-475b-adc8-d202c482b66d",
+        "topic_id": "b5454397-fb58-4069-bf66-f7ea9938cf83",
+        "user_id": 1,
+        "api_heading_id": "heading_2",
+        "title": "History Essentials - Lesson 2",
+        "section_index": 2,
+        "image_path": "illustration.png",
+        "created_at": "2025-08-28T11:00:00",
+        "updated_at": "2025-09-02T10:00:00",
+        "deleted_at": null,
+        "orderIndex": 2,
+        "totalPoint": 100
+      }
+    ],
+    "section_contents": [
+      {
+        "section_content_id": "2bfbf66f-070e-4dc5-829b-a38460fa0094",
+        "lesson_sections_id": "5d55bb94-4579-4263-b72f-2927ad603153",
+        "reading_level": "Intermediate",
+        "paragraph_delta_json": "Sample passage text.",
+        "api_grade_level": "KS1",
+        "api_reading_level": "Intermediate",
+        "created_at": "2025-09-01T13:00:00",
+        "updated_at": "2025-09-05T15:00:00",
+        "deleted_at": null
+      },
+      {
+        "section_content_id": "5094ed6e-6424-4bea-b71e-750777737985",
+        "lesson_sections_id": "4d324302-2708-475b-adc8-d202c482b66d",
+        "reading_level": "Intermediate",
+        "paragraph_delta_json": "Sample passage text.",
+        "api_grade_level": "KS1",
+        "api_reading_level": "Intermediate",
+        "created_at": "2025-09-01T10:00:00",
+        "updated_at": "2025-09-05T14:00:00",
+        "deleted_at": null
+      }
+    ],
+    "mcqs": [
+      {
+        "mcq_id": "bd3c47d3-7aa5-4499-ac5e-20136698fc2a",
+        "section_content_id": "2bfbf66f-070e-4dc5-829b-a38460fa0094",
+        "question": "What is concept 1?",
+        "image_path": null,
+        "correct_option_ui_id": "option_c",
+        "created_at": "2025-09-06T11:00:00",
+        "updated_at": "2025-09-08T12:00:00",
+        "deleted_at": null
+      },
+      {
+        "mcq_id": "4a4436f2-1102-442f-99d2-cd17ef94af6c",
+        "section_content_id": "5094ed6e-6424-4bea-b71e-750777737985",
+        "question": "What is concept 2?",
+        "image_path": null,
+        "correct_option_ui_id": "option_c",
+        "created_at": "2025-09-06T11:00:00",
+        "updated_at": "2025-09-08T13:00:00",
+        "deleted_at": null
+      }
+    ],
+    "mcq_options": [
+      {
+        "option_id": "c343b959-4ccd-46c1-abbd-fbe2d06e2d5f",
+        "mcq_id": "bd3c47d3-7aa5-4499-ac5e-20136698fc2a",
+        "text_value": "Choice 1",
+        "created_at": "2025-09-07T15:00:00",
+        "updated_at": "2025-09-08T14:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": "d2ae4377-244a-4656-ba4f-9b9160530ad6",
+        "mcq_id": "bd3c47d3-7aa5-4499-ac5e-20136698fc2a",
+        "text_value": "Choice 2",
+        "created_at": "2025-09-07T14:00:00",
+        "updated_at": "2025-09-08T11:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": "af0c9207-e305-4314-8612-8798f197cd48",
+        "mcq_id": "bd3c47d3-7aa5-4499-ac5e-20136698fc2a",
+        "text_value": "Choice 3",
+        "created_at": "2025-09-07T13:00:00",
+        "updated_at": "2025-09-08T10:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": "a6114e7c-e555-40b9-9f4e-fb05daa3d979",
+        "mcq_id": "bd3c47d3-7aa5-4499-ac5e-20136698fc2a",
+        "text_value": "Choice 4",
+        "created_at": "2025-09-07T11:00:00",
+        "updated_at": "2025-09-08T14:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": "aa0c45bb-2fed-4552-8576-ac87b55c957d",
+        "mcq_id": "4a4436f2-1102-442f-99d2-cd17ef94af6c",
+        "text_value": "Choice 1",
+        "created_at": "2025-09-07T10:00:00",
+        "updated_at": "2025-09-08T11:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": "c17cbffd-d9f0-460d-aefd-13039de8a4f9",
+        "mcq_id": "4a4436f2-1102-442f-99d2-cd17ef94af6c",
+        "text_value": "Choice 2",
+        "created_at": "2025-09-07T13:00:00",
+        "updated_at": "2025-09-08T10:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": "94bd63b0-6409-4930-bab2-6588fde2aed4",
+        "mcq_id": "4a4436f2-1102-442f-99d2-cd17ef94af6c",
+        "text_value": "Choice 3",
+        "created_at": "2025-09-07T11:00:00",
+        "updated_at": "2025-09-08T12:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": "21bce019-0979-4250-a9d5-780883ebc983",
+        "mcq_id": "4a4436f2-1102-442f-99d2-cd17ef94af6c",
+        "text_value": "Choice 4",
+        "created_at": "2025-09-07T15:00:00",
+        "updated_at": "2025-09-08T15:00:00",
+        "deleted_at": null
+      }
+    ],
+    "open_questions": [
+      {
+        "question_id": "744a0b45-6d00-4fd6-8900-67e34c0bde25",
+        "section_content_id": "2bfbf66f-070e-4dc5-829b-a38460fa0094",
+        "question": "Explain idea 1?",
+        "hint": "Think of a real-life example.",
+        "answer": "Sample answer.",
+        "created_at": "2025-09-07T10:00:00",
+        "updated_at": "2025-09-08T13:00:00",
+        "deleted_at": null
+      },
+      {
+        "question_id": "55ad0755-9280-474b-acb3-363ff9f4f047",
+        "section_content_id": "5094ed6e-6424-4bea-b71e-750777737985",
+        "question": "Explain idea 2?",
+        "hint": "Think of a real-life example.",
+        "answer": "Sample answer.",
+        "created_at": "2025-09-07T11:00:00",
+        "updated_at": "2025-09-08T14:00:00",
+        "deleted_at": null
+      }
+    ],
+    "chapter_session": [
+      {
+        "chapter_session_id": "8c5c034d-6f55-4910-826a-09b5ff8f1088",
+        "topic_session_id": "6e100fc6-b5c7-4e31-b29c-f2f5035245bf",
+        "section_content_id": "2bfbf66f-070e-4dc5-829b-a38460fa0094",
+        "local_id": "chap-87421a9f",
+        "started_at": "2025-08-30T15:00:00",
+        "completed_at": "2025-09-01T12:00:00",
+        "progress_percent": 57.3,
+        "time_spent": 32.91,
+        "points_earned": 8,
+        "replay_count": 3,
+        "skipped_content": false
+      },
+      {
+        "chapter_session_id": "b2cfdb2d-4a16-4d8a-9536-8251669c50c2",
+        "topic_session_id": "28dfacbc-bdd9-42fc-8b5e-86d8484b82e9",
+        "section_content_id": "5094ed6e-6424-4bea-b71e-750777737985",
+        "local_id": "chap-d73f2a2f",
+        "started_at": "2025-08-30T15:00:00",
+        "completed_at": "2025-09-01T11:00:00",
+        "progress_percent": 80.46,
+        "time_spent": 32.36,
+        "points_earned": 15,
+        "replay_count": 1,
+        "skipped_content": false
+      }
+    ],
+    "topic_session": [
+      {
+        "topic_session_id": "6e100fc6-b5c7-4e31-b29c-f2f5035245bf",
+        "enrollment_id": "743ab677-9be7-4ead-abf8-4952999ba93a",
+        "local_id": "loc-1e4c38e7",
+        "started_at": "2025-08-29T14:00:00",
+        "completed_at": "2025-09-02T14:00:00",
+        "total_time_spent": 43.53,
+        "completion_percent": 70.3,
+        "geo_location": "Bristol",
+        "device_type": "desktop"
+      },
+      {
+        "topic_session_id": "28dfacbc-bdd9-42fc-8b5e-86d8484b82e9",
+        "enrollment_id": "4ecac647-d3d8-4714-a1d5-9e4bc7a75d82",
+        "local_id": "loc-c72ffe40",
+        "started_at": "2025-08-29T10:00:00",
+        "completed_at": "2025-09-02T13:00:00",
+        "total_time_spent": 74.07,
+        "completion_percent": 76.83,
+        "geo_location": "Oxford",
+        "device_type": "tablet"
+      }
+    ],
+    "daily_session_log": [
+      {
+        "daily_session_id": "e421546a-ced7-4924-84a3-2bb9ffd03ee2",
+        "user_id": 1,
+        "login": "2025-09-03T10:00:00",
+        "logout": "2025-09-03T12:00:00",
+        "total_time_spent": 55.14
+      },
+      {
+        "daily_session_id": "eb44892a-65ab-4dcd-ba76-2555ea0a1603",
+        "user_id": 1,
+        "login": "2025-09-03T12:00:00",
+        "logout": "2025-09-03T12:00:00",
+        "total_time_spent": 53.36
+      }
+    ],
+    "AIChat": [
+      {
+        "chat_id": "8ac3e48d-04a3-40c0-aeb0-eff031c7b627",
+        "chapter_session_id": "8c5c034d-6f55-4910-826a-09b5ff8f1088",
+        "started_at": "2025-09-01T14:00:00",
+        "completed_at": "2025-09-01T15:00:00",
+        "total_turns": 1,
+        "avg_turn_length": 104,
+        "message_length": 287,
+        "mood_detected": "calm"
+      },
+      {
+        "chat_id": "e707caf2-fe5b-464e-8120-7cb27323c90f",
+        "chapter_session_id": "b2cfdb2d-4a16-4d8a-9536-8251669c50c2",
+        "started_at": "2025-09-01T15:00:00",
+        "completed_at": "2025-09-01T12:00:00",
+        "total_turns": 1,
+        "avg_turn_length": 111,
+        "message_length": 257,
+        "mood_detected": "frustrated"
+      }
+    ],
+    "org": [
+      {
+        "org_id": 1,
+        "name": "School Org 1",
+        "domain": "org1.example.edu",
+        "is_active": true,
+        "created_at": "2024-08-07T13:00:00",
+        "description": "Demo organisation"
+      },
+      {
+        "org_id": 2,
+        "name": "School Org 2",
+        "domain": "org2.example.edu",
+        "is_active": true,
+        "created_at": "2024-08-08T12:00:00",
+        "description": "Demo organisation"
+      }
+    ],
+    "org_user": [
+      {
+        "org_user_id": 1,
+        "org_id": 1,
+        "user_id": 1,
+        "role_id": 1,
+        "joined_at": "2025-02-23T14:00:00",
+        "is_active": true
+      }
+    ],
+    "role": [
+      {
+        "role_id": 1,
+        "name": "student",
+        "description": "student role",
+        "created_at": "2024-04-29T10:00:00"
+      },
+      {
+        "role_id": 2,
+        "name": "teacher",
+        "description": "teacher role",
+        "created_at": "2024-04-30T14:00:00"
+      },
+      {
+        "role_id": 3,
+        "name": "admin",
+        "description": "admin role",
+        "created_at": "2024-05-01T15:00:00"
+      }
+    ],
+    "activity_performance": [
+      {
+        "performance_id": "da76601d-1fc3-4bd0-9f6e-a6da59e06727",
+        "chapter_session_id": "8c5c034d-6f55-4910-826a-09b5ff8f1088",
+        "activity_id": "96209ccb-648d-4fb2-a17d-af9e7783b447",
+        "activity_type": "mcq",
+        "user_answer": "C",
+        "input_method": "keyboard",
+        "attempts": 2,
+        "is_right": true,
+        "submitted_at": "2025-09-01T14:00:00",
+        "activity_skip": false,
+        "time_spent": 71.91,
+        "used_hint": false,
+        "points_earned": 10
+      },
+      {
+        "performance_id": "8dcd6889-5055-4b5c-b5f7-33dd2666ea6f",
+        "chapter_session_id": "b2cfdb2d-4a16-4d8a-9536-8251669c50c2",
+        "activity_id": "8e6a2b7d-b2dc-4881-acf5-55c9bc3aa10b",
+        "activity_type": "mcq",
+        "user_answer": "D",
+        "input_method": "keyboard",
+        "attempts": 3,
+        "is_right": false,
+        "submitted_at": "2025-09-01T15:00:00",
+        "activity_skip": false,
+        "time_spent": 73.86,
+        "used_hint": true,
+        "points_earned": 14
+      }
+    ],
+    "ai_literacy_assessment": [
+      {
+        "user_id": 1,
+        "taken_at": "2025-08-15T09:00:00",
+        "type": "pre",
+        "score": 46,
+        "max_score": 100,
+        "concepts_mastered": [
+          "data",
+          "safety basics"
+        ],
+        "applications": [
+          "Identify AI assistive tools",
+          "Share safe prompts"
+        ]
+      },
+      {
+        "user_id": 1,
+        "taken_at": "2025-09-05T09:00:00",
+        "type": "post",
+        "score": 78,
+        "max_score": 100,
+        "concepts_mastered": [
+          "data",
+          "bias awareness",
+          "iterative improvement"
+        ],
+        "applications": [
+          "Explain when to ask the AI for help",
+          "Compare human vs AI solutions"
+        ]
+      }
+    ],
+    "userActivity": [
+      {
+        "ua_id": "cdac6181-d709-4a9f-8e09-094d9e81e984",
+        "user_id": 1,
+        "activity_type": "mcq_attempt",
+        "timestamp": "2025-09-04T10:00:00",
+        "metadata": {
+          "ip": "192.168.1.194"
+        }
+      },
+      {
+        "ua_id": "947a8a39-e551-4089-9a00-ab41ccfec3cd",
+        "user_id": 1,
+        "activity_type": "content_view",
+        "timestamp": "2025-09-04T14:00:00",
+        "metadata": {
+          "ip": "192.168.1.21"
+        }
+      }
+    ],
+    "userEvent": [
+      {
+        "ue_id": "127528e9-b098-42e7-8c31-d25f849d91c4",
+        "user_id": 1,
+        "event_type": "support_feature",
+        "feature": "hints",
+        "count": 3,
+        "recorded_at": "2025-09-04T20:00:00"
+      },
+      {
+        "ue_id": "343517d8-7e87-43e6-b20f-ca0b0d2fc996",
+        "user_id": 1,
+        "event_type": "support_feature",
+        "feature": "accessibility_contrast",
+        "count": 1,
+        "recorded_at": "2025-09-04T18:00:00"
+      }
+    ],
+    "Daily streak (not in use)": [
+      {
+        "streak_id": "65127bec-484f-4ec1-a1ab-792427229ee2",
+        "user_id": 1,
+        "currentStreak": 0,
+        "date": "2025-09-09",
+        "pointsEarned": 7,
+        "lastActive": "2025-09-09T15:00:00"
+      }
+    ],
+    "Daily Challenge (not in use)": [
+      {
+        "challenge_id": "c8c9d2b0-2855-48de-872c-b0247f8435f3",
+        "title": "Complete 2 lessons",
+        "description": "Finish any two lessons today.",
+        "pointsReward": 20,
+        "dueDate": "2025-09-10",
+        "date": "2025-09-09"
+      }
+    ],
+    "UserChallenge (not in use)": [
+      {
+        "id": "031ed95b-533d-4cb0-9430-673b091da552",
+        "daily_activity_id": "15650f1a-23cd-462d-857b-0670d9e19941",
+        "challenge_id": "c8c9d2b0-2855-48de-872c-b0247f8435f3",
+        "completed_at": "2025-09-10T13:00:00",
+        "pointsEarned": 20,
+        "started_at": "2025-09-09T12:00:00",
+        "time_spent": 58.56,
+        "has_skipped": false
+      }
+    ],
+    "point (not in use)": [
+      {
+        "point_id": "54a8d168-15df-41d8-910d-f5ff72f45ba9",
+        "user_id": 1,
+        "points_balance": 59,
+        "updated_at": "2025-09-09T14:00:00"
+      }
+    ],
+    "avatar_attribute": [
+      {
+        "avatar_attr_id": "f6ca462d-f2b2-4100-bc07-30032108fe86",
+        "user_id": 1,
+        "avatar_name": "Zed",
+        "clothes_set": "default",
+        "accessory": "badge",
+        "color_theme": "high_contrast",
+        "selected_at": "2025-09-08T15:00:00"
+      }
+    ],
+    "item_master": [
+      {
+        "item_id": "abc03a34-13ad-4e57-ba72-cdd0fc8716e4",
+        "item_type": "theme",
+        "name": "XP Booster",
+        "description": "Demo item",
+        "rarity": "rare",
+        "points_cost": 91,
+        "created_at": "2025-07-12T14:00:00"
+      },
+      {
+        "item_id": "64b25f5f-22ed-47ef-b327-a1b7060e8178",
+        "item_type": "booster",
+        "name": "Ocean Theme",
+        "description": "Demo item",
+        "rarity": "common",
+        "points_cost": 46,
+        "created_at": "2025-07-12T10:00:00"
+      },
+      {
+        "item_id": "0fd585b1-508c-42ce-8b07-9e14e1ce2016",
+        "item_type": "theme",
+        "name": "Ocean Theme",
+        "description": "Demo item",
+        "rarity": "epic",
+        "points_cost": 68,
+        "created_at": "2025-07-12T14:00:00"
+      },
+      {
+        "item_id": "fc4a2a80-8f01-4620-91f1-de20d9af4890",
+        "item_type": "theme",
+        "name": "Gold Badge",
+        "description": "Demo item",
+        "rarity": "common",
+        "points_cost": 92,
+        "created_at": "2025-07-12T13:00:00"
+      },
+      {
+        "item_id": "f542c77d-755c-4b24-9b77-a08cf0022589",
+        "item_type": "theme",
+        "name": "XP Booster",
+        "description": "Demo item",
+        "rarity": "epic",
+        "points_cost": 20,
+        "created_at": "2025-07-12T14:00:00"
+      }
+    ]
+  },
+  {
+    "user": [
+      {
+        "userid": 2,
+        "name": "Ava Patel",
+        "email": "ava@example.com",
+        "grade_level": "KS1",
+        "password_hashed": "hash_0002",
+        "gender": "female",
+        "country": "UK",
+        "DOB": "2010-01-02",
+        "created_at": "2024-09-10T14:00:00",
+        "geolocation": "Bristol",
+        "deviceType": "laptop",
+        "reading_level": "Emerging"
+      }
+    ],
+    "topics": [
+      {
+        "topic_id": "ce7297bc-b335-4e4e-bd3a-d3fe109db1f9",
+        "user_id": 2,
+        "title": "English Essentials",
+        "subject": "English",
+        "classLevel": "KS1",
+        "duration": 36,
+        "created_at": "2025-08-12T12:00:00",
+        "updated_at": "2025-08-22T15:00:00",
+        "deleted_at": null,
+        "total_point": 92
+      },
+      {
+        "topic_id": "e631baa3-7448-476b-8748-bc4b94eaba35",
+        "user_id": 2,
+        "title": "History Essentials",
+        "subject": "History",
+        "classLevel": "KS1",
+        "duration": 36,
+        "created_at": "2025-08-13T14:00:00",
+        "updated_at": "2025-08-23T13:00:00",
+        "deleted_at": null,
+        "total_point": 94
+      }
+    ],
+    "lesson_sections (chapter)": [
+      {
+        "lesson_sections_id": "da1397c2-f341-4955-a221-3f44c49c35e7",
+        "topic_id": "ce7297bc-b335-4e4e-bd3a-d3fe109db1f9",
+        "user_id": 2,
+        "api_heading_id": "heading_1",
+        "title": "English Essentials - Lesson 1",
+        "section_index": 1,
+        "image_path": "illustration.png",
+        "created_at": "2025-08-27T14:00:00",
+        "updated_at": "2025-09-01T11:00:00",
+        "deleted_at": null,
+        "orderIndex": 1,
+        "totalPoint": 100
+      },
+      {
+        "lesson_sections_id": "82321ff6-1557-4e41-8f39-7c962689119e",
+        "topic_id": "e631baa3-7448-476b-8748-bc4b94eaba35",
+        "user_id": 2,
+        "api_heading_id": "heading_2",
+        "title": "History Essentials - Lesson 2",
+        "section_index": 2,
+        "image_path": "illustration.png",
+        "created_at": "2025-08-28T11:00:00",
+        "updated_at": "2025-09-02T13:00:00",
+        "deleted_at": null,
+        "orderIndex": 2,
+        "totalPoint": 100
+      }
+    ],
+    "section_contents": [
+      {
+        "section_content_id": "694cef83-0e4b-4503-9a32-b9df1a7c4661",
+        "lesson_sections_id": "da1397c2-f341-4955-a221-3f44c49c35e7",
+        "reading_level": "Emerging",
+        "paragraph_delta_json": "Sample passage text.",
+        "api_grade_level": "KS1",
+        "api_reading_level": "Emerging",
+        "created_at": "2025-09-01T10:00:00",
+        "updated_at": "2025-09-05T15:00:00",
+        "deleted_at": null
+      },
+      {
+        "section_content_id": "e0bc4966-e7f0-4d39-938b-d0e24e7c8aa9",
+        "lesson_sections_id": "82321ff6-1557-4e41-8f39-7c962689119e",
+        "reading_level": "Emerging",
+        "paragraph_delta_json": "Sample passage text.",
+        "api_grade_level": "KS1",
+        "api_reading_level": "Emerging",
+        "created_at": "2025-09-01T15:00:00",
+        "updated_at": "2025-09-05T15:00:00",
+        "deleted_at": null
+      }
+    ],
+    "mcqs": [
+      {
+        "mcq_id": "adb47cc7-2361-40a9-9fd0-3ab0a84cb68a",
+        "section_content_id": "694cef83-0e4b-4503-9a32-b9df1a7c4661",
+        "question": "What is concept 1?",
+        "image_path": null,
+        "correct_option_ui_id": "option_c",
+        "created_at": "2025-09-06T14:00:00",
+        "updated_at": "2025-09-08T14:00:00",
+        "deleted_at": null
+      },
+      {
+        "mcq_id": "74e05661-4899-4988-8b09-c773c970d422",
+        "section_content_id": "e0bc4966-e7f0-4d39-938b-d0e24e7c8aa9",
+        "question": "What is concept 2?",
+        "image_path": null,
+        "correct_option_ui_id": "option_c",
+        "created_at": "2025-09-06T13:00:00",
+        "updated_at": "2025-09-08T14:00:00",
+        "deleted_at": null
+      }
+    ],
+    "mcq_options": [
+      {
+        "option_id": "35127f0a-95c1-46bf-a814-e06092e2e0ec",
+        "mcq_id": "adb47cc7-2361-40a9-9fd0-3ab0a84cb68a",
+        "text_value": "Choice 1",
+        "created_at": "2025-09-07T15:00:00",
+        "updated_at": "2025-09-08T14:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": "20a7e9f0-4942-494c-b742-bfcd3fdeccfb",
+        "mcq_id": "adb47cc7-2361-40a9-9fd0-3ab0a84cb68a",
+        "text_value": "Choice 2",
+        "created_at": "2025-09-07T15:00:00",
+        "updated_at": "2025-09-08T13:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": "b1b67c1e-aecd-4a94-a720-988128688535",
+        "mcq_id": "adb47cc7-2361-40a9-9fd0-3ab0a84cb68a",
+        "text_value": "Choice 3",
+        "created_at": "2025-09-07T15:00:00",
+        "updated_at": "2025-09-08T13:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": "e22858a4-245b-4d64-a5e9-24e793781a7c",
+        "mcq_id": "adb47cc7-2361-40a9-9fd0-3ab0a84cb68a",
+        "text_value": "Choice 4",
+        "created_at": "2025-09-07T10:00:00",
+        "updated_at": "2025-09-08T11:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": "751a9b80-4df2-4833-98f0-967f775ce473",
+        "mcq_id": "74e05661-4899-4988-8b09-c773c970d422",
+        "text_value": "Choice 1",
+        "created_at": "2025-09-07T13:00:00",
+        "updated_at": "2025-09-08T15:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": "039c062a-4c0f-4ac1-9632-c1622dcfa08c",
+        "mcq_id": "74e05661-4899-4988-8b09-c773c970d422",
+        "text_value": "Choice 2",
+        "created_at": "2025-09-07T11:00:00",
+        "updated_at": "2025-09-08T13:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": "b4784189-cbbc-468c-89a7-2414a72711a0",
+        "mcq_id": "74e05661-4899-4988-8b09-c773c970d422",
+        "text_value": "Choice 3",
+        "created_at": "2025-09-07T15:00:00",
+        "updated_at": "2025-09-08T15:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": "6c035d18-a575-473f-a537-4dd57d86b0bd",
+        "mcq_id": "74e05661-4899-4988-8b09-c773c970d422",
+        "text_value": "Choice 4",
+        "created_at": "2025-09-07T11:00:00",
+        "updated_at": "2025-09-08T13:00:00",
+        "deleted_at": null
+      }
+    ],
+    "open_questions": [
+      {
+        "question_id": "71a378d0-be4b-4cd7-9c48-1d60b3a5eca1",
+        "section_content_id": "694cef83-0e4b-4503-9a32-b9df1a7c4661",
+        "question": "Explain idea 1?",
+        "hint": "Think of a real-life example.",
+        "answer": "Sample answer.",
+        "created_at": "2025-09-07T10:00:00",
+        "updated_at": "2025-09-08T10:00:00",
+        "deleted_at": null
+      },
+      {
+        "question_id": "154e095c-6a2e-440c-8dbc-048b907b809d",
+        "section_content_id": "e0bc4966-e7f0-4d39-938b-d0e24e7c8aa9",
+        "question": "Explain idea 2?",
+        "hint": "Think of a real-life example.",
+        "answer": "Sample answer.",
+        "created_at": "2025-09-07T15:00:00",
+        "updated_at": "2025-09-08T13:00:00",
+        "deleted_at": null
+      }
+    ],
+    "chapter_session": [
+      {
+        "chapter_session_id": "99f0ca7a-d25e-442e-aa27-4cce981a13a6",
+        "topic_session_id": "bae78d41-4513-44f1-afd2-141906b13dbd",
+        "section_content_id": "694cef83-0e4b-4503-9a32-b9df1a7c4661",
+        "local_id": "chap-b7a727d6",
+        "started_at": "2025-08-30T14:00:00",
+        "completed_at": "2025-09-01T10:00:00",
+        "progress_percent": 92.36,
+        "time_spent": 27.25,
+        "points_earned": 7,
+        "replay_count": 1,
+        "skipped_content": true
+      },
+      {
+        "chapter_session_id": "7c1ba9a8-d51e-446b-8041-a14843bc7739",
+        "topic_session_id": "05172ea4-b140-41d1-838d-7b585fcee6fc",
+        "section_content_id": "e0bc4966-e7f0-4d39-938b-d0e24e7c8aa9",
+        "local_id": "chap-4e0248c7",
+        "started_at": "2025-08-30T12:00:00",
+        "completed_at": "2025-09-01T12:00:00",
+        "progress_percent": 88.95,
+        "time_spent": 58.53,
+        "points_earned": 12,
+        "replay_count": 3,
+        "skipped_content": false
+      }
+    ],
+    "topic_session": [
+      {
+        "topic_session_id": "bae78d41-4513-44f1-afd2-141906b13dbd",
+        "enrollment_id": "76f614b6-41eb-4fc1-b850-a73a0faa3ce2",
+        "local_id": "loc-08b3cf47",
+        "started_at": "2025-08-29T11:00:00",
+        "completed_at": "2025-09-02T14:00:00",
+        "total_time_spent": 56.73,
+        "completion_percent": 86.3,
+        "geo_location": "Bristol",
+        "device_type": "tablet"
+      },
+      {
+        "topic_session_id": "05172ea4-b140-41d1-838d-7b585fcee6fc",
+        "enrollment_id": "8471c27c-b782-427c-89da-fc3e4c7c2cda",
+        "local_id": "loc-732a11e8",
+        "started_at": "2025-08-29T11:00:00",
+        "completed_at": "2025-09-02T13:00:00",
+        "total_time_spent": 35.32,
+        "completion_percent": 82.09,
+        "geo_location": "Norwich",
+        "device_type": "desktop"
+      }
+    ],
+    "daily_session_log": [
+      {
+        "daily_session_id": "024b1d8f-7b46-4fe6-a31a-7d62f550273b",
+        "user_id": 2,
+        "login": "2025-09-03T14:00:00",
+        "logout": "2025-09-03T13:00:00",
+        "total_time_spent": 53.46
+      },
+      {
+        "daily_session_id": "2578f060-c17f-4616-b876-b82e64171640",
+        "user_id": 2,
+        "login": "2025-09-03T13:00:00",
+        "logout": "2025-09-03T15:00:00",
+        "total_time_spent": 61.03
+      }
+    ],
+    "AIChat": [
+      {
+        "chat_id": "fb2b951d-dee7-4bfc-b315-b5fb16d4b723",
+        "chapter_session_id": "99f0ca7a-d25e-442e-aa27-4cce981a13a6",
+        "started_at": "2025-09-01T16:00:00",
+        "completed_at": "2025-09-01T14:00:00",
+        "total_turns": 5,
+        "avg_turn_length": 124,
+        "message_length": 276,
+        "mood_detected": "calm"
+      },
+      {
+        "chat_id": "484aa390-387f-44db-bd59-51e5177fbec2",
+        "chapter_session_id": "7c1ba9a8-d51e-446b-8041-a14843bc7739",
+        "started_at": "2025-09-01T14:00:00",
+        "completed_at": "2025-09-01T15:00:00",
+        "total_turns": 4,
+        "avg_turn_length": 80,
+        "message_length": 282,
+        "mood_detected": "engaged"
+      }
+    ],
+    "org": [
+      {
+        "org_id": 1,
+        "name": "School Org 1",
+        "domain": "org1.example.edu",
+        "is_active": true,
+        "created_at": "2024-08-07T13:00:00",
+        "description": "Demo organisation"
+      },
+      {
+        "org_id": 2,
+        "name": "School Org 2",
+        "domain": "org2.example.edu",
+        "is_active": true,
+        "created_at": "2024-08-08T12:00:00",
+        "description": "Demo organisation"
+      }
+    ],
+    "org_user": [
+      {
+        "org_user_id": 2,
+        "org_id": 1,
+        "user_id": 2,
+        "role_id": 1,
+        "joined_at": "2025-02-24T10:00:00",
+        "is_active": true
+      }
+    ],
+    "role": [
+      {
+        "role_id": 1,
+        "name": "student",
+        "description": "student role",
+        "created_at": "2024-04-29T10:00:00"
+      },
+      {
+        "role_id": 2,
+        "name": "teacher",
+        "description": "teacher role",
+        "created_at": "2024-04-30T14:00:00"
+      },
+      {
+        "role_id": 3,
+        "name": "admin",
+        "description": "admin role",
+        "created_at": "2024-05-01T15:00:00"
+      }
+    ],
+    "activity_performance": [
+      {
+        "performance_id": "8bbf47dc-f233-4a1a-aef5-5112dfd3131e",
+        "chapter_session_id": "99f0ca7a-d25e-442e-aa27-4cce981a13a6",
+        "activity_id": "e8e6c85e-4a63-4ee6-a39a-96d7c1f10c40",
+        "activity_type": "mcq",
+        "user_answer": "C",
+        "input_method": "mic",
+        "attempts": 2,
+        "is_right": false,
+        "submitted_at": "2025-09-01T18:00:00",
+        "activity_skip": false,
+        "time_spent": 58.26,
+        "used_hint": true,
+        "points_earned": 8
+      },
+      {
+        "performance_id": "9c0bfcd1-c522-4862-b033-00fb594dcd87",
+        "chapter_session_id": "7c1ba9a8-d51e-446b-8041-a14843bc7739",
+        "activity_id": "e787dfaa-01f3-4ab3-b6e3-3c6c6e7dd48e",
+        "activity_type": "mcq",
+        "user_answer": "D",
+        "input_method": "touch",
+        "attempts": 3,
+        "is_right": true,
+        "submitted_at": "2025-09-01T14:00:00",
+        "activity_skip": false,
+        "time_spent": 16.61,
+        "used_hint": true,
+        "points_earned": 10
+      }
+    ],
+    "ai_literacy_assessment": [
+      {
+        "user_id": 2,
+        "taken_at": "2025-08-12T09:00:00",
+        "type": "pre",
+        "score": 52,
+        "max_score": 100,
+        "concepts_mastered": [
+          "data",
+          "privacy basics"
+        ],
+        "applications": [
+          "Describe AI inputs",
+          "List safe search tips"
+        ]
+      },
+      {
+        "user_id": 2,
+        "taken_at": "2025-09-06T09:00:00",
+        "type": "post",
+        "score": 80,
+        "max_score": 100,
+        "concepts_mastered": [
+          "data",
+          "privacy basics",
+          "model limitations"
+        ],
+        "applications": [
+          "Draft multi-step prompts",
+          "Plan when to cite AI outputs"
+        ]
+      }
+    ],
+    "userActivity": [
+      {
+        "ua_id": "3329016f-c07d-4c2b-b344-5765ab205755",
+        "user_id": 2,
+        "activity_type": "mcq_attempt",
+        "timestamp": "2025-09-04T11:00:00",
+        "metadata": {
+          "ip": "192.168.1.101"
+        }
+      },
+      {
+        "ua_id": "2ebc847c-bcd0-4afa-ae76-630f1ff33b6b",
+        "user_id": 2,
+        "activity_type": "mcq_attempt",
+        "timestamp": "2025-09-04T15:00:00",
+        "metadata": {
+          "ip": "192.168.1.87"
+        }
+      }
+    ],
+    "userEvent": [
+      {
+        "ue_id": "db2147bc-dcf9-4bb7-82c3-c2a8a99bb1b3",
+        "user_id": 2,
+        "event_type": "support_feature",
+        "feature": "hints",
+        "count": 2,
+        "recorded_at": "2025-09-04T15:00:00"
+      },
+      {
+        "ue_id": "14457f5b-ebe1-4665-97bd-e468ce13ae17",
+        "user_id": 2,
+        "event_type": "help_request",
+        "feature": "live_support",
+        "count": 3,
+        "recorded_at": "2025-09-04T16:00:00"
+      }
+    ],
+    "Daily streak (not in use)": [
+      {
+        "streak_id": "e168d29e-d94f-48b8-8ef1-02d683e3fd59",
+        "user_id": 2,
+        "currentStreak": 0,
+        "date": "2025-09-09",
+        "pointsEarned": 15,
+        "lastActive": "2025-09-09T11:00:00"
+      }
+    ],
+    "Daily Challenge (not in use)": [
+      {
+        "challenge_id": "91b87e80-429f-4616-aa7a-8b42af5363a4",
+        "title": "Complete 2 lessons",
+        "description": "Finish any two lessons today.",
+        "pointsReward": 20,
+        "dueDate": "2025-09-10",
+        "date": "2025-09-09"
+      }
+    ],
+    "UserChallenge (not in use)": [
+      {
+        "id": "dbe95111-5753-4610-a08a-7e99c80a24f5",
+        "daily_activity_id": "e65c12d4-a247-486e-9c41-c0abf8762ed2",
+        "challenge_id": "91b87e80-429f-4616-aa7a-8b42af5363a4",
+        "completed_at": "2025-09-10T13:00:00",
+        "pointsEarned": 20,
+        "started_at": "2025-09-09T15:00:00",
+        "time_spent": 36.84,
+        "has_skipped": false
+      }
+    ],
+    "point (not in use)": [
+      {
+        "point_id": "8dcdfd4f-3f73-4cfe-ab6a-fb7e868d813b",
+        "user_id": 2,
+        "points_balance": 377,
+        "updated_at": "2025-09-09T10:00:00"
+      }
+    ],
+    "avatar_attribute": [
+      {
+        "avatar_attr_id": "4c43c1de-2ecb-42b2-a333-df9eef849959",
+        "user_id": 2,
+        "avatar_name": "Nova",
+        "clothes_set": "default",
+        "accessory": "badge",
+        "color_theme": "night_mode",
+        "selected_at": "2025-09-08T12:00:00"
+      }
+    ],
+    "item_master": [
+      {
+        "item_id": "abc03a34-13ad-4e57-ba72-cdd0fc8716e4",
+        "item_type": "theme",
+        "name": "XP Booster",
+        "description": "Demo item",
+        "rarity": "rare",
+        "points_cost": 91,
+        "created_at": "2025-07-12T14:00:00"
+      },
+      {
+        "item_id": "64b25f5f-22ed-47ef-b327-a1b7060e8178",
+        "item_type": "booster",
+        "name": "Ocean Theme",
+        "description": "Demo item",
+        "rarity": "common",
+        "points_cost": 46,
+        "created_at": "2025-07-12T10:00:00"
+      },
+      {
+        "item_id": "0fd585b1-508c-42ce-8b07-9e14e1ce2016",
+        "item_type": "theme",
+        "name": "Ocean Theme",
+        "description": "Demo item",
+        "rarity": "epic",
+        "points_cost": 68,
+        "created_at": "2025-07-12T14:00:00"
+      },
+      {
+        "item_id": "fc4a2a80-8f01-4620-91f1-de20d9af4890",
+        "item_type": "theme",
+        "name": "Gold Badge",
+        "description": "Demo item",
+        "rarity": "common",
+        "points_cost": 92,
+        "created_at": "2025-07-12T13:00:00"
+      },
+      {
+        "item_id": "f542c77d-755c-4b24-9b77-a08cf0022589",
+        "item_type": "theme",
+        "name": "XP Booster",
+        "description": "Demo item",
+        "rarity": "epic",
+        "points_cost": 20,
+        "created_at": "2025-07-12T14:00:00"
+      }
+    ]
+  },
+  {
+    "user": [
+      {
+        "userid": 3,
+        "name": "Leo Chen",
+        "email": "leo@example.com",
+        "grade_level": "KS2",
+        "password_hashed": "hash_0003",
+        "gender": "male",
+        "country": "UK",
+        "DOB": "2011-01-02",
+        "created_at": "2024-09-10T13:00:00",
+        "geolocation": "Norwich",
+        "deviceType": "laptop",
+        "reading_level": "Intermediate"
+      }
+    ],
+    "topics": [
+      {
+        "topic_id": "79494db8-3c3a-41b1-af20-61a6a95c1f26",
+        "user_id": 3,
+        "title": "English Essentials",
+        "subject": "English",
+        "classLevel": "KS2",
+        "duration": 25,
+        "created_at": "2025-08-12T15:00:00",
+        "updated_at": "2025-08-22T13:00:00",
+        "deleted_at": null,
+        "total_point": 116
+      },
+      {
+        "topic_id": "8be35084-1e04-4c20-9046-e8debb36fe59",
+        "user_id": 3,
+        "title": "History Essentials",
+        "subject": "History",
+        "classLevel": "KS2",
+        "duration": 56,
+        "created_at": "2025-08-13T12:00:00",
+        "updated_at": "2025-08-23T14:00:00",
+        "deleted_at": null,
+        "total_point": 86
+      }
+    ],
+    "lesson_sections (chapter)": [
+      {
+        "lesson_sections_id": "e9f35213-1f37-4c41-bb2f-52fc4fa6a453",
+        "topic_id": "79494db8-3c3a-41b1-af20-61a6a95c1f26",
+        "user_id": 3,
+        "api_heading_id": "heading_1",
+        "title": "English Essentials - Lesson 1",
+        "section_index": 1,
+        "image_path": "illustration.png",
+        "created_at": "2025-08-27T12:00:00",
+        "updated_at": "2025-09-01T14:00:00",
+        "deleted_at": null,
+        "orderIndex": 1,
+        "totalPoint": 100
+      },
+      {
+        "lesson_sections_id": "d3284533-3ca5-4aa6-9aaa-3f54b09730f2",
+        "topic_id": "8be35084-1e04-4c20-9046-e8debb36fe59",
+        "user_id": 3,
+        "api_heading_id": "heading_2",
+        "title": "History Essentials - Lesson 2",
+        "section_index": 2,
+        "image_path": "illustration.png",
+        "created_at": "2025-08-28T13:00:00",
+        "updated_at": "2025-09-02T14:00:00",
+        "deleted_at": null,
+        "orderIndex": 2,
+        "totalPoint": 100
+      }
+    ],
+    "section_contents": [
+      {
+        "section_content_id": "19bb1f5b-99a8-4b8c-983b-5298666b3b6e",
+        "lesson_sections_id": "e9f35213-1f37-4c41-bb2f-52fc4fa6a453",
+        "reading_level": "Intermediate",
+        "paragraph_delta_json": "Sample passage text.",
+        "api_grade_level": "KS2",
+        "api_reading_level": "Intermediate",
+        "created_at": "2025-09-01T13:00:00",
+        "updated_at": "2025-09-05T10:00:00",
+        "deleted_at": null
+      },
+      {
+        "section_content_id": "bfde1617-bf5c-47eb-9c4f-d3bda1f858a0",
+        "lesson_sections_id": "d3284533-3ca5-4aa6-9aaa-3f54b09730f2",
+        "reading_level": "Intermediate",
+        "paragraph_delta_json": "Sample passage text.",
+        "api_grade_level": "KS2",
+        "api_reading_level": "Intermediate",
+        "created_at": "2025-09-01T14:00:00",
+        "updated_at": "2025-09-05T14:00:00",
+        "deleted_at": null
+      }
+    ],
+    "mcqs": [
+      {
+        "mcq_id": "d477d332-189b-49dd-b6c9-226abad96fb6",
+        "section_content_id": "19bb1f5b-99a8-4b8c-983b-5298666b3b6e",
+        "question": "What is concept 1?",
+        "image_path": null,
+        "correct_option_ui_id": "option_c",
+        "created_at": "2025-09-06T12:00:00",
+        "updated_at": "2025-09-08T10:00:00",
+        "deleted_at": null
+      },
+      {
+        "mcq_id": "d379127a-b43d-49e9-9d1c-a938b1e1eede",
+        "section_content_id": "bfde1617-bf5c-47eb-9c4f-d3bda1f858a0",
+        "question": "What is concept 2?",
+        "image_path": null,
+        "correct_option_ui_id": "option_c",
+        "created_at": "2025-09-06T11:00:00",
+        "updated_at": "2025-09-08T15:00:00",
+        "deleted_at": null
+      }
+    ],
+    "mcq_options": [
+      {
+        "option_id": "80e054cf-4c56-4dd4-b7f8-2437387914c2",
+        "mcq_id": "d477d332-189b-49dd-b6c9-226abad96fb6",
+        "text_value": "Choice 1",
+        "created_at": "2025-09-07T12:00:00",
+        "updated_at": "2025-09-08T10:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": "a1a2f369-69f3-448c-a847-901e41a0cb98",
+        "mcq_id": "d477d332-189b-49dd-b6c9-226abad96fb6",
+        "text_value": "Choice 2",
+        "created_at": "2025-09-07T12:00:00",
+        "updated_at": "2025-09-08T12:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": "4c91946a-5648-4e09-9eef-76f276d6a1c5",
+        "mcq_id": "d477d332-189b-49dd-b6c9-226abad96fb6",
+        "text_value": "Choice 3",
+        "created_at": "2025-09-07T15:00:00",
+        "updated_at": "2025-09-08T11:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": "e5f11719-8a2e-4b9c-ad21-d7cacb48d88d",
+        "mcq_id": "d477d332-189b-49dd-b6c9-226abad96fb6",
+        "text_value": "Choice 4",
+        "created_at": "2025-09-07T11:00:00",
+        "updated_at": "2025-09-08T11:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": "838cecb9-f9a9-44c8-8fb2-264cf2f4ca55",
+        "mcq_id": "d379127a-b43d-49e9-9d1c-a938b1e1eede",
+        "text_value": "Choice 1",
+        "created_at": "2025-09-07T13:00:00",
+        "updated_at": "2025-09-08T10:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": "58a6d3be-7335-4a0b-beb4-e4537bef154e",
+        "mcq_id": "d379127a-b43d-49e9-9d1c-a938b1e1eede",
+        "text_value": "Choice 2",
+        "created_at": "2025-09-07T15:00:00",
+        "updated_at": "2025-09-08T12:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": "511ee817-8bc9-4dcf-92bd-ab74ca67738e",
+        "mcq_id": "d379127a-b43d-49e9-9d1c-a938b1e1eede",
+        "text_value": "Choice 3",
+        "created_at": "2025-09-07T15:00:00",
+        "updated_at": "2025-09-08T15:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": "9a4a98e6-62e1-4185-b0b6-ab7e6d63cd87",
+        "mcq_id": "d379127a-b43d-49e9-9d1c-a938b1e1eede",
+        "text_value": "Choice 4",
+        "created_at": "2025-09-07T11:00:00",
+        "updated_at": "2025-09-08T14:00:00",
+        "deleted_at": null
+      }
+    ],
+    "open_questions": [
+      {
+        "question_id": "f532bbb6-d747-4507-af26-a90f28f3d8a0",
+        "section_content_id": "19bb1f5b-99a8-4b8c-983b-5298666b3b6e",
+        "question": "Explain idea 1?",
+        "hint": "Think of a real-life example.",
+        "answer": "Sample answer.",
+        "created_at": "2025-09-07T12:00:00",
+        "updated_at": "2025-09-08T15:00:00",
+        "deleted_at": null
+      },
+      {
+        "question_id": "fa176de9-4eda-4d8f-a651-fe9ca7882a58",
+        "section_content_id": "bfde1617-bf5c-47eb-9c4f-d3bda1f858a0",
+        "question": "Explain idea 2?",
+        "hint": "Think of a real-life example.",
+        "answer": "Sample answer.",
+        "created_at": "2025-09-07T13:00:00",
+        "updated_at": "2025-09-08T15:00:00",
+        "deleted_at": null
+      }
+    ],
+    "chapter_session": [
+      {
+        "chapter_session_id": "1c6aa295-b981-4a66-9a0f-bf4cd8072b35",
+        "topic_session_id": "7dc785d6-e54e-4347-84ff-410c04f5e04e",
+        "section_content_id": "19bb1f5b-99a8-4b8c-983b-5298666b3b6e",
+        "local_id": "chap-f0e0d611",
+        "started_at": "2025-08-30T15:00:00",
+        "completed_at": "2025-09-01T13:00:00",
+        "progress_percent": 82.37,
+        "time_spent": 59.76,
+        "points_earned": 6,
+        "replay_count": 0,
+        "skipped_content": false
+      },
+      {
+        "chapter_session_id": "ab4df09a-93ce-4790-9e26-edebf2dbb879",
+        "topic_session_id": "cc62ff8b-5e7d-4d17-8a35-fddbb4a04fc9",
+        "section_content_id": "bfde1617-bf5c-47eb-9c4f-d3bda1f858a0",
+        "local_id": "chap-0638b5f0",
+        "started_at": "2025-08-30T12:00:00",
+        "completed_at": "2025-09-01T15:00:00",
+        "progress_percent": 73.8,
+        "time_spent": 39.81,
+        "points_earned": 10,
+        "replay_count": 1,
+        "skipped_content": false
+      }
+    ],
+    "topic_session": [
+      {
+        "topic_session_id": "7dc785d6-e54e-4347-84ff-410c04f5e04e",
+        "enrollment_id": "83dc46a1-30fb-4ac0-b959-3c899ec7a300",
+        "local_id": "loc-24efdcfe",
+        "started_at": "2025-08-29T10:00:00",
+        "completed_at": "2025-09-02T11:00:00",
+        "total_time_spent": 45.16,
+        "completion_percent": 97.26,
+        "geo_location": "Oxford",
+        "device_type": "laptop"
+      },
+      {
+        "topic_session_id": "cc62ff8b-5e7d-4d17-8a35-fddbb4a04fc9",
+        "enrollment_id": "74202577-6458-4483-af4c-989fe359f70d",
+        "local_id": "loc-4c3b80e9",
+        "started_at": "2025-08-29T10:00:00",
+        "completed_at": "2025-09-02T14:00:00",
+        "total_time_spent": 31.61,
+        "completion_percent": 68.88,
+        "geo_location": "Norwich",
+        "device_type": "laptop"
+      }
+    ],
+    "daily_session_log": [
+      {
+        "daily_session_id": "a99fb3e4-d4a9-4205-b307-e0c4f8920462",
+        "user_id": 3,
+        "login": "2025-09-03T12:00:00",
+        "logout": "2025-09-03T11:00:00",
+        "total_time_spent": 77.53
+      },
+      {
+        "daily_session_id": "3ebb1f07-d415-4850-b794-71d325e80454",
+        "user_id": 3,
+        "login": "2025-09-03T14:00:00",
+        "logout": "2025-09-03T13:00:00",
+        "total_time_spent": 49.09
+      }
+    ],
+    "AIChat": [
+      {
+        "chat_id": "300807ad-7826-476b-8535-5cc63fbbad94",
+        "chapter_session_id": "1c6aa295-b981-4a66-9a0f-bf4cd8072b35",
+        "started_at": "2025-09-01T16:00:00",
+        "completed_at": "2025-09-01T16:00:00",
+        "total_turns": 2,
+        "avg_turn_length": 80,
+        "message_length": 268,
+        "mood_detected": "calm"
+      },
+      {
+        "chat_id": "fc61f548-4847-46b8-b045-c6977adac5c4",
+        "chapter_session_id": "ab4df09a-93ce-4790-9e26-edebf2dbb879",
+        "started_at": "2025-09-01T15:00:00",
+        "completed_at": "2025-09-01T16:00:00",
+        "total_turns": 3,
+        "avg_turn_length": 207,
+        "message_length": 198,
+        "mood_detected": "calm"
+      }
+    ],
+    "org": [
+      {
+        "org_id": 1,
+        "name": "School Org 1",
+        "domain": "org1.example.edu",
+        "is_active": true,
+        "created_at": "2024-08-07T13:00:00",
+        "description": "Demo organisation"
+      },
+      {
+        "org_id": 2,
+        "name": "School Org 2",
+        "domain": "org2.example.edu",
+        "is_active": true,
+        "created_at": "2024-08-08T12:00:00",
+        "description": "Demo organisation"
+      }
+    ],
+    "org_user": [
+      {
+        "org_user_id": 3,
+        "org_id": 1,
+        "user_id": 3,
+        "role_id": 1,
+        "joined_at": "2025-02-25T10:00:00",
+        "is_active": true
+      }
+    ],
+    "role": [
+      {
+        "role_id": 1,
+        "name": "student",
+        "description": "student role",
+        "created_at": "2024-04-29T10:00:00"
+      },
+      {
+        "role_id": 2,
+        "name": "teacher",
+        "description": "teacher role",
+        "created_at": "2024-04-30T14:00:00"
+      },
+      {
+        "role_id": 3,
+        "name": "admin",
+        "description": "admin role",
+        "created_at": "2024-05-01T15:00:00"
+      }
+    ],
+    "activity_performance": [
+      {
+        "performance_id": "346fd102-0fc8-4682-9e63-76a2cfac4683",
+        "chapter_session_id": "1c6aa295-b981-4a66-9a0f-bf4cd8072b35",
+        "activity_id": "7e1b7e40-2581-4b69-b561-8cefbc543bd6",
+        "activity_type": "mcq",
+        "user_answer": "C",
+        "input_method": "touch",
+        "attempts": 3,
+        "is_right": false,
+        "submitted_at": "2025-09-01T15:00:00",
+        "activity_skip": false,
+        "time_spent": 66.13,
+        "used_hint": true,
+        "points_earned": 8
+      },
+      {
+        "performance_id": "8acd1722-a919-4c41-b405-e2e852baf198",
+        "chapter_session_id": "ab4df09a-93ce-4790-9e26-edebf2dbb879",
+        "activity_id": "be0bc62f-986c-4324-8f59-e81e4485943b",
+        "activity_type": "mcq",
+        "user_answer": "D",
+        "input_method": "mic",
+        "attempts": 3,
+        "is_right": true,
+        "submitted_at": "2025-09-01T16:00:00",
+        "activity_skip": false,
+        "time_spent": 42.33,
+        "used_hint": false,
+        "points_earned": 9
+      }
+    ],
+    "ai_literacy_assessment": [
+      {
+        "user_id": 3,
+        "taken_at": "2025-08-10T09:00:00",
+        "type": "pre",
+        "score": 40,
+        "max_score": 100,
+        "concepts_mastered": [
+          "data"
+        ],
+        "applications": [
+          "Describe data labeling"
+        ]
+      },
+      {
+        "user_id": 3,
+        "taken_at": "2025-09-05T09:30:00",
+        "type": "post",
+        "score": 70,
+        "max_score": 100,
+        "concepts_mastered": [
+          "data",
+          "feedback loops"
+        ],
+        "applications": [
+          "Design a short reflection for AI help",
+          "Explain model feedback signals"
+        ]
+      }
+    ],
+    "userActivity": [
+      {
+        "ua_id": "8c2b8bc5-0fdd-4745-b991-7ce7031a0995",
+        "user_id": 3,
+        "activity_type": "login",
+        "timestamp": "2025-09-04T15:00:00",
+        "metadata": {
+          "ip": "192.168.1.11"
+        }
+      },
+      {
+        "ua_id": "7e6580a0-5310-43eb-850f-885305eaa11d",
+        "user_id": 3,
+        "activity_type": "mcq_attempt",
+        "timestamp": "2025-09-04T10:00:00",
+        "metadata": {
+          "ip": "192.168.1.151"
+        }
+      }
+    ],
+    "userEvent": [
+      {
+        "ue_id": "efa42a8a-840b-4001-8a2e-aa2e2f03d5a9",
+        "user_id": 3,
+        "event_type": "help_request",
+        "feature": "hints",
+        "count": 1,
+        "recorded_at": "2025-09-04T17:00:00"
+      },
+      {
+        "ue_id": "10053ccd-7d1c-460d-bcc0-88e7d0ad6a72",
+        "user_id": 3,
+        "event_type": "support_feature",
+        "feature": "hints",
+        "count": 1,
+        "recorded_at": "2025-09-04T17:00:00"
+      }
+    ],
+    "Daily streak (not in use)": [
+      {
+        "streak_id": "c2639e41-29da-43e4-a510-c4c898be4db8",
+        "user_id": 3,
+        "currentStreak": 7,
+        "date": "2025-09-09",
+        "pointsEarned": 13,
+        "lastActive": "2025-09-09T14:00:00"
+      }
+    ],
+    "Daily Challenge (not in use)": [
+      {
+        "challenge_id": "ad9e49b6-21d1-47e6-9e78-1e29a197e004",
+        "title": "Complete 2 lessons",
+        "description": "Finish any two lessons today.",
+        "pointsReward": 20,
+        "dueDate": "2025-09-10",
+        "date": "2025-09-09"
+      }
+    ],
+    "UserChallenge (not in use)": [
+      {
+        "id": "9d68c352-6b56-42e0-8dbf-6ba725d7eef9",
+        "daily_activity_id": "21f2b31f-33cc-43a8-ac61-0756e4e4e962",
+        "challenge_id": "ad9e49b6-21d1-47e6-9e78-1e29a197e004",
+        "completed_at": "2025-09-10T14:00:00",
+        "pointsEarned": 20,
+        "started_at": "2025-09-09T10:00:00",
+        "time_spent": 52.42,
+        "has_skipped": false
+      }
+    ],
+    "point (not in use)": [
+      {
+        "point_id": "221a8497-a751-4f81-a517-baaadc53f98d",
+        "user_id": 3,
+        "points_balance": 480,
+        "updated_at": "2025-09-09T13:00:00"
+      }
+    ],
+    "avatar_attribute": [
+      {
+        "avatar_attr_id": "54e5e1cf-e46f-4ed3-bd21-3d23903fea63",
+        "user_id": 3,
+        "avatar_name": "Ava",
+        "clothes_set": "default",
+        "accessory": "hat",
+        "color_theme": "night_mode",
+        "selected_at": "2025-09-08T12:00:00"
+      }
+    ],
+    "item_master": [
+      {
+        "item_id": "abc03a34-13ad-4e57-ba72-cdd0fc8716e4",
+        "item_type": "theme",
+        "name": "XP Booster",
+        "description": "Demo item",
+        "rarity": "rare",
+        "points_cost": 91,
+        "created_at": "2025-07-12T14:00:00"
+      },
+      {
+        "item_id": "64b25f5f-22ed-47ef-b327-a1b7060e8178",
+        "item_type": "booster",
+        "name": "Ocean Theme",
+        "description": "Demo item",
+        "rarity": "common",
+        "points_cost": 46,
+        "created_at": "2025-07-12T10:00:00"
+      },
+      {
+        "item_id": "0fd585b1-508c-42ce-8b07-9e14e1ce2016",
+        "item_type": "theme",
+        "name": "Ocean Theme",
+        "description": "Demo item",
+        "rarity": "epic",
+        "points_cost": 68,
+        "created_at": "2025-07-12T14:00:00"
+      },
+      {
+        "item_id": "fc4a2a80-8f01-4620-91f1-de20d9af4890",
+        "item_type": "theme",
+        "name": "Gold Badge",
+        "description": "Demo item",
+        "rarity": "common",
+        "points_cost": 92,
+        "created_at": "2025-07-12T13:00:00"
+      },
+      {
+        "item_id": "f542c77d-755c-4b24-9b77-a08cf0022589",
+        "item_type": "theme",
+        "name": "XP Booster",
+        "description": "Demo item",
+        "rarity": "epic",
+        "points_cost": 20,
+        "created_at": "2025-07-12T14:00:00"
+      }
+    ]
+  },
+  {
+    "user": [
+      {
+        "userid": 4,
+        "name": "Mia Sanchez",
+        "email": "mia@example.com",
+        "grade_level": "KS3",
+        "password_hashed": "hash_0004",
+        "gender": "female",
+        "country": "UK",
+        "DOB": "2012-01-02",
+        "created_at": "2024-09-10T15:00:00",
+        "geolocation": "Norwich",
+        "deviceType": "tablet",
+        "reading_level": "Advanced"
+      }
+    ],
+    "topics": [
+      {
+        "topic_id": "c2576aca-fa44-433c-b5a4-0af71b6f9aa0",
+        "user_id": 4,
+        "title": "English Essentials",
+        "subject": "English",
+        "classLevel": "KS3",
+        "duration": 54,
+        "created_at": "2025-08-12T15:00:00",
+        "updated_at": "2025-08-22T14:00:00",
+        "deleted_at": null,
+        "total_point": 90
+      },
+      {
+        "topic_id": "52112ce8-5de9-4594-9fb5-1ece13c9c3c3",
+        "user_id": 4,
+        "title": "History Essentials",
+        "subject": "History",
+        "classLevel": "KS3",
+        "duration": 46,
+        "created_at": "2025-08-13T13:00:00",
+        "updated_at": "2025-08-23T13:00:00",
+        "deleted_at": null,
+        "total_point": 101
+      }
+    ],
+    "lesson_sections (chapter)": [
+      {
+        "lesson_sections_id": "c1e23510-2ed7-48cb-b044-602a68ffb527",
+        "topic_id": "c2576aca-fa44-433c-b5a4-0af71b6f9aa0",
+        "user_id": 4,
+        "api_heading_id": "heading_1",
+        "title": "English Essentials - Lesson 1",
+        "section_index": 1,
+        "image_path": "illustration.png",
+        "created_at": "2025-08-27T12:00:00",
+        "updated_at": "2025-09-01T13:00:00",
+        "deleted_at": null,
+        "orderIndex": 1,
+        "totalPoint": 100
+      },
+      {
+        "lesson_sections_id": "14ecf63e-5323-4a49-a4c9-9248705e05fc",
+        "topic_id": "52112ce8-5de9-4594-9fb5-1ece13c9c3c3",
+        "user_id": 4,
+        "api_heading_id": "heading_2",
+        "title": "History Essentials - Lesson 2",
+        "section_index": 2,
+        "image_path": "illustration.png",
+        "created_at": "2025-08-28T14:00:00",
+        "updated_at": "2025-09-02T12:00:00",
+        "deleted_at": null,
+        "orderIndex": 2,
+        "totalPoint": 100
+      }
+    ],
+    "section_contents": [
+      {
+        "section_content_id": "edbc3bd2-dd6d-4012-b3ce-9e861f7e9779",
+        "lesson_sections_id": "c1e23510-2ed7-48cb-b044-602a68ffb527",
+        "reading_level": "Advanced",
+        "paragraph_delta_json": "Sample passage text.",
+        "api_grade_level": "KS3",
+        "api_reading_level": "Advanced",
+        "created_at": "2025-09-01T13:00:00",
+        "updated_at": "2025-09-05T11:00:00",
+        "deleted_at": null
+      },
+      {
+        "section_content_id": "660f1acf-6291-4180-91b4-27fe5af76f1c",
+        "lesson_sections_id": "14ecf63e-5323-4a49-a4c9-9248705e05fc",
+        "reading_level": "Advanced",
+        "paragraph_delta_json": "Sample passage text.",
+        "api_grade_level": "KS3",
+        "api_reading_level": "Advanced",
+        "created_at": "2025-09-01T15:00:00",
+        "updated_at": "2025-09-05T10:00:00",
+        "deleted_at": null
+      }
+    ],
+    "mcqs": [
+      {
+        "mcq_id": "608b928a-817f-4963-aa3f-28624a56fddb",
+        "section_content_id": "edbc3bd2-dd6d-4012-b3ce-9e861f7e9779",
+        "question": "What is concept 1?",
+        "image_path": null,
+        "correct_option_ui_id": "option_c",
+        "created_at": "2025-09-06T14:00:00",
+        "updated_at": "2025-09-08T11:00:00",
+        "deleted_at": null
+      },
+      {
+        "mcq_id": "f10c58db-874c-4972-932b-850a478cfbb4",
+        "section_content_id": "660f1acf-6291-4180-91b4-27fe5af76f1c",
+        "question": "What is concept 2?",
+        "image_path": null,
+        "correct_option_ui_id": "option_c",
+        "created_at": "2025-09-06T15:00:00",
+        "updated_at": "2025-09-08T10:00:00",
+        "deleted_at": null
+      }
+    ],
+    "mcq_options": [
+      {
+        "option_id": "e565126a-b49c-48a4-840c-d98210d723d2",
+        "mcq_id": "608b928a-817f-4963-aa3f-28624a56fddb",
+        "text_value": "Choice 1",
+        "created_at": "2025-09-07T15:00:00",
+        "updated_at": "2025-09-08T14:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": "4a6bd07c-c61a-4eb8-ba91-fdce4180af41",
+        "mcq_id": "608b928a-817f-4963-aa3f-28624a56fddb",
+        "text_value": "Choice 2",
+        "created_at": "2025-09-07T15:00:00",
+        "updated_at": "2025-09-08T10:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": "30afe924-9986-4a93-819d-5f48d81ca07c",
+        "mcq_id": "608b928a-817f-4963-aa3f-28624a56fddb",
+        "text_value": "Choice 3",
+        "created_at": "2025-09-07T15:00:00",
+        "updated_at": "2025-09-08T14:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": "72e5f4bb-044e-4fb6-98e5-6f42b58b958b",
+        "mcq_id": "608b928a-817f-4963-aa3f-28624a56fddb",
+        "text_value": "Choice 4",
+        "created_at": "2025-09-07T14:00:00",
+        "updated_at": "2025-09-08T12:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": "6e2359c8-bc1d-4746-a798-0d91769797cf",
+        "mcq_id": "f10c58db-874c-4972-932b-850a478cfbb4",
+        "text_value": "Choice 1",
+        "created_at": "2025-09-07T12:00:00",
+        "updated_at": "2025-09-08T13:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": "126f9762-24f5-4256-ae5c-921e742eb99a",
+        "mcq_id": "f10c58db-874c-4972-932b-850a478cfbb4",
+        "text_value": "Choice 2",
+        "created_at": "2025-09-07T15:00:00",
+        "updated_at": "2025-09-08T13:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": "6804f1d2-03ac-4235-84f6-c445b9de5396",
+        "mcq_id": "f10c58db-874c-4972-932b-850a478cfbb4",
+        "text_value": "Choice 3",
+        "created_at": "2025-09-07T13:00:00",
+        "updated_at": "2025-09-08T12:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": "d373dbb1-027c-46ed-9b68-5cbd285b4439",
+        "mcq_id": "f10c58db-874c-4972-932b-850a478cfbb4",
+        "text_value": "Choice 4",
+        "created_at": "2025-09-07T14:00:00",
+        "updated_at": "2025-09-08T11:00:00",
+        "deleted_at": null
+      }
+    ],
+    "open_questions": [
+      {
+        "question_id": "f80b70a3-e2ba-4e5b-aef5-d794ae6284d7",
+        "section_content_id": "edbc3bd2-dd6d-4012-b3ce-9e861f7e9779",
+        "question": "Explain idea 1?",
+        "hint": "Think of a real-life example.",
+        "answer": "Sample answer.",
+        "created_at": "2025-09-07T13:00:00",
+        "updated_at": "2025-09-08T13:00:00",
+        "deleted_at": null
+      },
+      {
+        "question_id": "fc4f0afc-5568-41a1-898a-77604d7f0207",
+        "section_content_id": "660f1acf-6291-4180-91b4-27fe5af76f1c",
+        "question": "Explain idea 2?",
+        "hint": "Think of a real-life example.",
+        "answer": "Sample answer.",
+        "created_at": "2025-09-07T14:00:00",
+        "updated_at": "2025-09-08T12:00:00",
+        "deleted_at": null
+      }
+    ],
+    "chapter_session": [
+      {
+        "chapter_session_id": "ab572a34-9d57-46ae-9e62-d8899642b9a2",
+        "topic_session_id": "95299a0e-a6da-48bd-a2be-6dcb8fc8a648",
+        "section_content_id": "edbc3bd2-dd6d-4012-b3ce-9e861f7e9779",
+        "local_id": "chap-15e8a45a",
+        "started_at": "2025-08-30T12:00:00",
+        "completed_at": "2025-09-01T11:00:00",
+        "progress_percent": 85.48,
+        "time_spent": 53.84,
+        "points_earned": 12,
+        "replay_count": 2,
+        "skipped_content": false
+      },
+      {
+        "chapter_session_id": "1190f6be-9243-495f-a41c-d263194c3601",
+        "topic_session_id": "5b8d6606-995c-4039-b1fc-dc3bdebea91f",
+        "section_content_id": "660f1acf-6291-4180-91b4-27fe5af76f1c",
+        "local_id": "chap-876e94c7",
+        "started_at": "2025-08-30T11:00:00",
+        "completed_at": "2025-09-01T12:00:00",
+        "progress_percent": 85.05,
+        "time_spent": 23.89,
+        "points_earned": 10,
+        "replay_count": 3,
+        "skipped_content": false
+      }
+    ],
+    "topic_session": [
+      {
+        "topic_session_id": "95299a0e-a6da-48bd-a2be-6dcb8fc8a648",
+        "enrollment_id": "06edd5a4-d077-458d-b09b-c3b49dbcd58c",
+        "local_id": "loc-1519ff47",
+        "started_at": "2025-08-29T10:00:00",
+        "completed_at": "2025-09-02T12:00:00",
+        "total_time_spent": 61.2,
+        "completion_percent": 94.46,
+        "geo_location": "Bristol",
+        "device_type": "laptop"
+      },
+      {
+        "topic_session_id": "5b8d6606-995c-4039-b1fc-dc3bdebea91f",
+        "enrollment_id": "ba180d2f-daad-4785-9c23-a98f8d91000c",
+        "local_id": "loc-a5bc776c",
+        "started_at": "2025-08-29T15:00:00",
+        "completed_at": "2025-09-02T11:00:00",
+        "total_time_spent": 30.11,
+        "completion_percent": 85.14,
+        "geo_location": "Norwich",
+        "device_type": "desktop"
+      }
+    ],
+    "daily_session_log": [
+      {
+        "daily_session_id": "aded8945-b094-4ef5-9412-2b97d8c8a410",
+        "user_id": 4,
+        "login": "2025-09-03T10:00:00",
+        "logout": "2025-09-03T14:00:00",
+        "total_time_spent": 32.06
+      },
+      {
+        "daily_session_id": "ac5f59b4-c6ec-4855-95d0-5c7f2912cd25",
+        "user_id": 4,
+        "login": "2025-09-03T12:00:00",
+        "logout": "2025-09-03T14:00:00",
+        "total_time_spent": 97.93
+      }
+    ],
+    "AIChat": [
+      {
+        "chat_id": "d1a8551a-258d-4891-9cf2-fcb995f379f5",
+        "chapter_session_id": "ab572a34-9d57-46ae-9e62-d8899642b9a2",
+        "started_at": "2025-09-01T17:00:00",
+        "completed_at": "2025-09-01T16:00:00",
+        "total_turns": 1,
+        "avg_turn_length": 166,
+        "message_length": 220,
+        "mood_detected": "frustrated"
+      },
+      {
+        "chat_id": "f2edc7bc-c5cc-41b3-86f0-e3e787864a6f",
+        "chapter_session_id": "1190f6be-9243-495f-a41c-d263194c3601",
+        "started_at": "2025-09-01T13:00:00",
+        "completed_at": "2025-09-01T14:00:00",
+        "total_turns": 2,
+        "avg_turn_length": 193,
+        "message_length": 186,
+        "mood_detected": "frustrated"
+      }
+    ],
+    "org": [
+      {
+        "org_id": 1,
+        "name": "School Org 1",
+        "domain": "org1.example.edu",
+        "is_active": true,
+        "created_at": "2024-08-07T13:00:00",
+        "description": "Demo organisation"
+      },
+      {
+        "org_id": 2,
+        "name": "School Org 2",
+        "domain": "org2.example.edu",
+        "is_active": true,
+        "created_at": "2024-08-08T12:00:00",
+        "description": "Demo organisation"
+      }
+    ],
+    "org_user": [
+      {
+        "org_user_id": 4,
+        "org_id": 1,
+        "user_id": 4,
+        "role_id": 1,
+        "joined_at": "2025-02-26T12:00:00",
+        "is_active": true
+      }
+    ],
+    "role": [
+      {
+        "role_id": 1,
+        "name": "student",
+        "description": "student role",
+        "created_at": "2024-04-29T10:00:00"
+      },
+      {
+        "role_id": 2,
+        "name": "teacher",
+        "description": "teacher role",
+        "created_at": "2024-04-30T14:00:00"
+      },
+      {
+        "role_id": 3,
+        "name": "admin",
+        "description": "admin role",
+        "created_at": "2024-05-01T15:00:00"
+      }
+    ],
+    "activity_performance": [
+      {
+        "performance_id": "c9a8d892-7f0a-4203-aa32-cb2c51f5321f",
+        "chapter_session_id": "ab572a34-9d57-46ae-9e62-d8899642b9a2",
+        "activity_id": "6abd9df2-d3cd-4b67-a5a3-766bf67f2103",
+        "activity_type": "mcq",
+        "user_answer": "B",
+        "input_method": "mic",
+        "attempts": 1,
+        "is_right": false,
+        "submitted_at": "2025-09-01T16:00:00",
+        "activity_skip": false,
+        "time_spent": 14.66,
+        "used_hint": false,
+        "points_earned": 5
+      },
+      {
+        "performance_id": "bcf5e055-3956-477d-8223-528fca46d761",
+        "chapter_session_id": "1190f6be-9243-495f-a41c-d263194c3601",
+        "activity_id": "0229dc61-e333-453e-bd2e-08bb952e75d7",
+        "activity_type": "mcq",
+        "user_answer": "C",
+        "input_method": "mic",
+        "attempts": 3,
+        "is_right": true,
+        "submitted_at": "2025-09-01T13:00:00",
+        "activity_skip": false,
+        "time_spent": 61.6,
+        "used_hint": true,
+        "points_earned": 14
+      }
+    ],
+    "ai_literacy_assessment": [
+      {
+        "user_id": 4,
+        "taken_at": "2025-08-14T09:00:00",
+        "type": "pre",
+        "score": 55,
+        "max_score": 100,
+        "concepts_mastered": [
+          "data",
+          "ethics basics"
+        ],
+        "applications": [
+          "List safe sharing habits",
+          "Identify AI use cases in lessons"
+        ]
+      },
+      {
+        "user_id": 4,
+        "taken_at": "2025-09-07T09:30:00",
+        "type": "post",
+        "score": 85,
+        "max_score": 100,
+        "concepts_mastered": [
+          "data",
+          "ethics basics",
+          "responsible deployment"
+        ],
+        "applications": [
+          "Lead a safety checklist with peers",
+          "Critique AI suggestions with evidence"
+        ]
+      }
+    ],
+    "userActivity": [
+      {
+        "ua_id": "55868ae6-17b8-44fb-8b54-f81e19b59278",
+        "user_id": 4,
+        "activity_type": "login",
+        "timestamp": "2025-09-04T14:00:00",
+        "metadata": {
+          "ip": "192.168.1.81"
+        }
+      },
+      {
+        "ua_id": "4127f81b-2fba-4a52-91a6-baab172d2062",
+        "user_id": 4,
+        "activity_type": "mcq_attempt",
+        "timestamp": "2025-09-04T10:00:00",
+        "metadata": {
+          "ip": "192.168.1.63"
+        }
+      }
+    ],
+    "userEvent": [
+      {
+        "ue_id": "be84f1ba-9831-49b8-9a98-422a620096a5",
+        "user_id": 4,
+        "event_type": "help_request",
+        "feature": "live_support",
+        "count": 1,
+        "recorded_at": "2025-09-04T15:00:00"
+      },
+      {
+        "ue_id": "6ba4bccc-48d5-40c8-a9d8-9fe0e6334f05",
+        "user_id": 4,
+        "event_type": "help_request",
+        "feature": "live_support",
+        "count": 2,
+        "recorded_at": "2025-09-04T18:00:00"
+      }
+    ],
+    "Daily streak (not in use)": [
+      {
+        "streak_id": "b486bca3-37b4-4e7d-82f3-633eed5dd9ec",
+        "user_id": 4,
+        "currentStreak": 9,
+        "date": "2025-09-09",
+        "pointsEarned": 10,
+        "lastActive": "2025-09-09T10:00:00"
+      }
+    ],
+    "Daily Challenge (not in use)": [
+      {
+        "challenge_id": "8cf9300b-43ac-4fd8-b6ac-b7900e707cb0",
+        "title": "Complete 2 lessons",
+        "description": "Finish any two lessons today.",
+        "pointsReward": 20,
+        "dueDate": "2025-09-10",
+        "date": "2025-09-09"
+      }
+    ],
+    "UserChallenge (not in use)": [
+      {
+        "id": "9a165d54-3028-4522-a925-96f89b77df94",
+        "daily_activity_id": "65849057-a569-4557-9be2-9fa070d279e0",
+        "challenge_id": "8cf9300b-43ac-4fd8-b6ac-b7900e707cb0",
+        "completed_at": "2025-09-10T15:00:00",
+        "pointsEarned": 20,
+        "started_at": "2025-09-09T14:00:00",
+        "time_spent": 49.22,
+        "has_skipped": false
+      }
+    ],
+    "point (not in use)": [
+      {
+        "point_id": "cfb1f7e2-d67c-4266-9516-e0a54f97a2a9",
+        "user_id": 4,
+        "points_balance": 266,
+        "updated_at": "2025-09-09T12:00:00"
+      }
+    ],
+    "avatar_attribute": [
+      {
+        "avatar_attr_id": "5aa26bef-f126-482e-90a9-98b850ff5a45",
+        "user_id": 4,
+        "avatar_name": "Zed",
+        "clothes_set": "default",
+        "accessory": "glasses",
+        "color_theme": "calm_blue",
+        "selected_at": "2025-09-08T10:00:00"
+      }
+    ],
+    "item_master": [
+      {
+        "item_id": "abc03a34-13ad-4e57-ba72-cdd0fc8716e4",
+        "item_type": "theme",
+        "name": "XP Booster",
+        "description": "Demo item",
+        "rarity": "rare",
+        "points_cost": 91,
+        "created_at": "2025-07-12T14:00:00"
+      },
+      {
+        "item_id": "64b25f5f-22ed-47ef-b327-a1b7060e8178",
+        "item_type": "booster",
+        "name": "Ocean Theme",
+        "description": "Demo item",
+        "rarity": "common",
+        "points_cost": 46,
+        "created_at": "2025-07-12T10:00:00"
+      },
+      {
+        "item_id": "0fd585b1-508c-42ce-8b07-9e14e1ce2016",
+        "item_type": "theme",
+        "name": "Ocean Theme",
+        "description": "Demo item",
+        "rarity": "epic",
+        "points_cost": 68,
+        "created_at": "2025-07-12T14:00:00"
+      },
+      {
+        "item_id": "fc4a2a80-8f01-4620-91f1-de20d9af4890",
+        "item_type": "theme",
+        "name": "Gold Badge",
+        "description": "Demo item",
+        "rarity": "common",
+        "points_cost": 92,
+        "created_at": "2025-07-12T13:00:00"
+      },
+      {
+        "item_id": "f542c77d-755c-4b24-9b77-a08cf0022589",
+        "item_type": "theme",
+        "name": "XP Booster",
+        "description": "Demo item",
+        "rarity": "epic",
+        "points_cost": 20,
+        "created_at": "2025-07-12T14:00:00"
+      }
+    ]
+  }
+]

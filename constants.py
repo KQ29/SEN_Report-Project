@@ -1,7 +1,7 @@
 # constants.py
 
 # Defaults if nothing is uploaded in the sidebar.
-PRIMARY_JSON_PATH = "seed.json"
+PRIMARY_JSON_PATH = "four_students_new.json"
 SECONDARY_JSON_PATH = ""
 
 # Backwards-compatible alias used by older parts of the app;

@@ -330,7 +330,4 @@ def build_report(d: Dict[str, Any]) -> str:
     out.append(_section("GOALS & RECOMMENDATIONS"))
     out.append(_bullet(recommendations, icon="✅"))
 
-    out.append(_section("OPEN QUESTIONS"))
-    out.append(_list_line("ℹ️", "The dataset does not capture unanswered or out-of-scope questions."))
-
     return "".join(out)

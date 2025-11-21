@@ -209,8 +209,12 @@
         "type": "pre",
         "score": 45,
         "max_score": 100,
-        "concepts_mastered": ["data"],
-        "applications": ["Identify data in daily life"]
+        "concepts_mastered": [
+          "data"
+        ],
+        "applications": [
+          "Identify data in daily life"
+        ]
       },
       {
         "user_id": 1,
@@ -218,8 +222,5482 @@
         "type": "post",
         "score": 72,
         "max_score": 100,
-        "concepts_mastered": ["data", "algorithm", "bias"],
-        "applications": ["Explain algorithm with steps", "Spot bias in dataset"]
+        "concepts_mastered": [
+          "data",
+          "algorithm",
+          "bias"
+        ],
+        "applications": [
+          "Explain algorithm with steps",
+          "Spot bias in dataset"
+        ]
+      }
+    ],
+    "emotional_regulation_log": [
+      {
+        "entry_id": 1001,
+        "user_id": 1,
+        "recorded_at": "2024-09-03T00:00:00",
+        "zone": "Yellow",
+        "mood_indicator": "restless",
+        "sensory_adjustments": {
+          "contrast": "standard",
+          "font_size": "medium",
+          "background": "soft_blue"
+        }
+      },
+      {
+        "entry_id": 1002,
+        "user_id": 1,
+        "recorded_at": "2024-09-04T00:00:00",
+        "zone": "Red",
+        "mood_indicator": "overwhelmed",
+        "sensory_adjustments": {
+          "contrast": "low",
+          "font_size": "large",
+          "overlay": "amber"
+        }
+      },
+      {
+        "entry_id": 1003,
+        "user_id": 1,
+        "recorded_at": "2024-09-05T00:00:00",
+        "zone": "Blue",
+        "mood_indicator": "tired",
+        "sensory_adjustments": {
+          "contrast": "high",
+          "font_size": "small",
+          "filter": "warm"
+        }
+      }
+    ],
+    "support_usage": [
+      {
+        "event_id": 2001,
+        "user_id": 1,
+        "event_type": "help_request",
+        "feature": "live_support",
+        "count": 1,
+        "recorded_at": "2024-09-04T00:00:00"
+      },
+      {
+        "event_id": 2002,
+        "user_id": 1,
+        "event_type": "support_feature",
+        "feature": "hints",
+        "count": 1,
+        "recorded_at": "2024-09-05T00:00:00"
+      }
+    ],
+    "communication_events": [
+      {
+        "event_id": 3001,
+        "user_id": 1,
+        "interaction_type": "text_message",
+        "initiated_by": "system",
+        "turns": 2,
+        "message_length": 168,
+        "timestamp": "2024-09-05T00:00:00"
+      },
+      {
+        "event_id": 3002,
+        "user_id": 1,
+        "interaction_type": "avatar_chat",
+        "initiated_by": "student",
+        "turns": 1,
+        "message_length": 165,
+        "timestamp": "2024-09-06T00:00:00"
+      }
+    ]
+  },
+  {
+    "user": [
+      {
+        "user_id": 2,
+        "email": "apatel@example.org",
+        "name": "Ava Patel",
+        "age": 8,
+        "parental_email": "parent_apatel@example.org",
+        "password_hashed": "hash_0002",
+        "created_at": "2025-01-12T00:00:00",
+        "updated_at": "2025-01-22T00:00:00",
+        "dob": "2012-01-02",
+        "gender": "female",
+        "class_level": "KS1",
+        "school_name": "Willow Creek Primary",
+        "reading_level": "Emerging"
+      }
+    ],
+    "enrollment": [
+      {
+        "enrollment_id": 14,
+        "enrolled_at": "2024-09-11T00:00:00",
+        "user_id": 2,
+        "topic_id": 1,
+        "is_completed": false,
+        "have_certificate": true
+      },
+      {
+        "enrollment_id": 15,
+        "enrolled_at": "2024-09-12T00:00:00",
+        "user_id": 2,
+        "topic_id": 2,
+        "is_completed": true,
+        "have_certificate": false
+      }
+    ],
+    "daily_activity_log": [
+      {
+        "log_id": 16,
+        "user_id": 2,
+        "login_timestamp": "2024-09-07T00:00:00",
+        "time_spent": 20.83,
+        "points_earned": 11,
+        "activities_completed": 6
+      },
+      {
+        "log_id": 17,
+        "user_id": 2,
+        "login_timestamp": "2024-09-08T00:00:00",
+        "time_spent": 47.67,
+        "points_earned": 9,
+        "activities_completed": 5
+      },
+      {
+        "log_id": 18,
+        "user_id": 2,
+        "login_timestamp": "2024-09-09T00:00:00",
+        "time_spent": 25.83,
+        "points_earned": 10,
+        "activities_completed": 5
+      }
+    ],
+    "topic_session": [
+      {
+        "topic_session_id": 14,
+        "enrollment_id": 14,
+        "started_at": "2024-09-11T00:00:00",
+        "total_time_spent": 48.61,
+        "device_type": "desktop",
+        "completed_at": "2024-09-18T00:00:00",
+        "completion_percent": 72.74,
+        "geo_location": "Norwich"
+      },
+      {
+        "topic_session_id": 15,
+        "enrollment_id": 15,
+        "started_at": "2024-09-12T00:00:00",
+        "total_time_spent": 43.89,
+        "device_type": "tablet",
+        "completed_at": "2024-09-19T00:00:00",
+        "completion_percent": 81.83,
+        "geo_location": "Oxford"
+      }
+    ],
+    "chapter_session": [
+      {
+        "chapter_session_id": 14,
+        "topic_session_id": 14,
+        "section_content_id": 1,
+        "time_spent": 45.13,
+        "progress_percent": 85.33,
+        "replay_count": 2,
+        "points_earned": 6,
+        "skipped_content": false,
+        "started_at": "2024-09-11T02:00:00",
+        "completed_at": "2024-09-18T01:00:00"
+      },
+      {
+        "chapter_session_id": 15,
+        "topic_session_id": 15,
+        "section_content_id": 2,
+        "time_spent": 37.73,
+        "progress_percent": 61.69,
+        "replay_count": 1,
+        "points_earned": 10,
+        "skipped_content": false,
+        "started_at": "2024-09-12T02:00:00",
+        "completed_at": "2024-09-19T01:00:00"
+      }
+    ],
+    "activity_performance": [
+      {
+        "performance_id": 14,
+        "chapter_session_id": 14,
+        "activity_id": "12ad8b94-18f0-40c7-8597-2695fda34833",
+        "activity_type": "mcq",
+        "user_answer": "B",
+        "input_method": "touch",
+        "attempts": 1,
+        "is_right": false,
+        "submitted_at": "2024-09-18T02:00:00",
+        "activity_skip": false,
+        "time_spent": 43.63,
+        "used_hint": true,
+        "points_earned": 8
+      },
+      {
+        "performance_id": 15,
+        "chapter_session_id": 14,
+        "activity_id": "30b53b59-d95d-4933-b02a-974b79d0e537",
+        "activity_type": "mcq",
+        "user_answer": "C",
+        "input_method": "keyboard",
+        "attempts": 2,
+        "is_right": true,
+        "submitted_at": "2024-09-18T03:00:00",
+        "activity_skip": false,
+        "time_spent": 23.88,
+        "used_hint": false,
+        "points_earned": 8
+      },
+      {
+        "performance_id": 16,
+        "chapter_session_id": 15,
+        "activity_id": "a8b9bc8c-28ad-4999-b38a-ce93d6c02b17",
+        "activity_type": "mcq",
+        "user_answer": "B",
+        "input_method": "touch",
+        "attempts": 3,
+        "is_right": false,
+        "submitted_at": "2024-09-19T02:00:00",
+        "activity_skip": false,
+        "time_spent": 38.95,
+        "used_hint": false,
+        "points_earned": 9
+      },
+      {
+        "performance_id": 17,
+        "chapter_session_id": 15,
+        "activity_id": "80db5295-32a4-4d58-bb23-ddb821114600",
+        "activity_type": "mcq",
+        "user_answer": "C",
+        "input_method": "keyboard",
+        "attempts": 2,
+        "is_right": true,
+        "submitted_at": "2024-09-19T03:00:00",
+        "activity_skip": false,
+        "time_spent": 26.62,
+        "used_hint": false,
+        "points_earned": 12
+      }
+    ],
+    "lesson_session": [
+      {
+        "lesson_session_id": 1,
+        "user_id": 2,
+        "topic_id": 1,
+        "api_heading_id": 1,
+        "section_index": 5,
+        "title": "Session 1",
+        "device_type": "tablet",
+        "created_at": "2024-09-11T01:00:00"
+      },
+      {
+        "lesson_session_id": 2,
+        "user_id": 2,
+        "topic_id": 2,
+        "api_heading_id": 2,
+        "section_index": 6,
+        "title": "Session 2",
+        "device_type": "tablet",
+        "created_at": "2024-09-12T01:00:00"
+      }
+    ],
+    "Topics": [
+      {
+        "topic_id": 1,
+        "user_id": 2,
+        "title": "English Essentials",
+        "subject": "English",
+        "duration": 43,
+        "class_level": "KS1",
+        "created_at": "2024-09-11T00:00:00"
+      },
+      {
+        "topic_id": 2,
+        "user_id": 2,
+        "title": "History Essentials",
+        "subject": "History",
+        "duration": 30,
+        "class_level": "KS1",
+        "created_at": "2024-09-12T00:00:00"
+      }
+    ],
+    "avatar_change": [
+      {
+        "avatar_change_id": 1,
+        "chapter_session_id": 14,
+        "avatar_name": "Nova",
+        "clothes_set": "default",
+        "time_spent": 2.58,
+        "accessory": "badge",
+        "selected_at": "2024-09-18T00:00:00"
+      },
+      {
+        "avatar_change_id": 2,
+        "chapter_session_id": 15,
+        "avatar_name": "Ava",
+        "clothes_set": "default",
+        "time_spent": 2.94,
+        "accessory": "badge",
+        "selected_at": "2024-09-19T00:00:00"
+      }
+    ],
+    "font_change": [
+      {
+        "font_change_id": 1,
+        "chapter_session_id": 14,
+        "font_size": 19,
+        "font_style": "OpenDyslexic",
+        "selected_at": "2024-09-17T23:00:00"
+      },
+      {
+        "font_change_id": 2,
+        "chapter_session_id": 15,
+        "font_size": 16,
+        "font_style": "OpenDyslexic",
+        "selected_at": "2024-09-18T23:00:00"
+      }
+    ],
+    "background_change": [
+      {
+        "background_change_id": 1,
+        "chapter_session_id": 14,
+        "time_spent": 2.85,
+        "background_option": "night_mode",
+        "selected_at": "2024-09-17T22:00:00"
+      },
+      {
+        "background_change_id": 2,
+        "chapter_session_id": 15,
+        "time_spent": 3.96,
+        "background_option": "high_contrast",
+        "selected_at": "2024-09-18T22:00:00"
+      }
+    ],
+    "ai_chat": [
+      {
+        "chat_id": 1,
+        "chapter_session_id": 14,
+        "ai_response": "Let's work through the tricky steps together.",
+        "input_method": "text",
+        "time_spent": 3.36,
+        "user_message": "I need help with this question.",
+        "selected_at": "2024-09-18T02:00:00"
+      },
+      {
+        "chat_id": 2,
+        "chapter_session_id": 15,
+        "ai_response": "Let's work through the tricky steps together.",
+        "input_method": "text",
+        "time_spent": 4.7,
+        "user_message": "I need help with this question.",
+        "selected_at": "2024-09-19T02:00:00"
+      }
+    ],
+    "lesson_sections": [
+      {
+        "lesson_section_id": 1,
+        "topic_id": 1,
+        "user_id": 2,
+        "title": "Lesson 1",
+        "image_path": "illustration.png",
+        "section_index": 10,
+        "api_heading_id": "heading_1",
+        "created_at": "2024-09-11T00:00:00",
+        "updated_at": "2024-09-18T00:00:00",
+        "deleted_at": null,
+        "total_points": 100
+      },
+      {
+        "lesson_section_id": 2,
+        "topic_id": 2,
+        "user_id": 2,
+        "title": "Lesson 2",
+        "image_path": "illustration.png",
+        "section_index": 11,
+        "api_heading_id": "heading_2",
+        "created_at": "2024-09-12T00:00:00",
+        "updated_at": "2024-09-19T00:00:00",
+        "deleted_at": null,
+        "total_points": 100
+      }
+    ],
+    "section_contents": [
+      {
+        "section_content_id": 1,
+        "lesson_section_id": 1,
+        "reading_level": "Emerging",
+        "paragraph_delta_json": "Sample passage for Ava Patel topic 1.",
+        "api_grade_level": "KS1",
+        "api_reading_level": "Emerging",
+        "created_at": "2024-09-11T00:00:00",
+        "updated_at": "2024-09-18T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "section_content_id": 2,
+        "lesson_section_id": 2,
+        "reading_level": "Emerging",
+        "paragraph_delta_json": "Sample passage for Ava Patel topic 2.",
+        "api_grade_level": "KS1",
+        "api_reading_level": "Emerging",
+        "created_at": "2024-09-12T00:00:00",
+        "updated_at": "2024-09-19T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "mcqs": [
+      {
+        "mcq_id": 1,
+        "section_content_id": 1,
+        "question": "What is concept 1?",
+        "image_path": null,
+        "correct_option_ui_id": "option_c",
+        "created_at": "2024-09-11T00:00:00",
+        "updated_at": "2024-09-18T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "mcq_id": 2,
+        "section_content_id": 2,
+        "question": "What is concept 2?",
+        "image_path": null,
+        "correct_option_ui_id": "option_c",
+        "created_at": "2024-09-12T00:00:00",
+        "updated_at": "2024-09-19T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "mcq_options": [
+      {
+        "option_id": 1,
+        "mcq_id": 1,
+        "text_value": "Choice 1",
+        "created_at": "2024-09-11T00:00:00",
+        "updated_at": "2024-09-18T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 2,
+        "mcq_id": 1,
+        "text_value": "Choice 2",
+        "created_at": "2024-09-11T00:00:00",
+        "updated_at": "2024-09-18T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 3,
+        "mcq_id": 1,
+        "text_value": "Choice 3",
+        "created_at": "2024-09-11T00:00:00",
+        "updated_at": "2024-09-18T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 4,
+        "mcq_id": 1,
+        "text_value": "Choice 4",
+        "created_at": "2024-09-11T00:00:00",
+        "updated_at": "2024-09-18T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 5,
+        "mcq_id": 2,
+        "text_value": "Choice 1",
+        "created_at": "2024-09-12T00:00:00",
+        "updated_at": "2024-09-19T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 6,
+        "mcq_id": 2,
+        "text_value": "Choice 2",
+        "created_at": "2024-09-12T00:00:00",
+        "updated_at": "2024-09-19T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 7,
+        "mcq_id": 2,
+        "text_value": "Choice 3",
+        "created_at": "2024-09-12T00:00:00",
+        "updated_at": "2024-09-19T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 8,
+        "mcq_id": 2,
+        "text_value": "Choice 4",
+        "created_at": "2024-09-12T00:00:00",
+        "updated_at": "2024-09-19T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "mcq_click": [
+      {
+        "click_id": 1,
+        "mcq_id": 1,
+        "chapter_session_id": 14,
+        "click_count": 2,
+        "image_path": "mcq.png",
+        "last_click": "2024-09-19T00:00:00",
+        "created_at": "2024-09-18T00:00:00",
+        "updated_at": "2024-09-20T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "click_id": 2,
+        "mcq_id": 2,
+        "chapter_session_id": 15,
+        "click_count": 3,
+        "image_path": "mcq.png",
+        "last_click": "2024-09-20T00:00:00",
+        "created_at": "2024-09-19T00:00:00",
+        "updated_at": "2024-09-21T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "open_questions": [
+      {
+        "question_id": 1,
+        "section_content_id": 1,
+        "question": "Explain idea 1?",
+        "hint": "Think of real-life example",
+        "answer": "Sample answer",
+        "created_at": "2024-09-11T00:00:00",
+        "updated_at": "2024-09-18T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "question_id": 2,
+        "section_content_id": 2,
+        "question": "Explain idea 2?",
+        "hint": "Think of real-life example",
+        "answer": "Sample answer",
+        "created_at": "2024-09-12T00:00:00",
+        "updated_at": "2024-09-19T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "resource_click": [
+      {
+        "click_id": 1,
+        "chapter_session_id": 14,
+        "click_count": 3,
+        "image_path": "resource.png",
+        "last_click": "2024-09-19T00:00:00",
+        "created_at": "2024-09-11T00:00:00",
+        "updated_at": "2024-09-20T00:00:00"
+      },
+      {
+        "click_id": 2,
+        "chapter_session_id": 15,
+        "click_count": 3,
+        "image_path": "resource.png",
+        "last_click": "2024-09-20T00:00:00",
+        "created_at": "2024-09-12T00:00:00",
+        "updated_at": "2024-09-21T00:00:00"
+      }
+    ],
+    "ai_literacy_assessment": [
+      {
+        "user_id": 2,
+        "taken_at": "2024-09-07T00:00:00",
+        "type": "pre",
+        "score": 60,
+        "max_score": 100,
+        "concepts_mastered": [
+          "data"
+        ],
+        "applications": [
+          "Identify examples"
+        ]
+      },
+      {
+        "user_id": 2,
+        "taken_at": "2024-10-07T00:00:00",
+        "type": "post",
+        "score": 68,
+        "max_score": 100,
+        "concepts_mastered": [
+          "data",
+          "algorithm"
+        ],
+        "applications": [
+          "Explain algorithm steps",
+          "Spot bias"
+        ]
+      }
+    ],
+    "emotional_regulation_log": [
+      {
+        "entry_id": 1004,
+        "user_id": 2,
+        "recorded_at": "2024-09-05T00:00:00",
+        "zone": "Red",
+        "mood_indicator": "overwhelmed",
+        "sensory_adjustments": {
+          "contrast": "low",
+          "font_size": "large",
+          "overlay": "amber"
+        }
+      },
+      {
+        "entry_id": 1005,
+        "user_id": 2,
+        "recorded_at": "2024-09-06T00:00:00",
+        "zone": "Blue",
+        "mood_indicator": "tired",
+        "sensory_adjustments": {
+          "contrast": "high",
+          "font_size": "small",
+          "filter": "warm"
+        }
+      },
+      {
+        "entry_id": 1006,
+        "user_id": 2,
+        "recorded_at": "2024-09-07T00:00:00",
+        "zone": "Green",
+        "mood_indicator": "calm-focused",
+        "sensory_adjustments": {
+          "contrast": "high",
+          "font_size": "large",
+          "audio": "white_noise"
+        }
+      }
+    ],
+    "support_usage": [
+      {
+        "event_id": 2003,
+        "user_id": 2,
+        "event_type": "help_request",
+        "feature": "live_support",
+        "count": 1,
+        "recorded_at": "2024-09-07T00:00:00"
+      },
+      {
+        "event_id": 2004,
+        "user_id": 2,
+        "event_type": "support_feature",
+        "feature": "accessibility_contrast",
+        "count": 3,
+        "recorded_at": "2024-09-08T00:00:00"
+      }
+    ],
+    "communication_events": [
+      {
+        "event_id": 3003,
+        "user_id": 2,
+        "interaction_type": "avatar_chat",
+        "initiated_by": "student",
+        "turns": 1,
+        "message_length": 236,
+        "timestamp": "2024-09-09T00:00:00"
+      },
+      {
+        "event_id": 3004,
+        "user_id": 2,
+        "interaction_type": "text_message",
+        "initiated_by": "system",
+        "turns": 3,
+        "message_length": 176,
+        "timestamp": "2024-09-10T00:00:00"
+      }
+    ]
+  },
+  {
+    "user": [
+      {
+        "user_id": 3,
+        "email": "lchen@example.org",
+        "name": "Leo Chen",
+        "age": 9,
+        "parental_email": "parent_lchen@example.org",
+        "password_hashed": "hash_0003",
+        "created_at": "2025-01-05T00:00:00",
+        "updated_at": "2025-01-15T00:00:00",
+        "dob": "2011-01-02",
+        "gender": "male",
+        "class_level": "KS2",
+        "school_name": "Eastfield Academy",
+        "reading_level": "Intermediate"
+      }
+    ],
+    "enrollment": [
+      {
+        "enrollment_id": 16,
+        "enrolled_at": "2024-09-16T00:00:00",
+        "user_id": 3,
+        "topic_id": 3,
+        "is_completed": false,
+        "have_certificate": true
+      },
+      {
+        "enrollment_id": 17,
+        "enrolled_at": "2024-09-17T00:00:00",
+        "user_id": 3,
+        "topic_id": 4,
+        "is_completed": true,
+        "have_certificate": false
+      }
+    ],
+    "daily_activity_log": [
+      {
+        "log_id": 19,
+        "user_id": 3,
+        "login_timestamp": "2024-09-10T00:00:00",
+        "time_spent": 34.9,
+        "points_earned": 12,
+        "activities_completed": 5
+      },
+      {
+        "log_id": 20,
+        "user_id": 3,
+        "login_timestamp": "2024-09-11T00:00:00",
+        "time_spent": 27.61,
+        "points_earned": 6,
+        "activities_completed": 3
+      },
+      {
+        "log_id": 21,
+        "user_id": 3,
+        "login_timestamp": "2024-09-12T00:00:00",
+        "time_spent": 21.39,
+        "points_earned": 12,
+        "activities_completed": 2
+      }
+    ],
+    "topic_session": [
+      {
+        "topic_session_id": 16,
+        "enrollment_id": 16,
+        "started_at": "2024-09-16T00:00:00",
+        "total_time_spent": 45.35,
+        "device_type": "desktop",
+        "completed_at": "2024-09-23T00:00:00",
+        "completion_percent": 75.71,
+        "geo_location": "Oxford"
+      },
+      {
+        "topic_session_id": 17,
+        "enrollment_id": 17,
+        "started_at": "2024-09-17T00:00:00",
+        "total_time_spent": 55.44,
+        "device_type": "laptop",
+        "completed_at": "2024-09-24T00:00:00",
+        "completion_percent": 90.26,
+        "geo_location": "Bristol"
+      }
+    ],
+    "chapter_session": [
+      {
+        "chapter_session_id": 16,
+        "topic_session_id": 16,
+        "section_content_id": 3,
+        "time_spent": 42.32,
+        "progress_percent": 63.03,
+        "replay_count": 1,
+        "points_earned": 7,
+        "skipped_content": false,
+        "started_at": "2024-09-16T02:00:00",
+        "completed_at": "2024-09-23T01:00:00"
+      },
+      {
+        "chapter_session_id": 17,
+        "topic_session_id": 17,
+        "section_content_id": 4,
+        "time_spent": 47.98,
+        "progress_percent": 62.72,
+        "replay_count": 0,
+        "points_earned": 5,
+        "skipped_content": false,
+        "started_at": "2024-09-17T02:00:00",
+        "completed_at": "2024-09-24T01:00:00"
+      }
+    ],
+    "activity_performance": [
+      {
+        "performance_id": 18,
+        "chapter_session_id": 16,
+        "activity_id": "991b9984-9562-4c2a-b083-8d2948ac8de0",
+        "activity_type": "mcq",
+        "user_answer": "B",
+        "input_method": "touch",
+        "attempts": 3,
+        "is_right": true,
+        "submitted_at": "2024-09-23T02:00:00",
+        "activity_skip": false,
+        "time_spent": 38.32,
+        "used_hint": true,
+        "points_earned": 8
+      },
+      {
+        "performance_id": 19,
+        "chapter_session_id": 16,
+        "activity_id": "e3b7adbc-7610-4994-a1e0-48e98b2026e3",
+        "activity_type": "mcq",
+        "user_answer": "C",
+        "input_method": "keyboard",
+        "attempts": 1,
+        "is_right": true,
+        "submitted_at": "2024-09-23T03:00:00",
+        "activity_skip": false,
+        "time_spent": 14.09,
+        "used_hint": false,
+        "points_earned": 11
+      },
+      {
+        "performance_id": 20,
+        "chapter_session_id": 17,
+        "activity_id": "0a72b981-36a1-45b1-8cfd-6179c526b558",
+        "activity_type": "mcq",
+        "user_answer": "B",
+        "input_method": "touch",
+        "attempts": 2,
+        "is_right": false,
+        "submitted_at": "2024-09-24T02:00:00",
+        "activity_skip": false,
+        "time_spent": 31.64,
+        "used_hint": true,
+        "points_earned": 7
+      },
+      {
+        "performance_id": 21,
+        "chapter_session_id": 17,
+        "activity_id": "d77f1f9c-2ce4-4ec1-a172-24844e4f1a89",
+        "activity_type": "mcq",
+        "user_answer": "C",
+        "input_method": "keyboard",
+        "attempts": 1,
+        "is_right": true,
+        "submitted_at": "2024-09-24T03:00:00",
+        "activity_skip": false,
+        "time_spent": 20.76,
+        "used_hint": false,
+        "points_earned": 11
+      }
+    ],
+    "lesson_session": [
+      {
+        "lesson_session_id": 3,
+        "user_id": 3,
+        "topic_id": 3,
+        "api_heading_id": 3,
+        "section_index": 5,
+        "title": "Session 1",
+        "device_type": "tablet",
+        "created_at": "2024-09-16T01:00:00"
+      },
+      {
+        "lesson_session_id": 4,
+        "user_id": 3,
+        "topic_id": 4,
+        "api_heading_id": 4,
+        "section_index": 6,
+        "title": "Session 2",
+        "device_type": "laptop",
+        "created_at": "2024-09-17T01:00:00"
+      }
+    ],
+    "Topics": [
+      {
+        "topic_id": 3,
+        "user_id": 3,
+        "title": "History Essentials",
+        "subject": "History",
+        "duration": 35,
+        "class_level": "KS2",
+        "created_at": "2024-09-16T00:00:00"
+      },
+      {
+        "topic_id": 4,
+        "user_id": 3,
+        "title": "Geography Essentials",
+        "subject": "Geography",
+        "duration": 27,
+        "class_level": "KS2",
+        "created_at": "2024-09-17T00:00:00"
+      }
+    ],
+    "avatar_change": [
+      {
+        "avatar_change_id": 3,
+        "chapter_session_id": 16,
+        "avatar_name": "Kai",
+        "clothes_set": "default",
+        "time_spent": 1.81,
+        "accessory": "badge",
+        "selected_at": "2024-09-23T00:00:00"
+      },
+      {
+        "avatar_change_id": 4,
+        "chapter_session_id": 17,
+        "avatar_name": "Zed",
+        "clothes_set": "default",
+        "time_spent": 1.85,
+        "accessory": "badge",
+        "selected_at": "2024-09-24T00:00:00"
+      }
+    ],
+    "font_change": [
+      {
+        "font_change_id": 3,
+        "chapter_session_id": 16,
+        "font_size": 15,
+        "font_style": "Comic Sans",
+        "selected_at": "2024-09-22T23:00:00"
+      },
+      {
+        "font_change_id": 4,
+        "chapter_session_id": 17,
+        "font_size": 15,
+        "font_style": "Lexend",
+        "selected_at": "2024-09-23T23:00:00"
+      }
+    ],
+    "background_change": [
+      {
+        "background_change_id": 3,
+        "chapter_session_id": 16,
+        "time_spent": 2.68,
+        "background_option": "night_mode",
+        "selected_at": "2024-09-22T22:00:00"
+      },
+      {
+        "background_change_id": 4,
+        "chapter_session_id": 17,
+        "time_spent": 3.32,
+        "background_option": "calm_blue",
+        "selected_at": "2024-09-23T22:00:00"
+      }
+    ],
+    "ai_chat": [
+      {
+        "chat_id": 3,
+        "chapter_session_id": 16,
+        "ai_response": "Let's work through the tricky steps together.",
+        "input_method": "text",
+        "time_spent": 1.41,
+        "user_message": "I need help with this question.",
+        "selected_at": "2024-09-23T02:00:00"
+      },
+      {
+        "chat_id": 4,
+        "chapter_session_id": 17,
+        "ai_response": "Let's work through the tricky steps together.",
+        "input_method": "text",
+        "time_spent": 3.1,
+        "user_message": "I need help with this question.",
+        "selected_at": "2024-09-24T02:00:00"
+      }
+    ],
+    "lesson_sections": [
+      {
+        "lesson_section_id": 3,
+        "topic_id": 3,
+        "user_id": 3,
+        "title": "Lesson 3",
+        "image_path": "illustration.png",
+        "section_index": 10,
+        "api_heading_id": "heading_3",
+        "created_at": "2024-09-16T00:00:00",
+        "updated_at": "2024-09-23T00:00:00",
+        "deleted_at": null,
+        "total_points": 100
+      },
+      {
+        "lesson_section_id": 4,
+        "topic_id": 4,
+        "user_id": 3,
+        "title": "Lesson 4",
+        "image_path": "illustration.png",
+        "section_index": 11,
+        "api_heading_id": "heading_4",
+        "created_at": "2024-09-17T00:00:00",
+        "updated_at": "2024-09-24T00:00:00",
+        "deleted_at": null,
+        "total_points": 100
+      }
+    ],
+    "section_contents": [
+      {
+        "section_content_id": 3,
+        "lesson_section_id": 3,
+        "reading_level": "Intermediate",
+        "paragraph_delta_json": "Sample passage for Leo Chen topic 1.",
+        "api_grade_level": "KS2",
+        "api_reading_level": "Intermediate",
+        "created_at": "2024-09-16T00:00:00",
+        "updated_at": "2024-09-23T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "section_content_id": 4,
+        "lesson_section_id": 4,
+        "reading_level": "Intermediate",
+        "paragraph_delta_json": "Sample passage for Leo Chen topic 2.",
+        "api_grade_level": "KS2",
+        "api_reading_level": "Intermediate",
+        "created_at": "2024-09-17T00:00:00",
+        "updated_at": "2024-09-24T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "mcqs": [
+      {
+        "mcq_id": 3,
+        "section_content_id": 3,
+        "question": "What is concept 1?",
+        "image_path": null,
+        "correct_option_ui_id": "option_c",
+        "created_at": "2024-09-16T00:00:00",
+        "updated_at": "2024-09-23T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "mcq_id": 4,
+        "section_content_id": 4,
+        "question": "What is concept 2?",
+        "image_path": null,
+        "correct_option_ui_id": "option_c",
+        "created_at": "2024-09-17T00:00:00",
+        "updated_at": "2024-09-24T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "mcq_options": [
+      {
+        "option_id": 9,
+        "mcq_id": 3,
+        "text_value": "Choice 1",
+        "created_at": "2024-09-16T00:00:00",
+        "updated_at": "2024-09-23T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 10,
+        "mcq_id": 3,
+        "text_value": "Choice 2",
+        "created_at": "2024-09-16T00:00:00",
+        "updated_at": "2024-09-23T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 11,
+        "mcq_id": 3,
+        "text_value": "Choice 3",
+        "created_at": "2024-09-16T00:00:00",
+        "updated_at": "2024-09-23T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 12,
+        "mcq_id": 3,
+        "text_value": "Choice 4",
+        "created_at": "2024-09-16T00:00:00",
+        "updated_at": "2024-09-23T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 13,
+        "mcq_id": 4,
+        "text_value": "Choice 1",
+        "created_at": "2024-09-17T00:00:00",
+        "updated_at": "2024-09-24T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 14,
+        "mcq_id": 4,
+        "text_value": "Choice 2",
+        "created_at": "2024-09-17T00:00:00",
+        "updated_at": "2024-09-24T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 15,
+        "mcq_id": 4,
+        "text_value": "Choice 3",
+        "created_at": "2024-09-17T00:00:00",
+        "updated_at": "2024-09-24T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 16,
+        "mcq_id": 4,
+        "text_value": "Choice 4",
+        "created_at": "2024-09-17T00:00:00",
+        "updated_at": "2024-09-24T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "mcq_click": [
+      {
+        "click_id": 3,
+        "mcq_id": 3,
+        "chapter_session_id": 16,
+        "click_count": 5,
+        "image_path": "mcq.png",
+        "last_click": "2024-09-24T00:00:00",
+        "created_at": "2024-09-23T00:00:00",
+        "updated_at": "2024-09-25T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "click_id": 4,
+        "mcq_id": 4,
+        "chapter_session_id": 17,
+        "click_count": 3,
+        "image_path": "mcq.png",
+        "last_click": "2024-09-25T00:00:00",
+        "created_at": "2024-09-24T00:00:00",
+        "updated_at": "2024-09-26T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "open_questions": [
+      {
+        "question_id": 3,
+        "section_content_id": 3,
+        "question": "Explain idea 1?",
+        "hint": "Think of real-life example",
+        "answer": "Sample answer",
+        "created_at": "2024-09-16T00:00:00",
+        "updated_at": "2024-09-23T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "question_id": 4,
+        "section_content_id": 4,
+        "question": "Explain idea 2?",
+        "hint": "Think of real-life example",
+        "answer": "Sample answer",
+        "created_at": "2024-09-17T00:00:00",
+        "updated_at": "2024-09-24T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "resource_click": [
+      {
+        "click_id": 3,
+        "chapter_session_id": 16,
+        "click_count": 1,
+        "image_path": "resource.png",
+        "last_click": "2024-09-24T00:00:00",
+        "created_at": "2024-09-16T00:00:00",
+        "updated_at": "2024-09-25T00:00:00"
+      },
+      {
+        "click_id": 4,
+        "chapter_session_id": 17,
+        "click_count": 4,
+        "image_path": "resource.png",
+        "last_click": "2024-09-25T00:00:00",
+        "created_at": "2024-09-17T00:00:00",
+        "updated_at": "2024-09-26T00:00:00"
+      }
+    ],
+    "ai_literacy_assessment": [
+      {
+        "user_id": 3,
+        "taken_at": "2024-09-10T00:00:00",
+        "type": "pre",
+        "score": 43,
+        "max_score": 100,
+        "concepts_mastered": [
+          "data"
+        ],
+        "applications": [
+          "Identify examples"
+        ]
+      },
+      {
+        "user_id": 3,
+        "taken_at": "2024-10-10T00:00:00",
+        "type": "post",
+        "score": 69,
+        "max_score": 100,
+        "concepts_mastered": [
+          "data",
+          "algorithm"
+        ],
+        "applications": [
+          "Explain algorithm steps",
+          "Spot bias"
+        ]
+      }
+    ],
+    "emotional_regulation_log": [
+      {
+        "entry_id": 1007,
+        "user_id": 3,
+        "recorded_at": "2024-09-07T00:00:00",
+        "zone": "Blue",
+        "mood_indicator": "tired",
+        "sensory_adjustments": {
+          "contrast": "high",
+          "font_size": "small",
+          "filter": "warm"
+        }
+      },
+      {
+        "entry_id": 1008,
+        "user_id": 3,
+        "recorded_at": "2024-09-08T00:00:00",
+        "zone": "Green",
+        "mood_indicator": "calm-focused",
+        "sensory_adjustments": {
+          "contrast": "high",
+          "font_size": "large",
+          "audio": "white_noise"
+        }
+      },
+      {
+        "entry_id": 1009,
+        "user_id": 3,
+        "recorded_at": "2024-09-09T00:00:00",
+        "zone": "Yellow",
+        "mood_indicator": "restless",
+        "sensory_adjustments": {
+          "contrast": "standard",
+          "font_size": "medium",
+          "background": "soft_blue"
+        }
+      }
+    ],
+    "support_usage": [
+      {
+        "event_id": 2005,
+        "user_id": 3,
+        "event_type": "help_request",
+        "feature": "live_support",
+        "count": 3,
+        "recorded_at": "2024-09-10T00:00:00"
+      },
+      {
+        "event_id": 2006,
+        "user_id": 3,
+        "event_type": "support_feature",
+        "feature": "hints",
+        "count": 2,
+        "recorded_at": "2024-09-11T00:00:00"
+      }
+    ],
+    "communication_events": [
+      {
+        "event_id": 3005,
+        "user_id": 3,
+        "interaction_type": "text_message",
+        "initiated_by": "system",
+        "turns": 2,
+        "message_length": 95,
+        "timestamp": "2024-09-13T00:00:00"
+      },
+      {
+        "event_id": 3006,
+        "user_id": 3,
+        "interaction_type": "avatar_chat",
+        "initiated_by": "student",
+        "turns": 4,
+        "message_length": 81,
+        "timestamp": "2024-09-14T00:00:00"
+      }
+    ]
+  },
+  {
+    "user": [
+      {
+        "user_id": 4,
+        "email": "msanchez@example.org",
+        "name": "Mia Sanchez",
+        "age": 10,
+        "parental_email": "parent_msanchez@example.org",
+        "password_hashed": "hash_0004",
+        "created_at": "2024-12-29T00:00:00",
+        "updated_at": "2025-01-08T00:00:00",
+        "dob": "2010-01-02",
+        "gender": "female",
+        "class_level": "KS3",
+        "school_name": "Harbor View School",
+        "reading_level": "Advanced"
+      }
+    ],
+    "enrollment": [
+      {
+        "enrollment_id": 18,
+        "enrolled_at": "2024-09-21T00:00:00",
+        "user_id": 4,
+        "topic_id": 5,
+        "is_completed": false,
+        "have_certificate": true
+      },
+      {
+        "enrollment_id": 19,
+        "enrolled_at": "2024-09-22T00:00:00",
+        "user_id": 4,
+        "topic_id": 6,
+        "is_completed": true,
+        "have_certificate": false
+      }
+    ],
+    "daily_activity_log": [
+      {
+        "log_id": 22,
+        "user_id": 4,
+        "login_timestamp": "2024-09-13T00:00:00",
+        "time_spent": 21.6,
+        "points_earned": 8,
+        "activities_completed": 4
+      },
+      {
+        "log_id": 23,
+        "user_id": 4,
+        "login_timestamp": "2024-09-14T00:00:00",
+        "time_spent": 55.01,
+        "points_earned": 9,
+        "activities_completed": 6
+      },
+      {
+        "log_id": 24,
+        "user_id": 4,
+        "login_timestamp": "2024-09-15T00:00:00",
+        "time_spent": 40.63,
+        "points_earned": 4,
+        "activities_completed": 6
+      }
+    ],
+    "topic_session": [
+      {
+        "topic_session_id": 18,
+        "enrollment_id": 18,
+        "started_at": "2024-09-21T00:00:00",
+        "total_time_spent": 56.3,
+        "device_type": "desktop",
+        "completed_at": "2024-09-28T00:00:00",
+        "completion_percent": 85.53,
+        "geo_location": "Leeds"
+      },
+      {
+        "topic_session_id": 19,
+        "enrollment_id": 19,
+        "started_at": "2024-09-22T00:00:00",
+        "total_time_spent": 43.8,
+        "device_type": "laptop",
+        "completed_at": "2024-09-29T00:00:00",
+        "completion_percent": 75.78,
+        "geo_location": "Leeds"
+      }
+    ],
+    "chapter_session": [
+      {
+        "chapter_session_id": 18,
+        "topic_session_id": 18,
+        "section_content_id": 5,
+        "time_spent": 42.75,
+        "progress_percent": 76.49,
+        "replay_count": 1,
+        "points_earned": 12,
+        "skipped_content": false,
+        "started_at": "2024-09-21T02:00:00",
+        "completed_at": "2024-09-28T01:00:00"
+      },
+      {
+        "chapter_session_id": 19,
+        "topic_session_id": 19,
+        "section_content_id": 6,
+        "time_spent": 44.67,
+        "progress_percent": 57.75,
+        "replay_count": 0,
+        "points_earned": 11,
+        "skipped_content": false,
+        "started_at": "2024-09-22T02:00:00",
+        "completed_at": "2024-09-29T01:00:00"
+      }
+    ],
+    "activity_performance": [
+      {
+        "performance_id": 22,
+        "chapter_session_id": 18,
+        "activity_id": "4262283f-a80e-4cb4-89c3-8bd5622e9b2d",
+        "activity_type": "mcq",
+        "user_answer": "B",
+        "input_method": "touch",
+        "attempts": 2,
+        "is_right": false,
+        "submitted_at": "2024-09-28T02:00:00",
+        "activity_skip": false,
+        "time_spent": 24.88,
+        "used_hint": false,
+        "points_earned": 9
+      },
+      {
+        "performance_id": 23,
+        "chapter_session_id": 18,
+        "activity_id": "198d76c7-ad46-406e-a3fd-aea2f9ecce73",
+        "activity_type": "mcq",
+        "user_answer": "C",
+        "input_method": "keyboard",
+        "attempts": 2,
+        "is_right": true,
+        "submitted_at": "2024-09-28T03:00:00",
+        "activity_skip": false,
+        "time_spent": 13.16,
+        "used_hint": false,
+        "points_earned": 12
+      },
+      {
+        "performance_id": 24,
+        "chapter_session_id": 19,
+        "activity_id": "4ca8ce5e-ce79-4f6d-b18d-8545c1e32948",
+        "activity_type": "mcq",
+        "user_answer": "B",
+        "input_method": "touch",
+        "attempts": 3,
+        "is_right": true,
+        "submitted_at": "2024-09-29T02:00:00",
+        "activity_skip": false,
+        "time_spent": 26.61,
+        "used_hint": true,
+        "points_earned": 8
+      },
+      {
+        "performance_id": 25,
+        "chapter_session_id": 19,
+        "activity_id": "c1dc6f43-2857-4b27-831b-ea127290cfe2",
+        "activity_type": "mcq",
+        "user_answer": "C",
+        "input_method": "keyboard",
+        "attempts": 1,
+        "is_right": true,
+        "submitted_at": "2024-09-29T03:00:00",
+        "activity_skip": false,
+        "time_spent": 27.13,
+        "used_hint": false,
+        "points_earned": 10
+      }
+    ],
+    "lesson_session": [
+      {
+        "lesson_session_id": 5,
+        "user_id": 4,
+        "topic_id": 5,
+        "api_heading_id": 5,
+        "section_index": 5,
+        "title": "Session 1",
+        "device_type": "tablet",
+        "created_at": "2024-09-21T01:00:00"
+      },
+      {
+        "lesson_session_id": 6,
+        "user_id": 4,
+        "topic_id": 6,
+        "api_heading_id": 6,
+        "section_index": 6,
+        "title": "Session 2",
+        "device_type": "laptop",
+        "created_at": "2024-09-22T01:00:00"
+      }
+    ],
+    "Topics": [
+      {
+        "topic_id": 5,
+        "user_id": 4,
+        "title": "Geography Essentials",
+        "subject": "Geography",
+        "duration": 31,
+        "class_level": "KS3",
+        "created_at": "2024-09-21T00:00:00"
+      },
+      {
+        "topic_id": 6,
+        "user_id": 4,
+        "title": "Computing Essentials",
+        "subject": "Computing",
+        "duration": 45,
+        "class_level": "KS3",
+        "created_at": "2024-09-22T00:00:00"
+      }
+    ],
+    "avatar_change": [
+      {
+        "avatar_change_id": 5,
+        "chapter_session_id": 18,
+        "avatar_name": "Kai",
+        "clothes_set": "default",
+        "time_spent": 1.33,
+        "accessory": "badge",
+        "selected_at": "2024-09-28T00:00:00"
+      },
+      {
+        "avatar_change_id": 6,
+        "chapter_session_id": 19,
+        "avatar_name": "Ava",
+        "clothes_set": "default",
+        "time_spent": 1.97,
+        "accessory": "badge",
+        "selected_at": "2024-09-29T00:00:00"
+      }
+    ],
+    "font_change": [
+      {
+        "font_change_id": 5,
+        "chapter_session_id": 18,
+        "font_size": 18,
+        "font_style": "Lexend",
+        "selected_at": "2024-09-27T23:00:00"
+      },
+      {
+        "font_change_id": 6,
+        "chapter_session_id": 19,
+        "font_size": 17,
+        "font_style": "OpenDyslexic",
+        "selected_at": "2024-09-28T23:00:00"
+      }
+    ],
+    "background_change": [
+      {
+        "background_change_id": 5,
+        "chapter_session_id": 18,
+        "time_spent": 2.33,
+        "background_option": "high_contrast",
+        "selected_at": "2024-09-27T22:00:00"
+      },
+      {
+        "background_change_id": 6,
+        "chapter_session_id": 19,
+        "time_spent": 3.29,
+        "background_option": "calm_blue",
+        "selected_at": "2024-09-28T22:00:00"
+      }
+    ],
+    "ai_chat": [
+      {
+        "chat_id": 5,
+        "chapter_session_id": 18,
+        "ai_response": "Let's work through the tricky steps together.",
+        "input_method": "text",
+        "time_spent": 1.2,
+        "user_message": "I need help with this question.",
+        "selected_at": "2024-09-28T02:00:00"
+      },
+      {
+        "chat_id": 6,
+        "chapter_session_id": 19,
+        "ai_response": "Let's work through the tricky steps together.",
+        "input_method": "text",
+        "time_spent": 2.82,
+        "user_message": "I need help with this question.",
+        "selected_at": "2024-09-29T02:00:00"
+      }
+    ],
+    "lesson_sections": [
+      {
+        "lesson_section_id": 5,
+        "topic_id": 5,
+        "user_id": 4,
+        "title": "Lesson 5",
+        "image_path": "illustration.png",
+        "section_index": 10,
+        "api_heading_id": "heading_5",
+        "created_at": "2024-09-21T00:00:00",
+        "updated_at": "2024-09-28T00:00:00",
+        "deleted_at": null,
+        "total_points": 100
+      },
+      {
+        "lesson_section_id": 6,
+        "topic_id": 6,
+        "user_id": 4,
+        "title": "Lesson 6",
+        "image_path": "illustration.png",
+        "section_index": 11,
+        "api_heading_id": "heading_6",
+        "created_at": "2024-09-22T00:00:00",
+        "updated_at": "2024-09-29T00:00:00",
+        "deleted_at": null,
+        "total_points": 100
+      }
+    ],
+    "section_contents": [
+      {
+        "section_content_id": 5,
+        "lesson_section_id": 5,
+        "reading_level": "Advanced",
+        "paragraph_delta_json": "Sample passage for Mia Sanchez topic 1.",
+        "api_grade_level": "KS3",
+        "api_reading_level": "Advanced",
+        "created_at": "2024-09-21T00:00:00",
+        "updated_at": "2024-09-28T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "section_content_id": 6,
+        "lesson_section_id": 6,
+        "reading_level": "Advanced",
+        "paragraph_delta_json": "Sample passage for Mia Sanchez topic 2.",
+        "api_grade_level": "KS3",
+        "api_reading_level": "Advanced",
+        "created_at": "2024-09-22T00:00:00",
+        "updated_at": "2024-09-29T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "mcqs": [
+      {
+        "mcq_id": 5,
+        "section_content_id": 5,
+        "question": "What is concept 1?",
+        "image_path": null,
+        "correct_option_ui_id": "option_c",
+        "created_at": "2024-09-21T00:00:00",
+        "updated_at": "2024-09-28T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "mcq_id": 6,
+        "section_content_id": 6,
+        "question": "What is concept 2?",
+        "image_path": null,
+        "correct_option_ui_id": "option_c",
+        "created_at": "2024-09-22T00:00:00",
+        "updated_at": "2024-09-29T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "mcq_options": [
+      {
+        "option_id": 17,
+        "mcq_id": 5,
+        "text_value": "Choice 1",
+        "created_at": "2024-09-21T00:00:00",
+        "updated_at": "2024-09-28T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 18,
+        "mcq_id": 5,
+        "text_value": "Choice 2",
+        "created_at": "2024-09-21T00:00:00",
+        "updated_at": "2024-09-28T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 19,
+        "mcq_id": 5,
+        "text_value": "Choice 3",
+        "created_at": "2024-09-21T00:00:00",
+        "updated_at": "2024-09-28T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 20,
+        "mcq_id": 5,
+        "text_value": "Choice 4",
+        "created_at": "2024-09-21T00:00:00",
+        "updated_at": "2024-09-28T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 21,
+        "mcq_id": 6,
+        "text_value": "Choice 1",
+        "created_at": "2024-09-22T00:00:00",
+        "updated_at": "2024-09-29T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 22,
+        "mcq_id": 6,
+        "text_value": "Choice 2",
+        "created_at": "2024-09-22T00:00:00",
+        "updated_at": "2024-09-29T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 23,
+        "mcq_id": 6,
+        "text_value": "Choice 3",
+        "created_at": "2024-09-22T00:00:00",
+        "updated_at": "2024-09-29T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 24,
+        "mcq_id": 6,
+        "text_value": "Choice 4",
+        "created_at": "2024-09-22T00:00:00",
+        "updated_at": "2024-09-29T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "mcq_click": [
+      {
+        "click_id": 5,
+        "mcq_id": 5,
+        "chapter_session_id": 18,
+        "click_count": 2,
+        "image_path": "mcq.png",
+        "last_click": "2024-09-29T00:00:00",
+        "created_at": "2024-09-28T00:00:00",
+        "updated_at": "2024-09-30T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "click_id": 6,
+        "mcq_id": 6,
+        "chapter_session_id": 19,
+        "click_count": 1,
+        "image_path": "mcq.png",
+        "last_click": "2024-09-30T00:00:00",
+        "created_at": "2024-09-29T00:00:00",
+        "updated_at": "2024-10-01T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "open_questions": [
+      {
+        "question_id": 5,
+        "section_content_id": 5,
+        "question": "Explain idea 1?",
+        "hint": "Think of real-life example",
+        "answer": "Sample answer",
+        "created_at": "2024-09-21T00:00:00",
+        "updated_at": "2024-09-28T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "question_id": 6,
+        "section_content_id": 6,
+        "question": "Explain idea 2?",
+        "hint": "Think of real-life example",
+        "answer": "Sample answer",
+        "created_at": "2024-09-22T00:00:00",
+        "updated_at": "2024-09-29T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "resource_click": [
+      {
+        "click_id": 5,
+        "chapter_session_id": 18,
+        "click_count": 4,
+        "image_path": "resource.png",
+        "last_click": "2024-09-29T00:00:00",
+        "created_at": "2024-09-21T00:00:00",
+        "updated_at": "2024-09-30T00:00:00"
+      },
+      {
+        "click_id": 6,
+        "chapter_session_id": 19,
+        "click_count": 2,
+        "image_path": "resource.png",
+        "last_click": "2024-09-30T00:00:00",
+        "created_at": "2024-09-22T00:00:00",
+        "updated_at": "2024-10-01T00:00:00"
+      }
+    ],
+    "ai_literacy_assessment": [
+      {
+        "user_id": 4,
+        "taken_at": "2024-09-13T00:00:00",
+        "type": "pre",
+        "score": 35,
+        "max_score": 100,
+        "concepts_mastered": [
+          "data"
+        ],
+        "applications": [
+          "Identify examples"
+        ]
+      },
+      {
+        "user_id": 4,
+        "taken_at": "2024-10-13T00:00:00",
+        "type": "post",
+        "score": 70,
+        "max_score": 100,
+        "concepts_mastered": [
+          "data",
+          "algorithm"
+        ],
+        "applications": [
+          "Explain algorithm steps",
+          "Spot bias"
+        ]
+      }
+    ],
+    "emotional_regulation_log": [
+      {
+        "entry_id": 1010,
+        "user_id": 4,
+        "recorded_at": "2024-09-09T00:00:00",
+        "zone": "Green",
+        "mood_indicator": "calm-focused",
+        "sensory_adjustments": {
+          "contrast": "high",
+          "font_size": "large",
+          "audio": "white_noise"
+        }
+      },
+      {
+        "entry_id": 1011,
+        "user_id": 4,
+        "recorded_at": "2024-09-10T00:00:00",
+        "zone": "Yellow",
+        "mood_indicator": "restless",
+        "sensory_adjustments": {
+          "contrast": "standard",
+          "font_size": "medium",
+          "background": "soft_blue"
+        }
+      },
+      {
+        "entry_id": 1012,
+        "user_id": 4,
+        "recorded_at": "2024-09-11T00:00:00",
+        "zone": "Red",
+        "mood_indicator": "overwhelmed",
+        "sensory_adjustments": {
+          "contrast": "low",
+          "font_size": "large",
+          "overlay": "amber"
+        }
+      }
+    ],
+    "support_usage": [
+      {
+        "event_id": 2007,
+        "user_id": 4,
+        "event_type": "help_request",
+        "feature": "live_support",
+        "count": 2,
+        "recorded_at": "2024-09-13T00:00:00"
+      },
+      {
+        "event_id": 2008,
+        "user_id": 4,
+        "event_type": "support_feature",
+        "feature": "text_reader",
+        "count": 1,
+        "recorded_at": "2024-09-14T00:00:00"
+      }
+    ],
+    "communication_events": [
+      {
+        "event_id": 3007,
+        "user_id": 4,
+        "interaction_type": "avatar_chat",
+        "initiated_by": "student",
+        "turns": 1,
+        "message_length": 221,
+        "timestamp": "2024-09-17T00:00:00"
+      },
+      {
+        "event_id": 3008,
+        "user_id": 4,
+        "interaction_type": "text_message",
+        "initiated_by": "system",
+        "turns": 1,
+        "message_length": 188,
+        "timestamp": "2024-09-18T00:00:00"
+      }
+    ]
+  },
+  {
+    "user": [
+      {
+        "user_id": 5,
+        "email": "nibrahim@example.org",
+        "name": "Noah Ibrahim",
+        "age": 11,
+        "parental_email": "parent_nibrahim@example.org",
+        "password_hashed": "hash_0005",
+        "created_at": "2024-12-22T00:00:00",
+        "updated_at": "2025-01-01T00:00:00",
+        "dob": "2009-01-02",
+        "gender": "male",
+        "class_level": "KS4",
+        "school_name": "Northbridge Prep",
+        "reading_level": "Intermediate"
+      }
+    ],
+    "enrollment": [
+      {
+        "enrollment_id": 20,
+        "enrolled_at": "2024-09-26T00:00:00",
+        "user_id": 5,
+        "topic_id": 7,
+        "is_completed": false,
+        "have_certificate": true
+      },
+      {
+        "enrollment_id": 21,
+        "enrolled_at": "2024-09-27T00:00:00",
+        "user_id": 5,
+        "topic_id": 8,
+        "is_completed": true,
+        "have_certificate": false
+      }
+    ],
+    "daily_activity_log": [
+      {
+        "log_id": 25,
+        "user_id": 5,
+        "login_timestamp": "2024-09-16T00:00:00",
+        "time_spent": 41.32,
+        "points_earned": 11,
+        "activities_completed": 4
+      },
+      {
+        "log_id": 26,
+        "user_id": 5,
+        "login_timestamp": "2024-09-17T00:00:00",
+        "time_spent": 31.44,
+        "points_earned": 9,
+        "activities_completed": 4
+      },
+      {
+        "log_id": 27,
+        "user_id": 5,
+        "login_timestamp": "2024-09-18T00:00:00",
+        "time_spent": 45.17,
+        "points_earned": 12,
+        "activities_completed": 4
+      }
+    ],
+    "topic_session": [
+      {
+        "topic_session_id": 20,
+        "enrollment_id": 20,
+        "started_at": "2024-09-26T00:00:00",
+        "total_time_spent": 48.99,
+        "device_type": "desktop",
+        "completed_at": "2024-10-03T00:00:00",
+        "completion_percent": 68.28,
+        "geo_location": "Norwich"
+      },
+      {
+        "topic_session_id": 21,
+        "enrollment_id": 21,
+        "started_at": "2024-09-27T00:00:00",
+        "total_time_spent": 69.64,
+        "device_type": "desktop",
+        "completed_at": "2024-10-04T00:00:00",
+        "completion_percent": 73.76,
+        "geo_location": "Cardiff"
+      }
+    ],
+    "chapter_session": [
+      {
+        "chapter_session_id": 20,
+        "topic_session_id": 20,
+        "section_content_id": 7,
+        "time_spent": 46.85,
+        "progress_percent": 62.01,
+        "replay_count": 0,
+        "points_earned": 5,
+        "skipped_content": false,
+        "started_at": "2024-09-26T02:00:00",
+        "completed_at": "2024-10-03T01:00:00"
+      },
+      {
+        "chapter_session_id": 21,
+        "topic_session_id": 21,
+        "section_content_id": 8,
+        "time_spent": 27.99,
+        "progress_percent": 88.93,
+        "replay_count": 0,
+        "points_earned": 8,
+        "skipped_content": false,
+        "started_at": "2024-09-27T02:00:00",
+        "completed_at": "2024-10-04T01:00:00"
+      }
+    ],
+    "activity_performance": [
+      {
+        "performance_id": 26,
+        "chapter_session_id": 20,
+        "activity_id": "7107a313-5e53-4976-b2b0-4b6fd0b36f3a",
+        "activity_type": "mcq",
+        "user_answer": "B",
+        "input_method": "touch",
+        "attempts": 2,
+        "is_right": false,
+        "submitted_at": "2024-10-03T02:00:00",
+        "activity_skip": false,
+        "time_spent": 30.96,
+        "used_hint": false,
+        "points_earned": 10
+      },
+      {
+        "performance_id": 27,
+        "chapter_session_id": 20,
+        "activity_id": "9930b0ca-06c7-48a9-8a21-807a995e46a6",
+        "activity_type": "mcq",
+        "user_answer": "C",
+        "input_method": "keyboard",
+        "attempts": 1,
+        "is_right": true,
+        "submitted_at": "2024-10-03T03:00:00",
+        "activity_skip": false,
+        "time_spent": 16.73,
+        "used_hint": false,
+        "points_earned": 11
+      },
+      {
+        "performance_id": 28,
+        "chapter_session_id": 21,
+        "activity_id": "9f2f1d3e-d499-43e1-a825-c46534d499b5",
+        "activity_type": "mcq",
+        "user_answer": "B",
+        "input_method": "touch",
+        "attempts": 1,
+        "is_right": false,
+        "submitted_at": "2024-10-04T02:00:00",
+        "activity_skip": false,
+        "time_spent": 29.73,
+        "used_hint": true,
+        "points_earned": 8
+      },
+      {
+        "performance_id": 29,
+        "chapter_session_id": 21,
+        "activity_id": "9148c916-904c-463b-a1fa-fef1956fd686",
+        "activity_type": "mcq",
+        "user_answer": "C",
+        "input_method": "keyboard",
+        "attempts": 2,
+        "is_right": true,
+        "submitted_at": "2024-10-04T03:00:00",
+        "activity_skip": false,
+        "time_spent": 17.2,
+        "used_hint": false,
+        "points_earned": 9
+      }
+    ],
+    "lesson_session": [
+      {
+        "lesson_session_id": 7,
+        "user_id": 5,
+        "topic_id": 7,
+        "api_heading_id": 7,
+        "section_index": 5,
+        "title": "Session 1",
+        "device_type": "laptop",
+        "created_at": "2024-09-26T01:00:00"
+      },
+      {
+        "lesson_session_id": 8,
+        "user_id": 5,
+        "topic_id": 8,
+        "api_heading_id": 8,
+        "section_index": 6,
+        "title": "Session 2",
+        "device_type": "desktop",
+        "created_at": "2024-09-27T01:00:00"
+      }
+    ],
+    "Topics": [
+      {
+        "topic_id": 7,
+        "user_id": 5,
+        "title": "Computing Essentials",
+        "subject": "Computing",
+        "duration": 36,
+        "class_level": "KS4",
+        "created_at": "2024-09-26T00:00:00"
+      },
+      {
+        "topic_id": 8,
+        "user_id": 5,
+        "title": "Maths Essentials",
+        "subject": "Maths",
+        "duration": 33,
+        "class_level": "KS4",
+        "created_at": "2024-09-27T00:00:00"
+      }
+    ],
+    "avatar_change": [
+      {
+        "avatar_change_id": 7,
+        "chapter_session_id": 20,
+        "avatar_name": "Kai",
+        "clothes_set": "default",
+        "time_spent": 1.7,
+        "accessory": "badge",
+        "selected_at": "2024-10-03T00:00:00"
+      },
+      {
+        "avatar_change_id": 8,
+        "chapter_session_id": 21,
+        "avatar_name": "Zed",
+        "clothes_set": "default",
+        "time_spent": 2.56,
+        "accessory": "badge",
+        "selected_at": "2024-10-04T00:00:00"
+      }
+    ],
+    "font_change": [
+      {
+        "font_change_id": 7,
+        "chapter_session_id": 20,
+        "font_size": 17,
+        "font_style": "Lexend",
+        "selected_at": "2024-10-02T23:00:00"
+      },
+      {
+        "font_change_id": 8,
+        "chapter_session_id": 21,
+        "font_size": 15,
+        "font_style": "Lexend",
+        "selected_at": "2024-10-03T23:00:00"
+      }
+    ],
+    "background_change": [
+      {
+        "background_change_id": 7,
+        "chapter_session_id": 20,
+        "time_spent": 1.83,
+        "background_option": "night_mode",
+        "selected_at": "2024-10-02T22:00:00"
+      },
+      {
+        "background_change_id": 8,
+        "chapter_session_id": 21,
+        "time_spent": 1.34,
+        "background_option": "high_contrast",
+        "selected_at": "2024-10-03T22:00:00"
+      }
+    ],
+    "ai_chat": [
+      {
+        "chat_id": 7,
+        "chapter_session_id": 20,
+        "ai_response": "Let's work through the tricky steps together.",
+        "input_method": "text",
+        "time_spent": 3.72,
+        "user_message": "I need help with this question.",
+        "selected_at": "2024-10-03T02:00:00"
+      },
+      {
+        "chat_id": 8,
+        "chapter_session_id": 21,
+        "ai_response": "Let's work through the tricky steps together.",
+        "input_method": "text",
+        "time_spent": 1.9,
+        "user_message": "I need help with this question.",
+        "selected_at": "2024-10-04T02:00:00"
+      }
+    ],
+    "lesson_sections": [
+      {
+        "lesson_section_id": 7,
+        "topic_id": 7,
+        "user_id": 5,
+        "title": "Lesson 7",
+        "image_path": "illustration.png",
+        "section_index": 10,
+        "api_heading_id": "heading_7",
+        "created_at": "2024-09-26T00:00:00",
+        "updated_at": "2024-10-03T00:00:00",
+        "deleted_at": null,
+        "total_points": 100
+      },
+      {
+        "lesson_section_id": 8,
+        "topic_id": 8,
+        "user_id": 5,
+        "title": "Lesson 8",
+        "image_path": "illustration.png",
+        "section_index": 11,
+        "api_heading_id": "heading_8",
+        "created_at": "2024-09-27T00:00:00",
+        "updated_at": "2024-10-04T00:00:00",
+        "deleted_at": null,
+        "total_points": 100
+      }
+    ],
+    "section_contents": [
+      {
+        "section_content_id": 7,
+        "lesson_section_id": 7,
+        "reading_level": "Intermediate",
+        "paragraph_delta_json": "Sample passage for Noah Ibrahim topic 1.",
+        "api_grade_level": "KS4",
+        "api_reading_level": "Intermediate",
+        "created_at": "2024-09-26T00:00:00",
+        "updated_at": "2024-10-03T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "section_content_id": 8,
+        "lesson_section_id": 8,
+        "reading_level": "Intermediate",
+        "paragraph_delta_json": "Sample passage for Noah Ibrahim topic 2.",
+        "api_grade_level": "KS4",
+        "api_reading_level": "Intermediate",
+        "created_at": "2024-09-27T00:00:00",
+        "updated_at": "2024-10-04T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "mcqs": [
+      {
+        "mcq_id": 7,
+        "section_content_id": 7,
+        "question": "What is concept 1?",
+        "image_path": null,
+        "correct_option_ui_id": "option_c",
+        "created_at": "2024-09-26T00:00:00",
+        "updated_at": "2024-10-03T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "mcq_id": 8,
+        "section_content_id": 8,
+        "question": "What is concept 2?",
+        "image_path": null,
+        "correct_option_ui_id": "option_c",
+        "created_at": "2024-09-27T00:00:00",
+        "updated_at": "2024-10-04T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "mcq_options": [
+      {
+        "option_id": 25,
+        "mcq_id": 7,
+        "text_value": "Choice 1",
+        "created_at": "2024-09-26T00:00:00",
+        "updated_at": "2024-10-03T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 26,
+        "mcq_id": 7,
+        "text_value": "Choice 2",
+        "created_at": "2024-09-26T00:00:00",
+        "updated_at": "2024-10-03T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 27,
+        "mcq_id": 7,
+        "text_value": "Choice 3",
+        "created_at": "2024-09-26T00:00:00",
+        "updated_at": "2024-10-03T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 28,
+        "mcq_id": 7,
+        "text_value": "Choice 4",
+        "created_at": "2024-09-26T00:00:00",
+        "updated_at": "2024-10-03T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 29,
+        "mcq_id": 8,
+        "text_value": "Choice 1",
+        "created_at": "2024-09-27T00:00:00",
+        "updated_at": "2024-10-04T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 30,
+        "mcq_id": 8,
+        "text_value": "Choice 2",
+        "created_at": "2024-09-27T00:00:00",
+        "updated_at": "2024-10-04T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 31,
+        "mcq_id": 8,
+        "text_value": "Choice 3",
+        "created_at": "2024-09-27T00:00:00",
+        "updated_at": "2024-10-04T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 32,
+        "mcq_id": 8,
+        "text_value": "Choice 4",
+        "created_at": "2024-09-27T00:00:00",
+        "updated_at": "2024-10-04T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "mcq_click": [
+      {
+        "click_id": 7,
+        "mcq_id": 7,
+        "chapter_session_id": 20,
+        "click_count": 2,
+        "image_path": "mcq.png",
+        "last_click": "2024-10-04T00:00:00",
+        "created_at": "2024-10-03T00:00:00",
+        "updated_at": "2024-10-05T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "click_id": 8,
+        "mcq_id": 8,
+        "chapter_session_id": 21,
+        "click_count": 1,
+        "image_path": "mcq.png",
+        "last_click": "2024-10-05T00:00:00",
+        "created_at": "2024-10-04T00:00:00",
+        "updated_at": "2024-10-06T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "open_questions": [
+      {
+        "question_id": 7,
+        "section_content_id": 7,
+        "question": "Explain idea 1?",
+        "hint": "Think of real-life example",
+        "answer": "Sample answer",
+        "created_at": "2024-09-26T00:00:00",
+        "updated_at": "2024-10-03T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "question_id": 8,
+        "section_content_id": 8,
+        "question": "Explain idea 2?",
+        "hint": "Think of real-life example",
+        "answer": "Sample answer",
+        "created_at": "2024-09-27T00:00:00",
+        "updated_at": "2024-10-04T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "resource_click": [
+      {
+        "click_id": 7,
+        "chapter_session_id": 20,
+        "click_count": 3,
+        "image_path": "resource.png",
+        "last_click": "2024-10-04T00:00:00",
+        "created_at": "2024-09-26T00:00:00",
+        "updated_at": "2024-10-05T00:00:00"
+      },
+      {
+        "click_id": 8,
+        "chapter_session_id": 21,
+        "click_count": 4,
+        "image_path": "resource.png",
+        "last_click": "2024-10-05T00:00:00",
+        "created_at": "2024-09-27T00:00:00",
+        "updated_at": "2024-10-06T00:00:00"
+      }
+    ],
+    "ai_literacy_assessment": [
+      {
+        "user_id": 5,
+        "taken_at": "2024-09-16T00:00:00",
+        "type": "pre",
+        "score": 47,
+        "max_score": 100,
+        "concepts_mastered": [
+          "data"
+        ],
+        "applications": [
+          "Identify examples"
+        ]
+      },
+      {
+        "user_id": 5,
+        "taken_at": "2024-10-16T00:00:00",
+        "type": "post",
+        "score": 64,
+        "max_score": 100,
+        "concepts_mastered": [
+          "data",
+          "algorithm"
+        ],
+        "applications": [
+          "Explain algorithm steps",
+          "Spot bias"
+        ]
+      }
+    ],
+    "emotional_regulation_log": [
+      {
+        "entry_id": 1013,
+        "user_id": 5,
+        "recorded_at": "2024-09-11T00:00:00",
+        "zone": "Yellow",
+        "mood_indicator": "restless",
+        "sensory_adjustments": {
+          "contrast": "standard",
+          "font_size": "medium",
+          "background": "soft_blue"
+        }
+      },
+      {
+        "entry_id": 1014,
+        "user_id": 5,
+        "recorded_at": "2024-09-12T00:00:00",
+        "zone": "Red",
+        "mood_indicator": "overwhelmed",
+        "sensory_adjustments": {
+          "contrast": "low",
+          "font_size": "large",
+          "overlay": "amber"
+        }
+      },
+      {
+        "entry_id": 1015,
+        "user_id": 5,
+        "recorded_at": "2024-09-13T00:00:00",
+        "zone": "Blue",
+        "mood_indicator": "tired",
+        "sensory_adjustments": {
+          "contrast": "high",
+          "font_size": "small",
+          "filter": "warm"
+        }
+      }
+    ],
+    "support_usage": [
+      {
+        "event_id": 2009,
+        "user_id": 5,
+        "event_type": "help_request",
+        "feature": "live_support",
+        "count": 3,
+        "recorded_at": "2024-09-16T00:00:00"
+      },
+      {
+        "event_id": 2010,
+        "user_id": 5,
+        "event_type": "support_feature",
+        "feature": "accessibility_contrast",
+        "count": 2,
+        "recorded_at": "2024-09-17T00:00:00"
+      }
+    ],
+    "communication_events": [
+      {
+        "event_id": 3009,
+        "user_id": 5,
+        "interaction_type": "text_message",
+        "initiated_by": "system",
+        "turns": 1,
+        "message_length": 180,
+        "timestamp": "2024-09-21T00:00:00"
+      },
+      {
+        "event_id": 3010,
+        "user_id": 5,
+        "interaction_type": "avatar_chat",
+        "initiated_by": "student",
+        "turns": 1,
+        "message_length": 181,
+        "timestamp": "2024-09-22T00:00:00"
+      }
+    ]
+  },
+  {
+    "user": [
+      {
+        "user_id": 6,
+        "email": "roconnor@example.org",
+        "name": "Ruby O'Connor",
+        "age": 12,
+        "parental_email": "parent_roconnor@example.org",
+        "password_hashed": "hash_0006",
+        "created_at": "2024-12-15T00:00:00",
+        "updated_at": "2024-12-25T00:00:00",
+        "dob": "2008-01-03",
+        "gender": "female",
+        "class_level": "KS2",
+        "school_name": "Starlight Academy",
+        "reading_level": "Emerging"
+      }
+    ],
+    "enrollment": [
+      {
+        "enrollment_id": 22,
+        "enrolled_at": "2024-10-01T00:00:00",
+        "user_id": 6,
+        "topic_id": 9,
+        "is_completed": false,
+        "have_certificate": true
+      },
+      {
+        "enrollment_id": 23,
+        "enrolled_at": "2024-10-02T00:00:00",
+        "user_id": 6,
+        "topic_id": 10,
+        "is_completed": true,
+        "have_certificate": false
+      }
+    ],
+    "daily_activity_log": [
+      {
+        "log_id": 28,
+        "user_id": 6,
+        "login_timestamp": "2024-09-19T00:00:00",
+        "time_spent": 44.93,
+        "points_earned": 5,
+        "activities_completed": 4
+      },
+      {
+        "log_id": 29,
+        "user_id": 6,
+        "login_timestamp": "2024-09-20T00:00:00",
+        "time_spent": 59.55,
+        "points_earned": 11,
+        "activities_completed": 5
+      },
+      {
+        "log_id": 30,
+        "user_id": 6,
+        "login_timestamp": "2024-09-21T00:00:00",
+        "time_spent": 54.67,
+        "points_earned": 8,
+        "activities_completed": 6
+      }
+    ],
+    "topic_session": [
+      {
+        "topic_session_id": 22,
+        "enrollment_id": 22,
+        "started_at": "2024-10-01T00:00:00",
+        "total_time_spent": 59.98,
+        "device_type": "laptop",
+        "completed_at": "2024-10-08T00:00:00",
+        "completion_percent": 64.74,
+        "geo_location": "Bristol"
+      },
+      {
+        "topic_session_id": 23,
+        "enrollment_id": 23,
+        "started_at": "2024-10-02T00:00:00",
+        "total_time_spent": 56.39,
+        "device_type": "tablet",
+        "completed_at": "2024-10-09T00:00:00",
+        "completion_percent": 68.93,
+        "geo_location": "Cardiff"
+      }
+    ],
+    "chapter_session": [
+      {
+        "chapter_session_id": 22,
+        "topic_session_id": 22,
+        "section_content_id": 9,
+        "time_spent": 49.58,
+        "progress_percent": 86.54,
+        "replay_count": 1,
+        "points_earned": 15,
+        "skipped_content": false,
+        "started_at": "2024-10-01T02:00:00",
+        "completed_at": "2024-10-08T01:00:00"
+      },
+      {
+        "chapter_session_id": 23,
+        "topic_session_id": 23,
+        "section_content_id": 10,
+        "time_spent": 37.3,
+        "progress_percent": 74.98,
+        "replay_count": 1,
+        "points_earned": 12,
+        "skipped_content": false,
+        "started_at": "2024-10-02T02:00:00",
+        "completed_at": "2024-10-09T01:00:00"
+      }
+    ],
+    "activity_performance": [
+      {
+        "performance_id": 30,
+        "chapter_session_id": 22,
+        "activity_id": "3183f4aa-c854-4a19-b347-bdaea3d4109e",
+        "activity_type": "mcq",
+        "user_answer": "B",
+        "input_method": "touch",
+        "attempts": 2,
+        "is_right": false,
+        "submitted_at": "2024-10-08T02:00:00",
+        "activity_skip": false,
+        "time_spent": 15.23,
+        "used_hint": true,
+        "points_earned": 7
+      },
+      {
+        "performance_id": 31,
+        "chapter_session_id": 22,
+        "activity_id": "8fe3ffc6-fd32-449c-bd37-5503a64bdab0",
+        "activity_type": "mcq",
+        "user_answer": "C",
+        "input_method": "keyboard",
+        "attempts": 2,
+        "is_right": true,
+        "submitted_at": "2024-10-08T03:00:00",
+        "activity_skip": false,
+        "time_spent": 25.68,
+        "used_hint": false,
+        "points_earned": 8
+      },
+      {
+        "performance_id": 32,
+        "chapter_session_id": 23,
+        "activity_id": "7556987e-864f-4697-bab0-260df4afcd15",
+        "activity_type": "mcq",
+        "user_answer": "B",
+        "input_method": "touch",
+        "attempts": 2,
+        "is_right": true,
+        "submitted_at": "2024-10-09T02:00:00",
+        "activity_skip": false,
+        "time_spent": 17.33,
+        "used_hint": true,
+        "points_earned": 9
+      },
+      {
+        "performance_id": 33,
+        "chapter_session_id": 23,
+        "activity_id": "d2a2c8d9-c5ef-4bd6-ad48-568a801f3bf5",
+        "activity_type": "mcq",
+        "user_answer": "C",
+        "input_method": "keyboard",
+        "attempts": 1,
+        "is_right": true,
+        "submitted_at": "2024-10-09T03:00:00",
+        "activity_skip": false,
+        "time_spent": 12.8,
+        "used_hint": false,
+        "points_earned": 8
+      }
+    ],
+    "lesson_session": [
+      {
+        "lesson_session_id": 9,
+        "user_id": 6,
+        "topic_id": 9,
+        "api_heading_id": 9,
+        "section_index": 5,
+        "title": "Session 1",
+        "device_type": "desktop",
+        "created_at": "2024-10-01T01:00:00"
+      },
+      {
+        "lesson_session_id": 10,
+        "user_id": 6,
+        "topic_id": 10,
+        "api_heading_id": 10,
+        "section_index": 6,
+        "title": "Session 2",
+        "device_type": "laptop",
+        "created_at": "2024-10-02T01:00:00"
+      }
+    ],
+    "Topics": [
+      {
+        "topic_id": 9,
+        "user_id": 6,
+        "title": "Maths Essentials",
+        "subject": "Maths",
+        "duration": 35,
+        "class_level": "KS2",
+        "created_at": "2024-10-01T00:00:00"
+      },
+      {
+        "topic_id": 10,
+        "user_id": 6,
+        "title": "Science Essentials",
+        "subject": "Science",
+        "duration": 26,
+        "class_level": "KS2",
+        "created_at": "2024-10-02T00:00:00"
+      }
+    ],
+    "avatar_change": [
+      {
+        "avatar_change_id": 9,
+        "chapter_session_id": 22,
+        "avatar_name": "Zed",
+        "clothes_set": "default",
+        "time_spent": 1.0,
+        "accessory": "badge",
+        "selected_at": "2024-10-08T00:00:00"
+      },
+      {
+        "avatar_change_id": 10,
+        "chapter_session_id": 23,
+        "avatar_name": "Nova",
+        "clothes_set": "default",
+        "time_spent": 1.88,
+        "accessory": "badge",
+        "selected_at": "2024-10-09T00:00:00"
+      }
+    ],
+    "font_change": [
+      {
+        "font_change_id": 9,
+        "chapter_session_id": 22,
+        "font_size": 18,
+        "font_style": "Comic Sans",
+        "selected_at": "2024-10-07T23:00:00"
+      },
+      {
+        "font_change_id": 10,
+        "chapter_session_id": 23,
+        "font_size": 20,
+        "font_style": "Lexend",
+        "selected_at": "2024-10-08T23:00:00"
+      }
+    ],
+    "background_change": [
+      {
+        "background_change_id": 9,
+        "chapter_session_id": 22,
+        "time_spent": 1.33,
+        "background_option": "high_contrast",
+        "selected_at": "2024-10-07T22:00:00"
+      },
+      {
+        "background_change_id": 10,
+        "chapter_session_id": 23,
+        "time_spent": 2.83,
+        "background_option": "night_mode",
+        "selected_at": "2024-10-08T22:00:00"
+      }
+    ],
+    "ai_chat": [
+      {
+        "chat_id": 9,
+        "chapter_session_id": 22,
+        "ai_response": "Let's work through the tricky steps together.",
+        "input_method": "text",
+        "time_spent": 2.23,
+        "user_message": "I need help with this question.",
+        "selected_at": "2024-10-08T02:00:00"
+      },
+      {
+        "chat_id": 10,
+        "chapter_session_id": 23,
+        "ai_response": "Let's work through the tricky steps together.",
+        "input_method": "text",
+        "time_spent": 4.35,
+        "user_message": "I need help with this question.",
+        "selected_at": "2024-10-09T02:00:00"
+      }
+    ],
+    "lesson_sections": [
+      {
+        "lesson_section_id": 9,
+        "topic_id": 9,
+        "user_id": 6,
+        "title": "Lesson 9",
+        "image_path": "illustration.png",
+        "section_index": 10,
+        "api_heading_id": "heading_9",
+        "created_at": "2024-10-01T00:00:00",
+        "updated_at": "2024-10-08T00:00:00",
+        "deleted_at": null,
+        "total_points": 100
+      },
+      {
+        "lesson_section_id": 10,
+        "topic_id": 10,
+        "user_id": 6,
+        "title": "Lesson 10",
+        "image_path": "illustration.png",
+        "section_index": 11,
+        "api_heading_id": "heading_10",
+        "created_at": "2024-10-02T00:00:00",
+        "updated_at": "2024-10-09T00:00:00",
+        "deleted_at": null,
+        "total_points": 100
+      }
+    ],
+    "section_contents": [
+      {
+        "section_content_id": 9,
+        "lesson_section_id": 9,
+        "reading_level": "Emerging",
+        "paragraph_delta_json": "Sample passage for Ruby O'Connor topic 1.",
+        "api_grade_level": "KS2",
+        "api_reading_level": "Emerging",
+        "created_at": "2024-10-01T00:00:00",
+        "updated_at": "2024-10-08T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "section_content_id": 10,
+        "lesson_section_id": 10,
+        "reading_level": "Emerging",
+        "paragraph_delta_json": "Sample passage for Ruby O'Connor topic 2.",
+        "api_grade_level": "KS2",
+        "api_reading_level": "Emerging",
+        "created_at": "2024-10-02T00:00:00",
+        "updated_at": "2024-10-09T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "mcqs": [
+      {
+        "mcq_id": 9,
+        "section_content_id": 9,
+        "question": "What is concept 1?",
+        "image_path": null,
+        "correct_option_ui_id": "option_c",
+        "created_at": "2024-10-01T00:00:00",
+        "updated_at": "2024-10-08T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "mcq_id": 10,
+        "section_content_id": 10,
+        "question": "What is concept 2?",
+        "image_path": null,
+        "correct_option_ui_id": "option_c",
+        "created_at": "2024-10-02T00:00:00",
+        "updated_at": "2024-10-09T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "mcq_options": [
+      {
+        "option_id": 33,
+        "mcq_id": 9,
+        "text_value": "Choice 1",
+        "created_at": "2024-10-01T00:00:00",
+        "updated_at": "2024-10-08T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 34,
+        "mcq_id": 9,
+        "text_value": "Choice 2",
+        "created_at": "2024-10-01T00:00:00",
+        "updated_at": "2024-10-08T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 35,
+        "mcq_id": 9,
+        "text_value": "Choice 3",
+        "created_at": "2024-10-01T00:00:00",
+        "updated_at": "2024-10-08T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 36,
+        "mcq_id": 9,
+        "text_value": "Choice 4",
+        "created_at": "2024-10-01T00:00:00",
+        "updated_at": "2024-10-08T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 37,
+        "mcq_id": 10,
+        "text_value": "Choice 1",
+        "created_at": "2024-10-02T00:00:00",
+        "updated_at": "2024-10-09T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 38,
+        "mcq_id": 10,
+        "text_value": "Choice 2",
+        "created_at": "2024-10-02T00:00:00",
+        "updated_at": "2024-10-09T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 39,
+        "mcq_id": 10,
+        "text_value": "Choice 3",
+        "created_at": "2024-10-02T00:00:00",
+        "updated_at": "2024-10-09T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 40,
+        "mcq_id": 10,
+        "text_value": "Choice 4",
+        "created_at": "2024-10-02T00:00:00",
+        "updated_at": "2024-10-09T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "mcq_click": [
+      {
+        "click_id": 9,
+        "mcq_id": 9,
+        "chapter_session_id": 22,
+        "click_count": 5,
+        "image_path": "mcq.png",
+        "last_click": "2024-10-09T00:00:00",
+        "created_at": "2024-10-08T00:00:00",
+        "updated_at": "2024-10-10T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "click_id": 10,
+        "mcq_id": 10,
+        "chapter_session_id": 23,
+        "click_count": 2,
+        "image_path": "mcq.png",
+        "last_click": "2024-10-10T00:00:00",
+        "created_at": "2024-10-09T00:00:00",
+        "updated_at": "2024-10-11T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "open_questions": [
+      {
+        "question_id": 9,
+        "section_content_id": 9,
+        "question": "Explain idea 1?",
+        "hint": "Think of real-life example",
+        "answer": "Sample answer",
+        "created_at": "2024-10-01T00:00:00",
+        "updated_at": "2024-10-08T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "question_id": 10,
+        "section_content_id": 10,
+        "question": "Explain idea 2?",
+        "hint": "Think of real-life example",
+        "answer": "Sample answer",
+        "created_at": "2024-10-02T00:00:00",
+        "updated_at": "2024-10-09T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "resource_click": [
+      {
+        "click_id": 9,
+        "chapter_session_id": 22,
+        "click_count": 1,
+        "image_path": "resource.png",
+        "last_click": "2024-10-09T00:00:00",
+        "created_at": "2024-10-01T00:00:00",
+        "updated_at": "2024-10-10T00:00:00"
+      },
+      {
+        "click_id": 10,
+        "chapter_session_id": 23,
+        "click_count": 1,
+        "image_path": "resource.png",
+        "last_click": "2024-10-10T00:00:00",
+        "created_at": "2024-10-02T00:00:00",
+        "updated_at": "2024-10-11T00:00:00"
+      }
+    ],
+    "ai_literacy_assessment": [
+      {
+        "user_id": 6,
+        "taken_at": "2024-09-19T00:00:00",
+        "type": "pre",
+        "score": 41,
+        "max_score": 100,
+        "concepts_mastered": [
+          "data"
+        ],
+        "applications": [
+          "Identify examples"
+        ]
+      },
+      {
+        "user_id": 6,
+        "taken_at": "2024-10-19T00:00:00",
+        "type": "post",
+        "score": 77,
+        "max_score": 100,
+        "concepts_mastered": [
+          "data",
+          "algorithm"
+        ],
+        "applications": [
+          "Explain algorithm steps",
+          "Spot bias"
+        ]
+      }
+    ],
+    "emotional_regulation_log": [
+      {
+        "entry_id": 1016,
+        "user_id": 6,
+        "recorded_at": "2024-09-13T00:00:00",
+        "zone": "Red",
+        "mood_indicator": "overwhelmed",
+        "sensory_adjustments": {
+          "contrast": "low",
+          "font_size": "large",
+          "overlay": "amber"
+        }
+      },
+      {
+        "entry_id": 1017,
+        "user_id": 6,
+        "recorded_at": "2024-09-14T00:00:00",
+        "zone": "Blue",
+        "mood_indicator": "tired",
+        "sensory_adjustments": {
+          "contrast": "high",
+          "font_size": "small",
+          "filter": "warm"
+        }
+      },
+      {
+        "entry_id": 1018,
+        "user_id": 6,
+        "recorded_at": "2024-09-15T00:00:00",
+        "zone": "Green",
+        "mood_indicator": "calm-focused",
+        "sensory_adjustments": {
+          "contrast": "high",
+          "font_size": "large",
+          "audio": "white_noise"
+        }
+      }
+    ],
+    "support_usage": [
+      {
+        "event_id": 2011,
+        "user_id": 6,
+        "event_type": "help_request",
+        "feature": "live_support",
+        "count": 1,
+        "recorded_at": "2024-09-19T00:00:00"
+      },
+      {
+        "event_id": 2012,
+        "user_id": 6,
+        "event_type": "support_feature",
+        "feature": "hints",
+        "count": 2,
+        "recorded_at": "2024-09-20T00:00:00"
+      }
+    ],
+    "communication_events": [
+      {
+        "event_id": 3011,
+        "user_id": 6,
+        "interaction_type": "avatar_chat",
+        "initiated_by": "student",
+        "turns": 3,
+        "message_length": 107,
+        "timestamp": "2024-09-25T00:00:00"
+      },
+      {
+        "event_id": 3012,
+        "user_id": 6,
+        "interaction_type": "text_message",
+        "initiated_by": "system",
+        "turns": 1,
+        "message_length": 94,
+        "timestamp": "2024-09-26T00:00:00"
+      }
+    ]
+  },
+  {
+    "user": [
+      {
+        "user_id": 7,
+        "email": "zwalker@example.org",
+        "name": "Zane Walker",
+        "age": 13,
+        "parental_email": "parent_zwalker@example.org",
+        "password_hashed": "hash_0007",
+        "created_at": "2024-12-08T00:00:00",
+        "updated_at": "2024-12-18T00:00:00",
+        "dob": "2007-01-03",
+        "gender": "male",
+        "class_level": "KS3",
+        "school_name": "Maple Ridge School",
+        "reading_level": "Advanced"
+      }
+    ],
+    "enrollment": [
+      {
+        "enrollment_id": 24,
+        "enrolled_at": "2024-10-06T00:00:00",
+        "user_id": 7,
+        "topic_id": 11,
+        "is_completed": false,
+        "have_certificate": true
+      },
+      {
+        "enrollment_id": 25,
+        "enrolled_at": "2024-10-07T00:00:00",
+        "user_id": 7,
+        "topic_id": 12,
+        "is_completed": true,
+        "have_certificate": false
+      }
+    ],
+    "daily_activity_log": [
+      {
+        "log_id": 31,
+        "user_id": 7,
+        "login_timestamp": "2024-09-22T00:00:00",
+        "time_spent": 32.82,
+        "points_earned": 5,
+        "activities_completed": 3
+      },
+      {
+        "log_id": 32,
+        "user_id": 7,
+        "login_timestamp": "2024-09-23T00:00:00",
+        "time_spent": 24.48,
+        "points_earned": 6,
+        "activities_completed": 6
+      },
+      {
+        "log_id": 33,
+        "user_id": 7,
+        "login_timestamp": "2024-09-24T00:00:00",
+        "time_spent": 32.66,
+        "points_earned": 6,
+        "activities_completed": 4
+      }
+    ],
+    "topic_session": [
+      {
+        "topic_session_id": 24,
+        "enrollment_id": 24,
+        "started_at": "2024-10-06T00:00:00",
+        "total_time_spent": 55.32,
+        "device_type": "laptop",
+        "completed_at": "2024-10-13T00:00:00",
+        "completion_percent": 93.44,
+        "geo_location": "Oxford"
+      },
+      {
+        "topic_session_id": 25,
+        "enrollment_id": 25,
+        "started_at": "2024-10-07T00:00:00",
+        "total_time_spent": 59.97,
+        "device_type": "laptop",
+        "completed_at": "2024-10-14T00:00:00",
+        "completion_percent": 75.16,
+        "geo_location": "Leeds"
+      }
+    ],
+    "chapter_session": [
+      {
+        "chapter_session_id": 24,
+        "topic_session_id": 24,
+        "section_content_id": 11,
+        "time_spent": 36.48,
+        "progress_percent": 82.79,
+        "replay_count": 2,
+        "points_earned": 15,
+        "skipped_content": false,
+        "started_at": "2024-10-06T02:00:00",
+        "completed_at": "2024-10-13T01:00:00"
+      },
+      {
+        "chapter_session_id": 25,
+        "topic_session_id": 25,
+        "section_content_id": 12,
+        "time_spent": 43.41,
+        "progress_percent": 66.21,
+        "replay_count": 1,
+        "points_earned": 12,
+        "skipped_content": false,
+        "started_at": "2024-10-07T02:00:00",
+        "completed_at": "2024-10-14T01:00:00"
+      }
+    ],
+    "activity_performance": [
+      {
+        "performance_id": 34,
+        "chapter_session_id": 24,
+        "activity_id": "d67d6981-4d5f-45cd-a187-450b5b0af78c",
+        "activity_type": "mcq",
+        "user_answer": "B",
+        "input_method": "touch",
+        "attempts": 3,
+        "is_right": false,
+        "submitted_at": "2024-10-13T02:00:00",
+        "activity_skip": false,
+        "time_spent": 39.35,
+        "used_hint": false,
+        "points_earned": 9
+      },
+      {
+        "performance_id": 35,
+        "chapter_session_id": 24,
+        "activity_id": "c916175e-d387-4026-9950-bf5fe982dd92",
+        "activity_type": "mcq",
+        "user_answer": "C",
+        "input_method": "keyboard",
+        "attempts": 1,
+        "is_right": true,
+        "submitted_at": "2024-10-13T03:00:00",
+        "activity_skip": false,
+        "time_spent": 20.36,
+        "used_hint": false,
+        "points_earned": 11
+      },
+      {
+        "performance_id": 36,
+        "chapter_session_id": 25,
+        "activity_id": "63053dd1-4f59-4f2a-ab09-ea46d4ad73b2",
+        "activity_type": "mcq",
+        "user_answer": "B",
+        "input_method": "touch",
+        "attempts": 1,
+        "is_right": true,
+        "submitted_at": "2024-10-14T02:00:00",
+        "activity_skip": false,
+        "time_spent": 24.43,
+        "used_hint": false,
+        "points_earned": 5
+      },
+      {
+        "performance_id": 37,
+        "chapter_session_id": 25,
+        "activity_id": "07d327b2-22b2-49d2-86ef-47760ccbb3b4",
+        "activity_type": "mcq",
+        "user_answer": "C",
+        "input_method": "keyboard",
+        "attempts": 2,
+        "is_right": true,
+        "submitted_at": "2024-10-14T03:00:00",
+        "activity_skip": false,
+        "time_spent": 28.91,
+        "used_hint": false,
+        "points_earned": 9
+      }
+    ],
+    "lesson_session": [
+      {
+        "lesson_session_id": 11,
+        "user_id": 7,
+        "topic_id": 11,
+        "api_heading_id": 11,
+        "section_index": 5,
+        "title": "Session 1",
+        "device_type": "tablet",
+        "created_at": "2024-10-06T01:00:00"
+      },
+      {
+        "lesson_session_id": 12,
+        "user_id": 7,
+        "topic_id": 12,
+        "api_heading_id": 12,
+        "section_index": 6,
+        "title": "Session 2",
+        "device_type": "desktop",
+        "created_at": "2024-10-07T01:00:00"
+      }
+    ],
+    "Topics": [
+      {
+        "topic_id": 11,
+        "user_id": 7,
+        "title": "Science Essentials",
+        "subject": "Science",
+        "duration": 27,
+        "class_level": "KS3",
+        "created_at": "2024-10-06T00:00:00"
+      },
+      {
+        "topic_id": 12,
+        "user_id": 7,
+        "title": "English Essentials",
+        "subject": "English",
+        "duration": 42,
+        "class_level": "KS3",
+        "created_at": "2024-10-07T00:00:00"
+      }
+    ],
+    "avatar_change": [
+      {
+        "avatar_change_id": 11,
+        "chapter_session_id": 24,
+        "avatar_name": "Nova",
+        "clothes_set": "default",
+        "time_spent": 2.4,
+        "accessory": "badge",
+        "selected_at": "2024-10-13T00:00:00"
+      },
+      {
+        "avatar_change_id": 12,
+        "chapter_session_id": 25,
+        "avatar_name": "Zed",
+        "clothes_set": "default",
+        "time_spent": 2.44,
+        "accessory": "badge",
+        "selected_at": "2024-10-14T00:00:00"
+      }
+    ],
+    "font_change": [
+      {
+        "font_change_id": 11,
+        "chapter_session_id": 24,
+        "font_size": 14,
+        "font_style": "Comic Sans",
+        "selected_at": "2024-10-12T23:00:00"
+      },
+      {
+        "font_change_id": 12,
+        "chapter_session_id": 25,
+        "font_size": 17,
+        "font_style": "Lexend",
+        "selected_at": "2024-10-13T23:00:00"
+      }
+    ],
+    "background_change": [
+      {
+        "background_change_id": 11,
+        "chapter_session_id": 24,
+        "time_spent": 1.07,
+        "background_option": "high_contrast",
+        "selected_at": "2024-10-12T22:00:00"
+      },
+      {
+        "background_change_id": 12,
+        "chapter_session_id": 25,
+        "time_spent": 1.7,
+        "background_option": "calm_blue",
+        "selected_at": "2024-10-13T22:00:00"
+      }
+    ],
+    "ai_chat": [
+      {
+        "chat_id": 11,
+        "chapter_session_id": 24,
+        "ai_response": "Let's work through the tricky steps together.",
+        "input_method": "text",
+        "time_spent": 3.05,
+        "user_message": "I need help with this question.",
+        "selected_at": "2024-10-13T02:00:00"
+      },
+      {
+        "chat_id": 12,
+        "chapter_session_id": 25,
+        "ai_response": "Let's work through the tricky steps together.",
+        "input_method": "text",
+        "time_spent": 4.19,
+        "user_message": "I need help with this question.",
+        "selected_at": "2024-10-14T02:00:00"
+      }
+    ],
+    "lesson_sections": [
+      {
+        "lesson_section_id": 11,
+        "topic_id": 11,
+        "user_id": 7,
+        "title": "Lesson 11",
+        "image_path": "illustration.png",
+        "section_index": 10,
+        "api_heading_id": "heading_11",
+        "created_at": "2024-10-06T00:00:00",
+        "updated_at": "2024-10-13T00:00:00",
+        "deleted_at": null,
+        "total_points": 100
+      },
+      {
+        "lesson_section_id": 12,
+        "topic_id": 12,
+        "user_id": 7,
+        "title": "Lesson 12",
+        "image_path": "illustration.png",
+        "section_index": 11,
+        "api_heading_id": "heading_12",
+        "created_at": "2024-10-07T00:00:00",
+        "updated_at": "2024-10-14T00:00:00",
+        "deleted_at": null,
+        "total_points": 100
+      }
+    ],
+    "section_contents": [
+      {
+        "section_content_id": 11,
+        "lesson_section_id": 11,
+        "reading_level": "Advanced",
+        "paragraph_delta_json": "Sample passage for Zane Walker topic 1.",
+        "api_grade_level": "KS3",
+        "api_reading_level": "Advanced",
+        "created_at": "2024-10-06T00:00:00",
+        "updated_at": "2024-10-13T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "section_content_id": 12,
+        "lesson_section_id": 12,
+        "reading_level": "Advanced",
+        "paragraph_delta_json": "Sample passage for Zane Walker topic 2.",
+        "api_grade_level": "KS3",
+        "api_reading_level": "Advanced",
+        "created_at": "2024-10-07T00:00:00",
+        "updated_at": "2024-10-14T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "mcqs": [
+      {
+        "mcq_id": 11,
+        "section_content_id": 11,
+        "question": "What is concept 1?",
+        "image_path": null,
+        "correct_option_ui_id": "option_c",
+        "created_at": "2024-10-06T00:00:00",
+        "updated_at": "2024-10-13T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "mcq_id": 12,
+        "section_content_id": 12,
+        "question": "What is concept 2?",
+        "image_path": null,
+        "correct_option_ui_id": "option_c",
+        "created_at": "2024-10-07T00:00:00",
+        "updated_at": "2024-10-14T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "mcq_options": [
+      {
+        "option_id": 41,
+        "mcq_id": 11,
+        "text_value": "Choice 1",
+        "created_at": "2024-10-06T00:00:00",
+        "updated_at": "2024-10-13T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 42,
+        "mcq_id": 11,
+        "text_value": "Choice 2",
+        "created_at": "2024-10-06T00:00:00",
+        "updated_at": "2024-10-13T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 43,
+        "mcq_id": 11,
+        "text_value": "Choice 3",
+        "created_at": "2024-10-06T00:00:00",
+        "updated_at": "2024-10-13T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 44,
+        "mcq_id": 11,
+        "text_value": "Choice 4",
+        "created_at": "2024-10-06T00:00:00",
+        "updated_at": "2024-10-13T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 45,
+        "mcq_id": 12,
+        "text_value": "Choice 1",
+        "created_at": "2024-10-07T00:00:00",
+        "updated_at": "2024-10-14T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 46,
+        "mcq_id": 12,
+        "text_value": "Choice 2",
+        "created_at": "2024-10-07T00:00:00",
+        "updated_at": "2024-10-14T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 47,
+        "mcq_id": 12,
+        "text_value": "Choice 3",
+        "created_at": "2024-10-07T00:00:00",
+        "updated_at": "2024-10-14T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 48,
+        "mcq_id": 12,
+        "text_value": "Choice 4",
+        "created_at": "2024-10-07T00:00:00",
+        "updated_at": "2024-10-14T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "mcq_click": [
+      {
+        "click_id": 11,
+        "mcq_id": 11,
+        "chapter_session_id": 24,
+        "click_count": 2,
+        "image_path": "mcq.png",
+        "last_click": "2024-10-14T00:00:00",
+        "created_at": "2024-10-13T00:00:00",
+        "updated_at": "2024-10-15T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "click_id": 12,
+        "mcq_id": 12,
+        "chapter_session_id": 25,
+        "click_count": 3,
+        "image_path": "mcq.png",
+        "last_click": "2024-10-15T00:00:00",
+        "created_at": "2024-10-14T00:00:00",
+        "updated_at": "2024-10-16T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "open_questions": [
+      {
+        "question_id": 11,
+        "section_content_id": 11,
+        "question": "Explain idea 1?",
+        "hint": "Think of real-life example",
+        "answer": "Sample answer",
+        "created_at": "2024-10-06T00:00:00",
+        "updated_at": "2024-10-13T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "question_id": 12,
+        "section_content_id": 12,
+        "question": "Explain idea 2?",
+        "hint": "Think of real-life example",
+        "answer": "Sample answer",
+        "created_at": "2024-10-07T00:00:00",
+        "updated_at": "2024-10-14T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "resource_click": [
+      {
+        "click_id": 11,
+        "chapter_session_id": 24,
+        "click_count": 3,
+        "image_path": "resource.png",
+        "last_click": "2024-10-14T00:00:00",
+        "created_at": "2024-10-06T00:00:00",
+        "updated_at": "2024-10-15T00:00:00"
+      },
+      {
+        "click_id": 12,
+        "chapter_session_id": 25,
+        "click_count": 4,
+        "image_path": "resource.png",
+        "last_click": "2024-10-15T00:00:00",
+        "created_at": "2024-10-07T00:00:00",
+        "updated_at": "2024-10-16T00:00:00"
+      }
+    ],
+    "ai_literacy_assessment": [
+      {
+        "user_id": 7,
+        "taken_at": "2024-09-22T00:00:00",
+        "type": "pre",
+        "score": 38,
+        "max_score": 100,
+        "concepts_mastered": [
+          "data"
+        ],
+        "applications": [
+          "Identify examples"
+        ]
+      },
+      {
+        "user_id": 7,
+        "taken_at": "2024-10-22T00:00:00",
+        "type": "post",
+        "score": 69,
+        "max_score": 100,
+        "concepts_mastered": [
+          "data",
+          "algorithm"
+        ],
+        "applications": [
+          "Explain algorithm steps",
+          "Spot bias"
+        ]
+      }
+    ],
+    "emotional_regulation_log": [
+      {
+        "entry_id": 1019,
+        "user_id": 7,
+        "recorded_at": "2024-09-15T00:00:00",
+        "zone": "Blue",
+        "mood_indicator": "tired",
+        "sensory_adjustments": {
+          "contrast": "high",
+          "font_size": "small",
+          "filter": "warm"
+        }
+      },
+      {
+        "entry_id": 1020,
+        "user_id": 7,
+        "recorded_at": "2024-09-16T00:00:00",
+        "zone": "Green",
+        "mood_indicator": "calm-focused",
+        "sensory_adjustments": {
+          "contrast": "high",
+          "font_size": "large",
+          "audio": "white_noise"
+        }
+      },
+      {
+        "entry_id": 1021,
+        "user_id": 7,
+        "recorded_at": "2024-09-17T00:00:00",
+        "zone": "Yellow",
+        "mood_indicator": "restless",
+        "sensory_adjustments": {
+          "contrast": "standard",
+          "font_size": "medium",
+          "background": "soft_blue"
+        }
+      }
+    ],
+    "support_usage": [
+      {
+        "event_id": 2013,
+        "user_id": 7,
+        "event_type": "help_request",
+        "feature": "live_support",
+        "count": 2,
+        "recorded_at": "2024-09-22T00:00:00"
+      },
+      {
+        "event_id": 2014,
+        "user_id": 7,
+        "event_type": "support_feature",
+        "feature": "accessibility_contrast",
+        "count": 3,
+        "recorded_at": "2024-09-23T00:00:00"
+      }
+    ],
+    "communication_events": [
+      {
+        "event_id": 3013,
+        "user_id": 7,
+        "interaction_type": "text_message",
+        "initiated_by": "system",
+        "turns": 2,
+        "message_length": 200,
+        "timestamp": "2024-09-29T00:00:00"
+      },
+      {
+        "event_id": 3014,
+        "user_id": 7,
+        "interaction_type": "avatar_chat",
+        "initiated_by": "student",
+        "turns": 3,
+        "message_length": 94,
+        "timestamp": "2024-09-30T00:00:00"
+      }
+    ]
+  },
+  {
+    "user": [
+      {
+        "user_id": 8,
+        "email": "ibennett@example.org",
+        "name": "Isla Bennett",
+        "age": 9,
+        "parental_email": "parent_ibennett@example.org",
+        "password_hashed": "hash_0008",
+        "created_at": "2024-11-30T00:00:00",
+        "updated_at": "2024-12-12T00:00:00",
+        "dob": "2009-06-01",
+        "gender": "female",
+        "class_level": "KS2",
+        "school_name": "Silver Birch Primary",
+        "reading_level": "Intermediate"
+      }
+    ],
+    "enrollment": [
+      {
+        "enrollment_id": 26,
+        "enrolled_at": "2024-10-11T00:00:00",
+        "user_id": 8,
+        "topic_id": 13,
+        "is_completed": false,
+        "have_certificate": true
+      },
+      {
+        "enrollment_id": 27,
+        "enrolled_at": "2024-10-12T00:00:00",
+        "user_id": 8,
+        "topic_id": 14,
+        "is_completed": true,
+        "have_certificate": false
+      }
+    ],
+    "daily_activity_log": [
+      {
+        "log_id": 34,
+        "user_id": 8,
+        "login_timestamp": "2024-09-25T00:00:00",
+        "time_spent": 35.42,
+        "points_earned": 7,
+        "activities_completed": 3
+      },
+      {
+        "log_id": 35,
+        "user_id": 8,
+        "login_timestamp": "2024-09-26T00:00:00",
+        "time_spent": 46.73,
+        "points_earned": 5,
+        "activities_completed": 4
+      },
+      {
+        "log_id": 36,
+        "user_id": 8,
+        "login_timestamp": "2024-09-27T00:00:00",
+        "time_spent": 30.78,
+        "points_earned": 10,
+        "activities_completed": 2
+      }
+    ],
+    "topic_session": [
+      {
+        "topic_session_id": 26,
+        "enrollment_id": 26,
+        "started_at": "2024-10-11T00:00:00",
+        "total_time_spent": 51.19,
+        "device_type": "desktop",
+        "completed_at": "2024-10-18T00:00:00",
+        "completion_percent": 81.42,
+        "geo_location": "Manchester"
+      },
+      {
+        "topic_session_id": 27,
+        "enrollment_id": 27,
+        "started_at": "2024-10-12T00:00:00",
+        "total_time_spent": 45.26,
+        "device_type": "desktop",
+        "completed_at": "2024-10-19T00:00:00",
+        "completion_percent": 80.83,
+        "geo_location": "Bristol"
+      }
+    ],
+    "chapter_session": [
+      {
+        "chapter_session_id": 26,
+        "topic_session_id": 26,
+        "section_content_id": 13,
+        "time_spent": 49.53,
+        "progress_percent": 89.82,
+        "replay_count": 2,
+        "points_earned": 8,
+        "skipped_content": false,
+        "started_at": "2024-10-11T02:00:00",
+        "completed_at": "2024-10-18T01:00:00"
+      },
+      {
+        "chapter_session_id": 27,
+        "topic_session_id": 27,
+        "section_content_id": 14,
+        "time_spent": 36.96,
+        "progress_percent": 55.67,
+        "replay_count": 0,
+        "points_earned": 10,
+        "skipped_content": false,
+        "started_at": "2024-10-12T02:00:00",
+        "completed_at": "2024-10-19T01:00:00"
+      }
+    ],
+    "activity_performance": [
+      {
+        "performance_id": 38,
+        "chapter_session_id": 26,
+        "activity_id": "901d4989-3cf1-43da-b14a-5c21c7b057e1",
+        "activity_type": "mcq",
+        "user_answer": "B",
+        "input_method": "touch",
+        "attempts": 1,
+        "is_right": true,
+        "submitted_at": "2024-10-18T02:00:00",
+        "activity_skip": false,
+        "time_spent": 42.49,
+        "used_hint": false,
+        "points_earned": 5
+      },
+      {
+        "performance_id": 39,
+        "chapter_session_id": 26,
+        "activity_id": "919b426d-37d8-480a-983b-d1506fa6b627",
+        "activity_type": "mcq",
+        "user_answer": "C",
+        "input_method": "keyboard",
+        "attempts": 1,
+        "is_right": true,
+        "submitted_at": "2024-10-18T03:00:00",
+        "activity_skip": false,
+        "time_spent": 18.2,
+        "used_hint": false,
+        "points_earned": 11
+      },
+      {
+        "performance_id": 40,
+        "chapter_session_id": 27,
+        "activity_id": "44d94b65-8f8c-46d1-80aa-17e6dffaa5b3",
+        "activity_type": "mcq",
+        "user_answer": "B",
+        "input_method": "touch",
+        "attempts": 2,
+        "is_right": false,
+        "submitted_at": "2024-10-19T02:00:00",
+        "activity_skip": false,
+        "time_spent": 29.18,
+        "used_hint": false,
+        "points_earned": 10
+      },
+      {
+        "performance_id": 41,
+        "chapter_session_id": 27,
+        "activity_id": "818f12d0-8d97-4b10-a95f-d8fba15c5228",
+        "activity_type": "mcq",
+        "user_answer": "C",
+        "input_method": "keyboard",
+        "attempts": 2,
+        "is_right": true,
+        "submitted_at": "2024-10-19T03:00:00",
+        "activity_skip": false,
+        "time_spent": 19.56,
+        "used_hint": false,
+        "points_earned": 9
+      }
+    ],
+    "lesson_session": [
+      {
+        "lesson_session_id": 13,
+        "user_id": 8,
+        "topic_id": 13,
+        "api_heading_id": 13,
+        "section_index": 5,
+        "title": "Session 1",
+        "device_type": "tablet",
+        "created_at": "2024-10-11T01:00:00"
+      },
+      {
+        "lesson_session_id": 14,
+        "user_id": 8,
+        "topic_id": 14,
+        "api_heading_id": 14,
+        "section_index": 6,
+        "title": "Session 2",
+        "device_type": "tablet",
+        "created_at": "2024-10-12T01:00:00"
+      }
+    ],
+    "Topics": [
+      {
+        "topic_id": 13,
+        "user_id": 8,
+        "title": "English Essentials",
+        "subject": "English",
+        "duration": 39,
+        "class_level": "KS2",
+        "created_at": "2024-10-11T00:00:00"
+      },
+      {
+        "topic_id": 14,
+        "user_id": 8,
+        "title": "History Essentials",
+        "subject": "History",
+        "duration": 42,
+        "class_level": "KS2",
+        "created_at": "2024-10-12T00:00:00"
+      }
+    ],
+    "avatar_change": [
+      {
+        "avatar_change_id": 13,
+        "chapter_session_id": 26,
+        "avatar_name": "Ava",
+        "clothes_set": "default",
+        "time_spent": 2.83,
+        "accessory": "badge",
+        "selected_at": "2024-10-18T00:00:00"
+      },
+      {
+        "avatar_change_id": 14,
+        "chapter_session_id": 27,
+        "avatar_name": "Zed",
+        "clothes_set": "default",
+        "time_spent": 1.4,
+        "accessory": "badge",
+        "selected_at": "2024-10-19T00:00:00"
+      }
+    ],
+    "font_change": [
+      {
+        "font_change_id": 13,
+        "chapter_session_id": 26,
+        "font_size": 20,
+        "font_style": "Lexend",
+        "selected_at": "2024-10-17T23:00:00"
+      },
+      {
+        "font_change_id": 14,
+        "chapter_session_id": 27,
+        "font_size": 17,
+        "font_style": "OpenDyslexic",
+        "selected_at": "2024-10-18T23:00:00"
+      }
+    ],
+    "background_change": [
+      {
+        "background_change_id": 13,
+        "chapter_session_id": 26,
+        "time_spent": 1.36,
+        "background_option": "calm_blue",
+        "selected_at": "2024-10-17T22:00:00"
+      },
+      {
+        "background_change_id": 14,
+        "chapter_session_id": 27,
+        "time_spent": 1.24,
+        "background_option": "night_mode",
+        "selected_at": "2024-10-18T22:00:00"
+      }
+    ],
+    "ai_chat": [
+      {
+        "chat_id": 13,
+        "chapter_session_id": 26,
+        "ai_response": "Let's work through the tricky steps together.",
+        "input_method": "text",
+        "time_spent": 1.25,
+        "user_message": "I need help with this question.",
+        "selected_at": "2024-10-18T02:00:00"
+      },
+      {
+        "chat_id": 14,
+        "chapter_session_id": 27,
+        "ai_response": "Let's work through the tricky steps together.",
+        "input_method": "text",
+        "time_spent": 1.27,
+        "user_message": "I need help with this question.",
+        "selected_at": "2024-10-19T02:00:00"
+      }
+    ],
+    "lesson_sections": [
+      {
+        "lesson_section_id": 13,
+        "topic_id": 13,
+        "user_id": 8,
+        "title": "Lesson 13",
+        "image_path": "illustration.png",
+        "section_index": 10,
+        "api_heading_id": "heading_13",
+        "created_at": "2024-10-11T00:00:00",
+        "updated_at": "2024-10-18T00:00:00",
+        "deleted_at": null,
+        "total_points": 100
+      },
+      {
+        "lesson_section_id": 14,
+        "topic_id": 14,
+        "user_id": 8,
+        "title": "Lesson 14",
+        "image_path": "illustration.png",
+        "section_index": 11,
+        "api_heading_id": "heading_14",
+        "created_at": "2024-10-12T00:00:00",
+        "updated_at": "2024-10-19T00:00:00",
+        "deleted_at": null,
+        "total_points": 100
+      }
+    ],
+    "section_contents": [
+      {
+        "section_content_id": 13,
+        "lesson_section_id": 13,
+        "reading_level": "Intermediate",
+        "paragraph_delta_json": "Sample passage for Isla Bennett topic 1.",
+        "api_grade_level": "KS2",
+        "api_reading_level": "Intermediate",
+        "created_at": "2024-10-11T00:00:00",
+        "updated_at": "2024-10-18T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "section_content_id": 14,
+        "lesson_section_id": 14,
+        "reading_level": "Intermediate",
+        "paragraph_delta_json": "Sample passage for Isla Bennett topic 2.",
+        "api_grade_level": "KS2",
+        "api_reading_level": "Intermediate",
+        "created_at": "2024-10-12T00:00:00",
+        "updated_at": "2024-10-19T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "mcqs": [
+      {
+        "mcq_id": 13,
+        "section_content_id": 13,
+        "question": "What is concept 1?",
+        "image_path": null,
+        "correct_option_ui_id": "option_c",
+        "created_at": "2024-10-11T00:00:00",
+        "updated_at": "2024-10-18T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "mcq_id": 14,
+        "section_content_id": 14,
+        "question": "What is concept 2?",
+        "image_path": null,
+        "correct_option_ui_id": "option_c",
+        "created_at": "2024-10-12T00:00:00",
+        "updated_at": "2024-10-19T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "mcq_options": [
+      {
+        "option_id": 49,
+        "mcq_id": 13,
+        "text_value": "Choice 1",
+        "created_at": "2024-10-11T00:00:00",
+        "updated_at": "2024-10-18T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 50,
+        "mcq_id": 13,
+        "text_value": "Choice 2",
+        "created_at": "2024-10-11T00:00:00",
+        "updated_at": "2024-10-18T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 51,
+        "mcq_id": 13,
+        "text_value": "Choice 3",
+        "created_at": "2024-10-11T00:00:00",
+        "updated_at": "2024-10-18T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 52,
+        "mcq_id": 13,
+        "text_value": "Choice 4",
+        "created_at": "2024-10-11T00:00:00",
+        "updated_at": "2024-10-18T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 53,
+        "mcq_id": 14,
+        "text_value": "Choice 1",
+        "created_at": "2024-10-12T00:00:00",
+        "updated_at": "2024-10-19T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 54,
+        "mcq_id": 14,
+        "text_value": "Choice 2",
+        "created_at": "2024-10-12T00:00:00",
+        "updated_at": "2024-10-19T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 55,
+        "mcq_id": 14,
+        "text_value": "Choice 3",
+        "created_at": "2024-10-12T00:00:00",
+        "updated_at": "2024-10-19T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 56,
+        "mcq_id": 14,
+        "text_value": "Choice 4",
+        "created_at": "2024-10-12T00:00:00",
+        "updated_at": "2024-10-19T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "mcq_click": [
+      {
+        "click_id": 13,
+        "mcq_id": 13,
+        "chapter_session_id": 26,
+        "click_count": 3,
+        "image_path": "mcq.png",
+        "last_click": "2024-10-19T00:00:00",
+        "created_at": "2024-10-18T00:00:00",
+        "updated_at": "2024-10-20T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "click_id": 14,
+        "mcq_id": 14,
+        "chapter_session_id": 27,
+        "click_count": 5,
+        "image_path": "mcq.png",
+        "last_click": "2024-10-20T00:00:00",
+        "created_at": "2024-10-19T00:00:00",
+        "updated_at": "2024-10-21T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "open_questions": [
+      {
+        "question_id": 13,
+        "section_content_id": 13,
+        "question": "Explain idea 1?",
+        "hint": "Think of real-life example",
+        "answer": "Sample answer",
+        "created_at": "2024-10-11T00:00:00",
+        "updated_at": "2024-10-18T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "question_id": 14,
+        "section_content_id": 14,
+        "question": "Explain idea 2?",
+        "hint": "Think of real-life example",
+        "answer": "Sample answer",
+        "created_at": "2024-10-12T00:00:00",
+        "updated_at": "2024-10-19T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "resource_click": [
+      {
+        "click_id": 13,
+        "chapter_session_id": 26,
+        "click_count": 4,
+        "image_path": "resource.png",
+        "last_click": "2024-10-19T00:00:00",
+        "created_at": "2024-10-11T00:00:00",
+        "updated_at": "2024-10-20T00:00:00"
+      },
+      {
+        "click_id": 14,
+        "chapter_session_id": 27,
+        "click_count": 1,
+        "image_path": "resource.png",
+        "last_click": "2024-10-20T00:00:00",
+        "created_at": "2024-10-12T00:00:00",
+        "updated_at": "2024-10-21T00:00:00"
+      }
+    ],
+    "ai_literacy_assessment": [
+      {
+        "user_id": 8,
+        "taken_at": "2024-09-25T00:00:00",
+        "type": "pre",
+        "score": 45,
+        "max_score": 100,
+        "concepts_mastered": [
+          "data"
+        ],
+        "applications": [
+          "Identify examples"
+        ]
+      },
+      {
+        "user_id": 8,
+        "taken_at": "2024-10-25T00:00:00",
+        "type": "post",
+        "score": 83,
+        "max_score": 100,
+        "concepts_mastered": [
+          "data",
+          "algorithm"
+        ],
+        "applications": [
+          "Explain algorithm steps",
+          "Spot bias"
+        ]
+      }
+    ],
+    "emotional_regulation_log": [
+      {
+        "entry_id": 1022,
+        "user_id": 8,
+        "recorded_at": "2024-09-17T00:00:00",
+        "zone": "Green",
+        "mood_indicator": "calm-focused",
+        "sensory_adjustments": {
+          "contrast": "high",
+          "font_size": "large",
+          "audio": "white_noise"
+        }
+      },
+      {
+        "entry_id": 1023,
+        "user_id": 8,
+        "recorded_at": "2024-09-18T00:00:00",
+        "zone": "Yellow",
+        "mood_indicator": "restless",
+        "sensory_adjustments": {
+          "contrast": "standard",
+          "font_size": "medium",
+          "background": "soft_blue"
+        }
+      },
+      {
+        "entry_id": 1024,
+        "user_id": 8,
+        "recorded_at": "2024-09-19T00:00:00",
+        "zone": "Red",
+        "mood_indicator": "overwhelmed",
+        "sensory_adjustments": {
+          "contrast": "low",
+          "font_size": "large",
+          "overlay": "amber"
+        }
+      }
+    ],
+    "support_usage": [
+      {
+        "event_id": 2015,
+        "user_id": 8,
+        "event_type": "help_request",
+        "feature": "live_support",
+        "count": 2,
+        "recorded_at": "2024-09-25T00:00:00"
+      },
+      {
+        "event_id": 2016,
+        "user_id": 8,
+        "event_type": "support_feature",
+        "feature": "hints",
+        "count": 2,
+        "recorded_at": "2024-09-26T00:00:00"
+      }
+    ],
+    "communication_events": [
+      {
+        "event_id": 3015,
+        "user_id": 8,
+        "interaction_type": "avatar_chat",
+        "initiated_by": "student",
+        "turns": 4,
+        "message_length": 106,
+        "timestamp": "2024-10-03T00:00:00"
+      },
+      {
+        "event_id": 3016,
+        "user_id": 8,
+        "interaction_type": "text_message",
+        "initiated_by": "system",
+        "turns": 3,
+        "message_length": 203,
+        "timestamp": "2024-10-04T00:00:00"
+      }
+    ]
+  },
+  {
+    "user": [
+      {
+        "user_id": 9,
+        "email": "cmorton@example.org",
+        "name": "Caleb Morton",
+        "age": 10,
+        "parental_email": "parent_cmorton@example.org",
+        "password_hashed": "hash_0009",
+        "created_at": "2024-12-04T00:00:00",
+        "updated_at": "2024-12-16T00:00:00",
+        "dob": "2008-06-01",
+        "gender": "male",
+        "class_level": "KS3",
+        "school_name": "Lakeside School",
+        "reading_level": "Advanced"
+      }
+    ],
+    "enrollment": [
+      {
+        "enrollment_id": 28,
+        "enrolled_at": "2024-10-16T00:00:00",
+        "user_id": 9,
+        "topic_id": 15,
+        "is_completed": false,
+        "have_certificate": true
+      },
+      {
+        "enrollment_id": 29,
+        "enrolled_at": "2024-10-17T00:00:00",
+        "user_id": 9,
+        "topic_id": 16,
+        "is_completed": true,
+        "have_certificate": false
+      }
+    ],
+    "daily_activity_log": [
+      {
+        "log_id": 37,
+        "user_id": 9,
+        "login_timestamp": "2024-09-28T00:00:00",
+        "time_spent": 33.06,
+        "points_earned": 3,
+        "activities_completed": 2
+      },
+      {
+        "log_id": 38,
+        "user_id": 9,
+        "login_timestamp": "2024-09-29T00:00:00",
+        "time_spent": 35.17,
+        "points_earned": 8,
+        "activities_completed": 2
+      },
+      {
+        "log_id": 39,
+        "user_id": 9,
+        "login_timestamp": "2024-09-30T00:00:00",
+        "time_spent": 51.91,
+        "points_earned": 6,
+        "activities_completed": 6
+      }
+    ],
+    "topic_session": [
+      {
+        "topic_session_id": 28,
+        "enrollment_id": 28,
+        "started_at": "2024-10-16T00:00:00",
+        "total_time_spent": 60.07,
+        "device_type": "laptop",
+        "completed_at": "2024-10-23T00:00:00",
+        "completion_percent": 82.43,
+        "geo_location": "Norwich"
+      },
+      {
+        "topic_session_id": 29,
+        "enrollment_id": 29,
+        "started_at": "2024-10-17T00:00:00",
+        "total_time_spent": 58.24,
+        "device_type": "tablet",
+        "completed_at": "2024-10-24T00:00:00",
+        "completion_percent": 72.27,
+        "geo_location": "Norwich"
+      }
+    ],
+    "chapter_session": [
+      {
+        "chapter_session_id": 28,
+        "topic_session_id": 28,
+        "section_content_id": 15,
+        "time_spent": 33.35,
+        "progress_percent": 89.54,
+        "replay_count": 0,
+        "points_earned": 6,
+        "skipped_content": false,
+        "started_at": "2024-10-16T02:00:00",
+        "completed_at": "2024-10-23T01:00:00"
+      },
+      {
+        "chapter_session_id": 29,
+        "topic_session_id": 29,
+        "section_content_id": 16,
+        "time_spent": 23.32,
+        "progress_percent": 75.18,
+        "replay_count": 1,
+        "points_earned": 14,
+        "skipped_content": false,
+        "started_at": "2024-10-17T02:00:00",
+        "completed_at": "2024-10-24T01:00:00"
+      }
+    ],
+    "activity_performance": [
+      {
+        "performance_id": 42,
+        "chapter_session_id": 28,
+        "activity_id": "4cfc2f2b-f282-46b1-aea5-f69941371ece",
+        "activity_type": "mcq",
+        "user_answer": "B",
+        "input_method": "touch",
+        "attempts": 1,
+        "is_right": true,
+        "submitted_at": "2024-10-23T02:00:00",
+        "activity_skip": false,
+        "time_spent": 15.51,
+        "used_hint": false,
+        "points_earned": 5
+      },
+      {
+        "performance_id": 43,
+        "chapter_session_id": 28,
+        "activity_id": "1a080ddf-eb1f-4c70-bc6a-7bfde48387c0",
+        "activity_type": "mcq",
+        "user_answer": "C",
+        "input_method": "keyboard",
+        "attempts": 1,
+        "is_right": true,
+        "submitted_at": "2024-10-23T03:00:00",
+        "activity_skip": false,
+        "time_spent": 18.65,
+        "used_hint": false,
+        "points_earned": 11
+      },
+      {
+        "performance_id": 44,
+        "chapter_session_id": 29,
+        "activity_id": "21742ec9-22e8-46a1-ba9e-ac3876748432",
+        "activity_type": "mcq",
+        "user_answer": "B",
+        "input_method": "touch",
+        "attempts": 1,
+        "is_right": false,
+        "submitted_at": "2024-10-24T02:00:00",
+        "activity_skip": false,
+        "time_spent": 42.4,
+        "used_hint": true,
+        "points_earned": 10
+      },
+      {
+        "performance_id": 45,
+        "chapter_session_id": 29,
+        "activity_id": "823a04ef-917e-4c71-90e9-f763e7971e49",
+        "activity_type": "mcq",
+        "user_answer": "C",
+        "input_method": "keyboard",
+        "attempts": 2,
+        "is_right": true,
+        "submitted_at": "2024-10-24T03:00:00",
+        "activity_skip": false,
+        "time_spent": 25.54,
+        "used_hint": false,
+        "points_earned": 8
+      }
+    ],
+    "lesson_session": [
+      {
+        "lesson_session_id": 15,
+        "user_id": 9,
+        "topic_id": 15,
+        "api_heading_id": 15,
+        "section_index": 5,
+        "title": "Session 1",
+        "device_type": "laptop",
+        "created_at": "2024-10-16T01:00:00"
+      },
+      {
+        "lesson_session_id": 16,
+        "user_id": 9,
+        "topic_id": 16,
+        "api_heading_id": 16,
+        "section_index": 6,
+        "title": "Session 2",
+        "device_type": "laptop",
+        "created_at": "2024-10-17T01:00:00"
+      }
+    ],
+    "Topics": [
+      {
+        "topic_id": 15,
+        "user_id": 9,
+        "title": "History Essentials",
+        "subject": "History",
+        "duration": 43,
+        "class_level": "KS3",
+        "created_at": "2024-10-16T00:00:00"
+      },
+      {
+        "topic_id": 16,
+        "user_id": 9,
+        "title": "Geography Essentials",
+        "subject": "Geography",
+        "duration": 38,
+        "class_level": "KS3",
+        "created_at": "2024-10-17T00:00:00"
+      }
+    ],
+    "avatar_change": [
+      {
+        "avatar_change_id": 15,
+        "chapter_session_id": 28,
+        "avatar_name": "Zed",
+        "clothes_set": "default",
+        "time_spent": 1.34,
+        "accessory": "badge",
+        "selected_at": "2024-10-23T00:00:00"
+      },
+      {
+        "avatar_change_id": 16,
+        "chapter_session_id": 29,
+        "avatar_name": "Kai",
+        "clothes_set": "default",
+        "time_spent": 2.5,
+        "accessory": "badge",
+        "selected_at": "2024-10-24T00:00:00"
+      }
+    ],
+    "font_change": [
+      {
+        "font_change_id": 15,
+        "chapter_session_id": 28,
+        "font_size": 17,
+        "font_style": "Comic Sans",
+        "selected_at": "2024-10-22T23:00:00"
+      },
+      {
+        "font_change_id": 16,
+        "chapter_session_id": 29,
+        "font_size": 14,
+        "font_style": "Comic Sans",
+        "selected_at": "2024-10-23T23:00:00"
+      }
+    ],
+    "background_change": [
+      {
+        "background_change_id": 15,
+        "chapter_session_id": 28,
+        "time_spent": 3.05,
+        "background_option": "night_mode",
+        "selected_at": "2024-10-22T22:00:00"
+      },
+      {
+        "background_change_id": 16,
+        "chapter_session_id": 29,
+        "time_spent": 1.51,
+        "background_option": "night_mode",
+        "selected_at": "2024-10-23T22:00:00"
+      }
+    ],
+    "ai_chat": [
+      {
+        "chat_id": 15,
+        "chapter_session_id": 28,
+        "ai_response": "Let's work through the tricky steps together.",
+        "input_method": "text",
+        "time_spent": 4.2,
+        "user_message": "I need help with this question.",
+        "selected_at": "2024-10-23T02:00:00"
+      },
+      {
+        "chat_id": 16,
+        "chapter_session_id": 29,
+        "ai_response": "Let's work through the tricky steps together.",
+        "input_method": "text",
+        "time_spent": 1.51,
+        "user_message": "I need help with this question.",
+        "selected_at": "2024-10-24T02:00:00"
+      }
+    ],
+    "lesson_sections": [
+      {
+        "lesson_section_id": 15,
+        "topic_id": 15,
+        "user_id": 9,
+        "title": "Lesson 15",
+        "image_path": "illustration.png",
+        "section_index": 10,
+        "api_heading_id": "heading_15",
+        "created_at": "2024-10-16T00:00:00",
+        "updated_at": "2024-10-23T00:00:00",
+        "deleted_at": null,
+        "total_points": 100
+      },
+      {
+        "lesson_section_id": 16,
+        "topic_id": 16,
+        "user_id": 9,
+        "title": "Lesson 16",
+        "image_path": "illustration.png",
+        "section_index": 11,
+        "api_heading_id": "heading_16",
+        "created_at": "2024-10-17T00:00:00",
+        "updated_at": "2024-10-24T00:00:00",
+        "deleted_at": null,
+        "total_points": 100
+      }
+    ],
+    "section_contents": [
+      {
+        "section_content_id": 15,
+        "lesson_section_id": 15,
+        "reading_level": "Advanced",
+        "paragraph_delta_json": "Sample passage for Caleb Morton topic 1.",
+        "api_grade_level": "KS3",
+        "api_reading_level": "Advanced",
+        "created_at": "2024-10-16T00:00:00",
+        "updated_at": "2024-10-23T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "section_content_id": 16,
+        "lesson_section_id": 16,
+        "reading_level": "Advanced",
+        "paragraph_delta_json": "Sample passage for Caleb Morton topic 2.",
+        "api_grade_level": "KS3",
+        "api_reading_level": "Advanced",
+        "created_at": "2024-10-17T00:00:00",
+        "updated_at": "2024-10-24T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "mcqs": [
+      {
+        "mcq_id": 15,
+        "section_content_id": 15,
+        "question": "What is concept 1?",
+        "image_path": null,
+        "correct_option_ui_id": "option_c",
+        "created_at": "2024-10-16T00:00:00",
+        "updated_at": "2024-10-23T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "mcq_id": 16,
+        "section_content_id": 16,
+        "question": "What is concept 2?",
+        "image_path": null,
+        "correct_option_ui_id": "option_c",
+        "created_at": "2024-10-17T00:00:00",
+        "updated_at": "2024-10-24T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "mcq_options": [
+      {
+        "option_id": 57,
+        "mcq_id": 15,
+        "text_value": "Choice 1",
+        "created_at": "2024-10-16T00:00:00",
+        "updated_at": "2024-10-23T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 58,
+        "mcq_id": 15,
+        "text_value": "Choice 2",
+        "created_at": "2024-10-16T00:00:00",
+        "updated_at": "2024-10-23T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 59,
+        "mcq_id": 15,
+        "text_value": "Choice 3",
+        "created_at": "2024-10-16T00:00:00",
+        "updated_at": "2024-10-23T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 60,
+        "mcq_id": 15,
+        "text_value": "Choice 4",
+        "created_at": "2024-10-16T00:00:00",
+        "updated_at": "2024-10-23T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 61,
+        "mcq_id": 16,
+        "text_value": "Choice 1",
+        "created_at": "2024-10-17T00:00:00",
+        "updated_at": "2024-10-24T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 62,
+        "mcq_id": 16,
+        "text_value": "Choice 2",
+        "created_at": "2024-10-17T00:00:00",
+        "updated_at": "2024-10-24T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 63,
+        "mcq_id": 16,
+        "text_value": "Choice 3",
+        "created_at": "2024-10-17T00:00:00",
+        "updated_at": "2024-10-24T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 64,
+        "mcq_id": 16,
+        "text_value": "Choice 4",
+        "created_at": "2024-10-17T00:00:00",
+        "updated_at": "2024-10-24T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "mcq_click": [
+      {
+        "click_id": 15,
+        "mcq_id": 15,
+        "chapter_session_id": 28,
+        "click_count": 1,
+        "image_path": "mcq.png",
+        "last_click": "2024-10-24T00:00:00",
+        "created_at": "2024-10-23T00:00:00",
+        "updated_at": "2024-10-25T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "click_id": 16,
+        "mcq_id": 16,
+        "chapter_session_id": 29,
+        "click_count": 1,
+        "image_path": "mcq.png",
+        "last_click": "2024-10-25T00:00:00",
+        "created_at": "2024-10-24T00:00:00",
+        "updated_at": "2024-10-26T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "open_questions": [
+      {
+        "question_id": 15,
+        "section_content_id": 15,
+        "question": "Explain idea 1?",
+        "hint": "Think of real-life example",
+        "answer": "Sample answer",
+        "created_at": "2024-10-16T00:00:00",
+        "updated_at": "2024-10-23T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "question_id": 16,
+        "section_content_id": 16,
+        "question": "Explain idea 2?",
+        "hint": "Think of real-life example",
+        "answer": "Sample answer",
+        "created_at": "2024-10-17T00:00:00",
+        "updated_at": "2024-10-24T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "resource_click": [
+      {
+        "click_id": 15,
+        "chapter_session_id": 28,
+        "click_count": 2,
+        "image_path": "resource.png",
+        "last_click": "2024-10-24T00:00:00",
+        "created_at": "2024-10-16T00:00:00",
+        "updated_at": "2024-10-25T00:00:00"
+      },
+      {
+        "click_id": 16,
+        "chapter_session_id": 29,
+        "click_count": 2,
+        "image_path": "resource.png",
+        "last_click": "2024-10-25T00:00:00",
+        "created_at": "2024-10-17T00:00:00",
+        "updated_at": "2024-10-26T00:00:00"
+      }
+    ],
+    "ai_literacy_assessment": [
+      {
+        "user_id": 9,
+        "taken_at": "2024-09-28T00:00:00",
+        "type": "pre",
+        "score": 49,
+        "max_score": 100,
+        "concepts_mastered": [
+          "data"
+        ],
+        "applications": [
+          "Identify examples"
+        ]
+      },
+      {
+        "user_id": 9,
+        "taken_at": "2024-10-28T00:00:00",
+        "type": "post",
+        "score": 68,
+        "max_score": 100,
+        "concepts_mastered": [
+          "data",
+          "algorithm"
+        ],
+        "applications": [
+          "Explain algorithm steps",
+          "Spot bias"
+        ]
+      }
+    ],
+    "emotional_regulation_log": [
+      {
+        "entry_id": 1025,
+        "user_id": 9,
+        "recorded_at": "2024-09-19T00:00:00",
+        "zone": "Yellow",
+        "mood_indicator": "restless",
+        "sensory_adjustments": {
+          "contrast": "standard",
+          "font_size": "medium",
+          "background": "soft_blue"
+        }
+      },
+      {
+        "entry_id": 1026,
+        "user_id": 9,
+        "recorded_at": "2024-09-20T00:00:00",
+        "zone": "Red",
+        "mood_indicator": "overwhelmed",
+        "sensory_adjustments": {
+          "contrast": "low",
+          "font_size": "large",
+          "overlay": "amber"
+        }
+      },
+      {
+        "entry_id": 1027,
+        "user_id": 9,
+        "recorded_at": "2024-09-21T00:00:00",
+        "zone": "Blue",
+        "mood_indicator": "tired",
+        "sensory_adjustments": {
+          "contrast": "high",
+          "font_size": "small",
+          "filter": "warm"
+        }
+      }
+    ],
+    "support_usage": [
+      {
+        "event_id": 2017,
+        "user_id": 9,
+        "event_type": "help_request",
+        "feature": "live_support",
+        "count": 2,
+        "recorded_at": "2024-09-28T00:00:00"
+      },
+      {
+        "event_id": 2018,
+        "user_id": 9,
+        "event_type": "support_feature",
+        "feature": "text_reader",
+        "count": 3,
+        "recorded_at": "2024-09-29T00:00:00"
+      }
+    ],
+    "communication_events": [
+      {
+        "event_id": 3017,
+        "user_id": 9,
+        "interaction_type": "text_message",
+        "initiated_by": "system",
+        "turns": 3,
+        "message_length": 154,
+        "timestamp": "2024-10-07T00:00:00"
+      },
+      {
+        "event_id": 3018,
+        "user_id": 9,
+        "interaction_type": "avatar_chat",
+        "initiated_by": "student",
+        "turns": 4,
+        "message_length": 225,
+        "timestamp": "2024-10-08T00:00:00"
+      }
+    ]
+  },
+  {
+    "user": [
+      {
+        "user_id": 10,
+        "email": "smartins@example.org",
+        "name": "Sofia Martins",
+        "age": 11,
+        "parental_email": "parent_smartins@example.org",
+        "password_hashed": "hash_0010",
+        "created_at": "2024-12-08T00:00:00",
+        "updated_at": "2024-12-20T00:00:00",
+        "dob": "2007-06-02",
+        "gender": "female",
+        "class_level": "KS4",
+        "school_name": "Horizon Academy",
+        "reading_level": "Advanced"
+      }
+    ],
+    "enrollment": [
+      {
+        "enrollment_id": 30,
+        "enrolled_at": "2024-10-21T00:00:00",
+        "user_id": 10,
+        "topic_id": 17,
+        "is_completed": false,
+        "have_certificate": true
+      },
+      {
+        "enrollment_id": 31,
+        "enrolled_at": "2024-10-22T00:00:00",
+        "user_id": 10,
+        "topic_id": 18,
+        "is_completed": true,
+        "have_certificate": false
+      }
+    ],
+    "daily_activity_log": [
+      {
+        "log_id": 40,
+        "user_id": 10,
+        "login_timestamp": "2024-10-01T00:00:00",
+        "time_spent": 49.48,
+        "points_earned": 8,
+        "activities_completed": 3
+      },
+      {
+        "log_id": 41,
+        "user_id": 10,
+        "login_timestamp": "2024-10-02T00:00:00",
+        "time_spent": 46.27,
+        "points_earned": 12,
+        "activities_completed": 2
+      },
+      {
+        "log_id": 42,
+        "user_id": 10,
+        "login_timestamp": "2024-10-03T00:00:00",
+        "time_spent": 41.97,
+        "points_earned": 5,
+        "activities_completed": 6
+      }
+    ],
+    "topic_session": [
+      {
+        "topic_session_id": 30,
+        "enrollment_id": 30,
+        "started_at": "2024-10-21T00:00:00",
+        "total_time_spent": 54.2,
+        "device_type": "desktop",
+        "completed_at": "2024-10-28T00:00:00",
+        "completion_percent": 71.03,
+        "geo_location": "Cardiff"
+      },
+      {
+        "topic_session_id": 31,
+        "enrollment_id": 31,
+        "started_at": "2024-10-22T00:00:00",
+        "total_time_spent": 42.3,
+        "device_type": "desktop",
+        "completed_at": "2024-10-29T00:00:00",
+        "completion_percent": 80.74,
+        "geo_location": "Manchester"
+      }
+    ],
+    "chapter_session": [
+      {
+        "chapter_session_id": 30,
+        "topic_session_id": 30,
+        "section_content_id": 17,
+        "time_spent": 46.57,
+        "progress_percent": 66.84,
+        "replay_count": 0,
+        "points_earned": 12,
+        "skipped_content": false,
+        "started_at": "2024-10-21T02:00:00",
+        "completed_at": "2024-10-28T01:00:00"
+      },
+      {
+        "chapter_session_id": 31,
+        "topic_session_id": 31,
+        "section_content_id": 18,
+        "time_spent": 27.06,
+        "progress_percent": 75.02,
+        "replay_count": 2,
+        "points_earned": 11,
+        "skipped_content": false,
+        "started_at": "2024-10-22T02:00:00",
+        "completed_at": "2024-10-29T01:00:00"
+      }
+    ],
+    "activity_performance": [
+      {
+        "performance_id": 46,
+        "chapter_session_id": 30,
+        "activity_id": "f57fa57c-5e69-4df6-b3cc-a3f1eeb5d23f",
+        "activity_type": "mcq",
+        "user_answer": "B",
+        "input_method": "touch",
+        "attempts": 1,
+        "is_right": false,
+        "submitted_at": "2024-10-28T02:00:00",
+        "activity_skip": false,
+        "time_spent": 35.14,
+        "used_hint": true,
+        "points_earned": 6
+      },
+      {
+        "performance_id": 47,
+        "chapter_session_id": 30,
+        "activity_id": "4f10c5fe-02cb-4778-886c-59fb1459c744",
+        "activity_type": "mcq",
+        "user_answer": "C",
+        "input_method": "keyboard",
+        "attempts": 1,
+        "is_right": true,
+        "submitted_at": "2024-10-28T03:00:00",
+        "activity_skip": false,
+        "time_spent": 14.27,
+        "used_hint": false,
+        "points_earned": 11
+      },
+      {
+        "performance_id": 48,
+        "chapter_session_id": 31,
+        "activity_id": "c946dab3-d49d-4801-bcfb-12a13d0f1151",
+        "activity_type": "mcq",
+        "user_answer": "B",
+        "input_method": "touch",
+        "attempts": 3,
+        "is_right": false,
+        "submitted_at": "2024-10-29T02:00:00",
+        "activity_skip": false,
+        "time_spent": 43.5,
+        "used_hint": true,
+        "points_earned": 8
+      },
+      {
+        "performance_id": 49,
+        "chapter_session_id": 31,
+        "activity_id": "596e1fef-941d-40c7-90f3-d7f9472c571c",
+        "activity_type": "mcq",
+        "user_answer": "C",
+        "input_method": "keyboard",
+        "attempts": 1,
+        "is_right": true,
+        "submitted_at": "2024-10-29T03:00:00",
+        "activity_skip": false,
+        "time_spent": 13.96,
+        "used_hint": false,
+        "points_earned": 10
+      }
+    ],
+    "lesson_session": [
+      {
+        "lesson_session_id": 17,
+        "user_id": 10,
+        "topic_id": 17,
+        "api_heading_id": 17,
+        "section_index": 5,
+        "title": "Session 1",
+        "device_type": "desktop",
+        "created_at": "2024-10-21T01:00:00"
+      },
+      {
+        "lesson_session_id": 18,
+        "user_id": 10,
+        "topic_id": 18,
+        "api_heading_id": 18,
+        "section_index": 6,
+        "title": "Session 2",
+        "device_type": "tablet",
+        "created_at": "2024-10-22T01:00:00"
+      }
+    ],
+    "Topics": [
+      {
+        "topic_id": 17,
+        "user_id": 10,
+        "title": "Geography Essentials",
+        "subject": "Geography",
+        "duration": 43,
+        "class_level": "KS4",
+        "created_at": "2024-10-21T00:00:00"
+      },
+      {
+        "topic_id": 18,
+        "user_id": 10,
+        "title": "Computing Essentials",
+        "subject": "Computing",
+        "duration": 30,
+        "class_level": "KS4",
+        "created_at": "2024-10-22T00:00:00"
+      }
+    ],
+    "avatar_change": [
+      {
+        "avatar_change_id": 17,
+        "chapter_session_id": 30,
+        "avatar_name": "Ava",
+        "clothes_set": "default",
+        "time_spent": 1.07,
+        "accessory": "badge",
+        "selected_at": "2024-10-28T00:00:00"
+      },
+      {
+        "avatar_change_id": 18,
+        "chapter_session_id": 31,
+        "avatar_name": "Kai",
+        "clothes_set": "default",
+        "time_spent": 1.0,
+        "accessory": "badge",
+        "selected_at": "2024-10-29T00:00:00"
+      }
+    ],
+    "font_change": [
+      {
+        "font_change_id": 17,
+        "chapter_session_id": 30,
+        "font_size": 20,
+        "font_style": "OpenDyslexic",
+        "selected_at": "2024-10-27T23:00:00"
+      },
+      {
+        "font_change_id": 18,
+        "chapter_session_id": 31,
+        "font_size": 16,
+        "font_style": "Lexend",
+        "selected_at": "2024-10-28T23:00:00"
+      }
+    ],
+    "background_change": [
+      {
+        "background_change_id": 17,
+        "chapter_session_id": 30,
+        "time_spent": 3.35,
+        "background_option": "calm_blue",
+        "selected_at": "2024-10-27T22:00:00"
+      },
+      {
+        "background_change_id": 18,
+        "chapter_session_id": 31,
+        "time_spent": 2.46,
+        "background_option": "night_mode",
+        "selected_at": "2024-10-28T22:00:00"
+      }
+    ],
+    "ai_chat": [
+      {
+        "chat_id": 17,
+        "chapter_session_id": 30,
+        "ai_response": "Let's work through the tricky steps together.",
+        "input_method": "text",
+        "time_spent": 1.59,
+        "user_message": "I need help with this question.",
+        "selected_at": "2024-10-28T02:00:00"
+      },
+      {
+        "chat_id": 18,
+        "chapter_session_id": 31,
+        "ai_response": "Let's work through the tricky steps together.",
+        "input_method": "text",
+        "time_spent": 4.44,
+        "user_message": "I need help with this question.",
+        "selected_at": "2024-10-29T02:00:00"
+      }
+    ],
+    "lesson_sections": [
+      {
+        "lesson_section_id": 17,
+        "topic_id": 17,
+        "user_id": 10,
+        "title": "Lesson 17",
+        "image_path": "illustration.png",
+        "section_index": 10,
+        "api_heading_id": "heading_17",
+        "created_at": "2024-10-21T00:00:00",
+        "updated_at": "2024-10-28T00:00:00",
+        "deleted_at": null,
+        "total_points": 100
+      },
+      {
+        "lesson_section_id": 18,
+        "topic_id": 18,
+        "user_id": 10,
+        "title": "Lesson 18",
+        "image_path": "illustration.png",
+        "section_index": 11,
+        "api_heading_id": "heading_18",
+        "created_at": "2024-10-22T00:00:00",
+        "updated_at": "2024-10-29T00:00:00",
+        "deleted_at": null,
+        "total_points": 100
+      }
+    ],
+    "section_contents": [
+      {
+        "section_content_id": 17,
+        "lesson_section_id": 17,
+        "reading_level": "Advanced",
+        "paragraph_delta_json": "Sample passage for Sofia Martins topic 1.",
+        "api_grade_level": "KS4",
+        "api_reading_level": "Advanced",
+        "created_at": "2024-10-21T00:00:00",
+        "updated_at": "2024-10-28T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "section_content_id": 18,
+        "lesson_section_id": 18,
+        "reading_level": "Advanced",
+        "paragraph_delta_json": "Sample passage for Sofia Martins topic 2.",
+        "api_grade_level": "KS4",
+        "api_reading_level": "Advanced",
+        "created_at": "2024-10-22T00:00:00",
+        "updated_at": "2024-10-29T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "mcqs": [
+      {
+        "mcq_id": 17,
+        "section_content_id": 17,
+        "question": "What is concept 1?",
+        "image_path": null,
+        "correct_option_ui_id": "option_c",
+        "created_at": "2024-10-21T00:00:00",
+        "updated_at": "2024-10-28T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "mcq_id": 18,
+        "section_content_id": 18,
+        "question": "What is concept 2?",
+        "image_path": null,
+        "correct_option_ui_id": "option_c",
+        "created_at": "2024-10-22T00:00:00",
+        "updated_at": "2024-10-29T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "mcq_options": [
+      {
+        "option_id": 65,
+        "mcq_id": 17,
+        "text_value": "Choice 1",
+        "created_at": "2024-10-21T00:00:00",
+        "updated_at": "2024-10-28T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 66,
+        "mcq_id": 17,
+        "text_value": "Choice 2",
+        "created_at": "2024-10-21T00:00:00",
+        "updated_at": "2024-10-28T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 67,
+        "mcq_id": 17,
+        "text_value": "Choice 3",
+        "created_at": "2024-10-21T00:00:00",
+        "updated_at": "2024-10-28T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 68,
+        "mcq_id": 17,
+        "text_value": "Choice 4",
+        "created_at": "2024-10-21T00:00:00",
+        "updated_at": "2024-10-28T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 69,
+        "mcq_id": 18,
+        "text_value": "Choice 1",
+        "created_at": "2024-10-22T00:00:00",
+        "updated_at": "2024-10-29T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 70,
+        "mcq_id": 18,
+        "text_value": "Choice 2",
+        "created_at": "2024-10-22T00:00:00",
+        "updated_at": "2024-10-29T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 71,
+        "mcq_id": 18,
+        "text_value": "Choice 3",
+        "created_at": "2024-10-22T00:00:00",
+        "updated_at": "2024-10-29T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "option_id": 72,
+        "mcq_id": 18,
+        "text_value": "Choice 4",
+        "created_at": "2024-10-22T00:00:00",
+        "updated_at": "2024-10-29T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "mcq_click": [
+      {
+        "click_id": 17,
+        "mcq_id": 17,
+        "chapter_session_id": 30,
+        "click_count": 2,
+        "image_path": "mcq.png",
+        "last_click": "2024-10-29T00:00:00",
+        "created_at": "2024-10-28T00:00:00",
+        "updated_at": "2024-10-30T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "click_id": 18,
+        "mcq_id": 18,
+        "chapter_session_id": 31,
+        "click_count": 4,
+        "image_path": "mcq.png",
+        "last_click": "2024-10-30T00:00:00",
+        "created_at": "2024-10-29T00:00:00",
+        "updated_at": "2024-10-31T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "open_questions": [
+      {
+        "question_id": 17,
+        "section_content_id": 17,
+        "question": "Explain idea 1?",
+        "hint": "Think of real-life example",
+        "answer": "Sample answer",
+        "created_at": "2024-10-21T00:00:00",
+        "updated_at": "2024-10-28T00:00:00",
+        "deleted_at": null
+      },
+      {
+        "question_id": 18,
+        "section_content_id": 18,
+        "question": "Explain idea 2?",
+        "hint": "Think of real-life example",
+        "answer": "Sample answer",
+        "created_at": "2024-10-22T00:00:00",
+        "updated_at": "2024-10-29T00:00:00",
+        "deleted_at": null
+      }
+    ],
+    "resource_click": [
+      {
+        "click_id": 17,
+        "chapter_session_id": 30,
+        "click_count": 4,
+        "image_path": "resource.png",
+        "last_click": "2024-10-29T00:00:00",
+        "created_at": "2024-10-21T00:00:00",
+        "updated_at": "2024-10-30T00:00:00"
+      },
+      {
+        "click_id": 18,
+        "chapter_session_id": 31,
+        "click_count": 4,
+        "image_path": "resource.png",
+        "last_click": "2024-10-30T00:00:00",
+        "created_at": "2024-10-22T00:00:00",
+        "updated_at": "2024-10-31T00:00:00"
+      }
+    ],
+    "ai_literacy_assessment": [
+      {
+        "user_id": 10,
+        "taken_at": "2024-10-01T00:00:00",
+        "type": "pre",
+        "score": 38,
+        "max_score": 100,
+        "concepts_mastered": [
+          "data"
+        ],
+        "applications": [
+          "Identify examples"
+        ]
+      },
+      {
+        "user_id": 10,
+        "taken_at": "2024-10-31T00:00:00",
+        "type": "post",
+        "score": 66,
+        "max_score": 100,
+        "concepts_mastered": [
+          "data",
+          "algorithm"
+        ],
+        "applications": [
+          "Explain algorithm steps",
+          "Spot bias"
+        ]
+      }
+    ],
+    "emotional_regulation_log": [
+      {
+        "entry_id": 1028,
+        "user_id": 10,
+        "recorded_at": "2024-09-21T00:00:00",
+        "zone": "Red",
+        "mood_indicator": "overwhelmed",
+        "sensory_adjustments": {
+          "contrast": "low",
+          "font_size": "large",
+          "overlay": "amber"
+        }
+      },
+      {
+        "entry_id": 1029,
+        "user_id": 10,
+        "recorded_at": "2024-09-22T00:00:00",
+        "zone": "Blue",
+        "mood_indicator": "tired",
+        "sensory_adjustments": {
+          "contrast": "high",
+          "font_size": "small",
+          "filter": "warm"
+        }
+      },
+      {
+        "entry_id": 1030,
+        "user_id": 10,
+        "recorded_at": "2024-09-23T00:00:00",
+        "zone": "Green",
+        "mood_indicator": "calm-focused",
+        "sensory_adjustments": {
+          "contrast": "high",
+          "font_size": "large",
+          "audio": "white_noise"
+        }
+      }
+    ],
+    "support_usage": [
+      {
+        "event_id": 2019,
+        "user_id": 10,
+        "event_type": "help_request",
+        "feature": "live_support",
+        "count": 1,
+        "recorded_at": "2024-10-01T00:00:00"
+      },
+      {
+        "event_id": 2020,
+        "user_id": 10,
+        "event_type": "support_feature",
+        "feature": "accessibility_contrast",
+        "count": 1,
+        "recorded_at": "2024-10-02T00:00:00"
+      }
+    ],
+    "communication_events": [
+      {
+        "event_id": 3019,
+        "user_id": 10,
+        "interaction_type": "avatar_chat",
+        "initiated_by": "student",
+        "turns": 3,
+        "message_length": 134,
+        "timestamp": "2024-10-11T00:00:00"
+      },
+      {
+        "event_id": 3020,
+        "user_id": 10,
+        "interaction_type": "text_message",
+        "initiated_by": "system",
+        "turns": 3,
+        "message_length": 80,
+        "timestamp": "2024-10-12T00:00:00"
       }
     ]
   }
