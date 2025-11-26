@@ -37,6 +37,7 @@ from ui_profile import display_user_metadata
 from ui_subjects import render_subject_growth
 from ui_personalisation import render_personalisation_usage
 from report_builder import build_report
+from qwen_integration import generate_ai_report
 
 st.set_page_config(page_title="Student Report Generator", layout="wide")
 
@@ -536,6 +537,124 @@ def derive_goals_and_recommendations(curr, acc, spd, indep, emo, attempts, focus
     return goals, recs
 
 
+def compute_report_payload(data, user_id, audience, start_date, end_date, data_label):
+    start_dt = datetime.combine(start_date, datetime.min.time())
+    end_dt = datetime.combine(end_date, datetime.max.time())
+
+    agg = aggregate_student(data, user_id)
+    curr = period_stats(data, user_id, start_dt, end_dt)
+    prev_span_days = max(1, (end_dt.date() - start_dt.date()).days + 1)
+    prev_end = start_dt - timedelta(seconds=1)
+    prev_start = prev_end - timedelta(days=prev_span_days - 1)
+    prev = period_stats(data, user_id, prev_start, prev_end)
+    trend_vs_prev = compute_trend(curr["total_time_mins"], prev["total_time_mins"])
+
+    focus_score_now = compute_focus_score(curr["completion_pct"], curr["avg_session_mins"])
+    focus_score_prev = compute_focus_score(prev["completion_pct"], prev["avg_session_mins"])
+    focus_delta = focus_score_now - focus_score_prev
+
+    active_days_total = agg.get("active_days_total", 0)
+    completion_pct_all = agg.get("lesson_completion_rate", 0)
+    avg_time_all = agg.get("avg_session_length", 0)
+    dropoff_risk = compute_dropoff_risk(active_days_total, completion_pct_all, avg_time_all)
+
+    acc_block = accuracy_and_mastery(data, user_id, start_dt, end_dt)
+    spd_block = response_time_stats(data, user_id, start_dt, end_dt)
+    eng_block = engagement_consistency(data, user_id, start_dt, end_dt)
+    indep_block = independence_support(data, user_id, start_dt, end_dt)
+    comm_block = communication_social(data, user_id, start_dt, end_dt)
+    emo_block = emotional_regulation_summary(data, user_id, start_dt, end_dt)
+    attempts_block = activity_attempt_profile(data, user_id, start_dt, end_dt)
+    ai_block = ai_literacy_stats(data, user_id, start_dt, end_dt)
+    independence_for_report = {k: v for k, v in indep_block.items() if k not in {"support_rate", "help_requests"}}
+
+    goals, recs = derive_goals_and_recommendations(
+        curr=curr,
+        acc=acc_block,
+        spd=spd_block,
+        indep=indep_block,
+        emo=emo_block,
+        attempts=attempts_block,
+        focus_score=focus_score_now,
+        dropoff=dropoff_risk,
+    )
+
+    report_data = {
+        "student": {"name": agg["name"], "id": user_id, "class": agg.get("class_level", "missed"), "year": agg.get("class_level", "missed")},
+        "period": {"start": start_date.isoformat(), "end": end_date.isoformat(), "generated_on": date.today().isoformat()},
+        "prepared_for": "Teacher" if audience == "teacher" else "Parent/Carer",
+        "devices": {},
+        "usage": {
+            "active_days": curr.get("active_days", "missed"),
+            "sessions": curr["sessions"],
+            "avg_session_mins": curr["avg_session_mins"],
+            "lessons_done": curr["lessons_done"],
+            "lessons_total": curr["lessons_total"],
+            "completion_pct": curr["completion_pct"],
+            "total_time_mins": curr["total_time_mins"],
+            "trend_vs_prev_pct": trend_vs_prev,
+        },
+        "focus": {
+            "focus_score": focus_score_now,
+            "focus_score_delta": focus_delta,
+            "class_median": 62,
+            "avg_sustained_block_mins": curr["avg_session_mins"],
+        },
+        "learning": {"skills": [], "perseverance_index": agg.get("avg_hints_used", "missed")},
+        "language": {},
+        "ai_support": {"hints_per_activity": agg.get("avg_hints_used", "missed")},
+        "routine": {
+            "dropoff_risk": dropoff_risk,
+            "active_days_total": active_days_total,
+            "completion_pct_all": completion_pct_all,
+            "avg_session_all": avg_time_all,
+        },
+        "goals": goals,
+        "recommendations": recs,
+        "questions": {},
+        # report drivers
+        "accuracy_mastery": acc_block,
+        "processing_speed": spd_block,
+        "ai_literacy": ai_block,
+        "independence": independence_for_report,
+        "communication": comm_block,
+        "emotional_regulation": emo_block,
+        "activity_performance": attempts_block,
+    }
+
+    return {
+        "user_id": user_id,
+        "audience": audience,
+        "start_date": start_date,
+        "end_date": end_date,
+        "start_dt": start_dt,
+        "end_dt": end_dt,
+        "data_label": data_label,
+        "agg": agg,
+        "curr": curr,
+        "prev": prev,
+        "trend_vs_prev": trend_vs_prev,
+        "acc_block": acc_block,
+        "spd_block": spd_block,
+        "eng_block": eng_block,
+        "indep_block": indep_block,
+        "comm_block": comm_block,
+        "emo_block": emo_block,
+        "attempts_block": attempts_block,
+        "ai_block": ai_block,
+        "independence_for_report": independence_for_report,
+        "goals": goals,
+        "recs": recs,
+        "report_data": report_data,
+        "focus_score_now": focus_score_now,
+        "focus_delta": focus_delta,
+        "dropoff_risk": dropoff_risk,
+        "active_days_total": active_days_total,
+        "completion_pct_all": completion_pct_all,
+        "avg_time_all": avg_time_all,
+    }
+
+
 def main():
     st.title("Student Report Generator (merged datasets)")
 
@@ -598,239 +717,217 @@ def main():
         st.info(f"Recommended range for user {user_id}: **{rec_start.date()} → {rec_end.date()}**")
 
     # -------- Run --------
-    if st.button("Run"):
+    run_clicked = st.button("Run")
+    state_key = f"report_payload_{user_id}"
+    if run_clicked:
         try:
-            agg = aggregate_student(data, user_id)
+            payload = compute_report_payload(data, user_id, audience, start_date, end_date, data_label)
         except Exception as e:
-            st.error(f"Aggregation error: {e}")
+            st.error(f"Run failed: {e}")
+            st.session_state.pop(state_key, None)
             return
+        st.session_state[state_key] = payload
+        st.session_state.pop(f"ai_report_{user_id}", None)
+        st.session_state.pop(f"ai_report_error_{user_id}", None)
 
-        start_dt = datetime.combine(start_date, datetime.min.time())
-        end_dt   = datetime.combine(end_date, datetime.max.time())
+    payload = st.session_state.get(state_key)
+    if not payload:
+        st.info("Set your filters and click Run to generate the report.")
+        return
+    if (
+        payload["start_date"] != start_date
+        or payload["end_date"] != end_date
+        or payload.get("data_label") != data_label
+        or payload.get("audience") != audience
+    ):
+        st.warning("Inputs changed — click Run to refresh the report.")
+        return
 
-        curr = period_stats(data, user_id, start_dt, end_dt)
-        prev_span_days = max(1, (end_dt.date() - start_dt.date()).days + 1)
-        prev_end = start_dt - timedelta(seconds=1)
-        prev_start = prev_end - timedelta(days=prev_span_days - 1)
-        prev = period_stats(data, user_id, prev_start, prev_end)
-        trend_vs_prev = compute_trend(curr["total_time_mins"], prev["total_time_mins"])
+    agg = payload["agg"]
+    curr = payload["curr"]
+    trend_vs_prev = payload["trend_vs_prev"]
+    acc_block = payload["acc_block"]
+    spd_block = payload["spd_block"]
+    eng_block = payload["eng_block"]
+    indep_block = payload["indep_block"]
+    comm_block = payload["comm_block"]
+    emo_block = payload["emo_block"]
+    attempts_block = payload["attempts_block"]
+    ai_block = payload["ai_block"]
+    independence_for_report = payload["independence_for_report"]
+    goals = payload["goals"]
+    recs = payload["recs"]
+    report_data = payload["report_data"]
+    start_dt = payload["start_dt"]
+    end_dt = payload["end_dt"]
 
-        # ----- Profile -----
-        display_user_metadata(agg)
+    # ----- Profile -----
+    display_user_metadata(agg)
 
-        # ----- Period KPI pies -----
-        st.markdown("### Period KPI charts")
-        r1c1, r1c2 = st.columns(2)
-        with r1c1:
-            st.plotly_chart(pie_for_score(curr.get("avg_score", 0)), use_container_width=True)
-        with r1c2:
-            st.plotly_chart(
-                pie_for_completed(curr["lessons_done"], curr["lessons_total"], "Lessons completed (topics ≥80%)"),
-                use_container_width=True
-            )
-
-        # ----- Period KPI combined bars (no Altair) -----
-        labels = ["Avg session length (period)", "Time-on-task (period)"]
-        values = [curr["avg_session_mins"], curr["total_time_mins"]]
-        units  = [" mins", " mins"]
-        st.plotly_chart(bar_period_kpis(labels, values, units), use_container_width=True)
-
-        # ----- All-time KPIs -----
-        st.markdown("### All-time KPI charts")
-        labels = [
-            "All-time points",
-            "All-time avg session",
-            f"Avg chapter progress ({agg['chapters_seen']} seen) (%)",
-            "Hints usage (all-time) (%)",
-        ]
-        values = [
-            float(agg["total_points"]),
-            float(agg["avg_session_length"]),
-            float(agg["avg_chapter_progress_val"]),
-            float(agg["avg_hints_used"] * 100.0),
-        ]
-        units = ["", " mins", " %", " %"]
-        st.plotly_chart(alltime_kpi_bars(labels, values, units), use_container_width=True)
-
-        # ---------- Advanced Learning KPIs ----------
-        st.markdown("### Advanced Learning KPIs")
-
-        acc_block = accuracy_and_mastery(data, user_id, start_dt, end_dt)
-        spd_block = response_time_stats(data, user_id, start_dt, end_dt)
-        eng_block = engagement_consistency(data, user_id, start_dt, end_dt)
-        indep_block = independence_support(data, user_id, start_dt, end_dt)
-        comm_block = communication_social(data, user_id, start_dt, end_dt)
-        emo_block = emotional_regulation_summary(data, user_id, start_dt, end_dt)
-        attempts_block = activity_attempt_profile(data, user_id, start_dt, end_dt)
-        ai_block = ai_literacy_stats(data, user_id, start_dt, end_dt)
-        independence_for_report = {k: v for k, v in indep_block.items() if k not in {"support_rate", "help_requests"}}
-
-        tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8 = st.tabs([
-            "Accuracy & Mastery",
-            "Processing Speed",
-            "Engagement & Consistency",
-            "Independence",
-            "Communication",
-            "Emotional Regulation",
-            "Activity Performance",
-            "AI Literacy",
-        ])
-
-        with tab1:
-            st.caption(f"Overall accuracy: **{acc_block['overall']:.1f}%**")
-            st.plotly_chart(bar_mastery_subjects(acc_block["subjects"]), use_container_width=True)
-
-        with tab2:
-            st.caption(
-                f"Attempts: **{spd_block['attempts']}** • Mean: **{spd_block['mean']}** • "
-                f"Median: **{spd_block['median']}** • P90: **{spd_block['p90']}**"
-            )
-            st.plotly_chart(bar_response_time_subjects(spd_block["per_subject"], unit_label=" mins"), use_container_width=True)
-
-        with tab3:
-            st.write("Active days:", eng_block["active_days"])
-            st.write("Total sessions:", eng_block["sessions_total"])
-            st.write("Longest streak:", eng_block["streak"])
-            weeks = eng_block.get("weeks", [])
-            st.caption(f"Weeks with activity: {sum(1 for col in eng_block.get('heat', []) if sum(col) > 0)} / {len(weeks)}")
-
-        with tab4:
-            st.write("Hint rate:", f"{indep_block['hint_rate']}%")
-            st.write("Retry rate:", f"{indep_block['retry_rate']}%")
-            st.write("Support rate:", f"{indep_block['support_rate']}%")
-            st.write("Help requests:", int(indep_block["help_requests"]))
-            st.write("Support features used:", int(indep_block["support_feature_uses"]))
-            st.write("Accessibility toggles:", int(indep_block["accessibility_uses"]))
-            st.write("Independence index:", f"{indep_block['independence']}")
-
-        with tab5:
-            st.write("Messages (period):", comm_block["messages"])
-            st.write("Personalisation changes (proxy):", comm_block["personalisation_changes"])
-            st.write("Avatar/Text interactions:", comm_block["interactions"])
-            st.write("Student-initiated:", comm_block["student_initiated"])
-            st.write("Avg length (chars):", comm_block["avg_length"])
-            st.write("Avg turns:", comm_block["avg_turns"])
-            st.write("Last interaction type:", comm_block.get("last_interaction_type") or "missed")
-
-        with tab6:
-            if emo_block["records"]:
-                st.write("Entries captured:", int(emo_block["records"]))
-                st.write("Latest zone:", emo_block.get("latest_zone") or "missed")
-                st.write("Latest mood:", emo_block.get("latest_mood") or "missed")
-                st.write("Green time:", f"{emo_block['green_pct']}%")
-                st.write("Stability index:", f"{emo_block['stability_index']}%")
-                adjustments = emo_block.get("top_adjustments") or []
-                st.write("Top sensory adjustments:", ", ".join(adjustments) if adjustments else "missed")
-                timeline = emo_block.get("timeline") or []
-                if timeline:
-                    timeline_text = ", ".join(f"{item['date']} ({item['zone']})" for item in timeline)
-                    st.write("Recent timeline:", timeline_text)
-            else:
-                st.info("No emotional regulation entries in this period.")
-
-        with tab7:
-            st.write("Activities recorded:", attempts_block["activities_recorded"])
-            st.write("MCQ attempted:", attempts_block["mcq_attempted"])
-            st.write("MCQ correct:", f"{attempts_block['mcq_correct_pct']}%")
-            st.write("Avg attempts (MCQ):", attempts_block["mcq_avg_attempts"])
-            st.write("First-try success:", f"{attempts_block['mcq_first_try_success_pct']}%")
-            detail_df = pd.DataFrame(attempts_block["attempt_details"])
-            if not detail_df.empty:
-                st.dataframe(detail_df)
-            else:
-                st.info("No activity performance captured for this period.")
-
-        with tab8:
-            if ai_block.get("available"):
-                st.write(f"Pre-test: {ai_block.get('pre_score', 'missed')} / {int(ai_block.get('max_score') or 100)}")
-                st.write(f"Post-test: {ai_block.get('post_score', 'missed')} / {int(ai_block.get('max_score') or 100)}")
-                st.write(f"Learning Gain: {ai_block.get('learning_gain', 'missed')}%")
-                st.write(f"Level (before → after): {ai_block.get('level_before', 'missed')} → {ai_block.get('level_after', 'missed')}")
-                concepts = ai_block.get("concepts_mastered") or []
-                apps = ai_block.get("applications") or []
-                if concepts:
-                    st.write("Key Concepts Mastered:", ", ".join(concepts))
-                if apps:
-                    st.write("Skill Applications:", "; ".join(apps))
-            else:
-                st.info("AI Literacy assessment not found. Add 'ai_literacy_assessment' to your JSON to enable this section.")
-
-        # ---------- Personalisation usage ----------
-        st.markdown("### Personalisation usage")
-        render_personalisation_usage(data, user_id, start_dt, end_dt)
-
-        # ---------- Subject growth ----------
-        render_subject_growth(aggregate_student(data, user_id))
-
-        # ---------- SEN Report ----------
-        st.subheader("🧾 SEN Report (auto-generated)")
-        if not curr["had_ts"]:
-            st.warning("No reliable timestamps found in your selected range.")
-
-        focus_score_now = compute_focus_score(curr["completion_pct"], curr["avg_session_mins"])
-        focus_score_prev = compute_focus_score(prev["completion_pct"], prev["avg_session_mins"])
-        focus_delta = focus_score_now - focus_score_prev
-        active_days_total = agg.get("active_days_total", 0)
-        completion_pct_all = agg.get("lesson_completion_rate", 0)
-        avg_time_all = agg.get("avg_session_length", 0)
-        dropoff_risk = compute_dropoff_risk(active_days_total, completion_pct_all, avg_time_all)
-        goals, recs = derive_goals_and_recommendations(
-            curr=curr,
-            acc=acc_block,
-            spd=spd_block,
-            indep=indep_block,
-            emo=emo_block,
-            attempts=attempts_block,
-            focus_score=focus_score_now,
-            dropoff=dropoff_risk,
+    # ----- Period KPI pies -----
+    st.markdown("### Period KPI charts")
+    r1c1, r1c2 = st.columns(2)
+    with r1c1:
+        st.plotly_chart(pie_for_score(curr.get("avg_score", 0)), use_container_width=True)
+    with r1c2:
+        st.plotly_chart(
+            pie_for_completed(curr["lessons_done"], curr["lessons_total"], "Lessons completed (topics ≥80%)"),
+            use_container_width=True
         )
 
-        report_data = {
-            "student": {"name": agg["name"], "id": user_id, "class": agg.get("class_level", "missed"), "year": agg.get("class_level", "missed")},
-            "period": {"start": start_date.isoformat(), "end": end_date.isoformat(), "generated_on": date.today().isoformat()},
-            "prepared_for": "Teacher" if audience == "teacher" else "Parent/Carer",
-            "devices": {},
-            "usage": {
-                "active_days": curr.get("active_days", "missed"),
-                "sessions": curr["sessions"],
-                "avg_session_mins": curr["avg_session_mins"],
-                "lessons_done": curr["lessons_done"],
-                "lessons_total": curr["lessons_total"],
-                "completion_pct": curr["completion_pct"],
-                "total_time_mins": curr["total_time_mins"],
-                "trend_vs_prev_pct": trend_vs_prev,
-            },
-            "focus": {
-                "focus_score": focus_score_now,
-                "focus_score_delta": focus_delta,
-                "class_median": 62,
-                "avg_sustained_block_mins": curr["avg_session_mins"],
-            },
-            "learning": {"skills": [], "perseverance_index": agg.get("avg_hints_used", "missed")},
-            "language": {},
-            "ai_support": {"hints_per_activity": agg.get("avg_hints_used", "missed")},
-            "routine": {
-                "dropoff_risk": dropoff_risk,
-                "active_days_total": active_days_total,
-                "completion_pct_all": completion_pct_all,
-                "avg_session_all": avg_time_all,
-            },
-            "goals": goals,
-            "recommendations": recs,
-            "questions": {},
-            # report drivers
-            "accuracy_mastery": acc_block,
-            "processing_speed": spd_block,
-            "ai_literacy": ai_block,   # NEW
-            "independence": independence_for_report,
-            "communication": comm_block,
-            "emotional_regulation": emo_block,
-            "activity_performance": attempts_block,
-        }
+    # ----- Period KPI combined bars (no Altair) -----
+    labels = ["Avg session length (period)", "Time-on-task (period)"]
+    values = [curr["avg_session_mins"], curr["total_time_mins"]]
+    units  = [" mins", " mins"]
+    st.plotly_chart(bar_period_kpis(labels, values, units), use_container_width=True)
 
-        render_sen_report(report_data)
+    # ----- All-time KPIs -----
+    st.markdown("### All-time KPI charts")
+    labels = [
+        "All-time points",
+        "All-time avg session",
+        f"Avg chapter progress ({agg['chapters_seen']} seen) (%)",
+        "Hints usage (all-time) (%)",
+    ]
+    values = [
+        float(agg["total_points"]),
+        float(agg["avg_session_length"]),
+        float(agg["avg_chapter_progress_val"]),
+        float(agg["avg_hints_used"] * 100.0),
+    ]
+    units = ["", " mins", " %", " %"]
+    st.plotly_chart(alltime_kpi_bars(labels, values, units), use_container_width=True)
 
-        report_text = build_report(report_data)
-        st.text_area("Report (copy-ready)", value=report_text, height=600)
+    # ---------- Advanced Learning KPIs ----------
+    st.markdown("### Advanced Learning KPIs")
+
+    tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8 = st.tabs([
+        "Accuracy & Mastery",
+        "Processing Speed",
+        "Engagement & Consistency",
+        "Independence",
+        "Communication",
+        "Emotional Regulation",
+        "Activity Performance",
+        "AI Literacy",
+    ])
+
+    with tab1:
+        st.caption(f"Overall accuracy: **{acc_block['overall']:.1f}%**")
+        st.plotly_chart(bar_mastery_subjects(acc_block["subjects"]), use_container_width=True)
+
+    with tab2:
+        st.caption(
+            f"Attempts: **{spd_block['attempts']}** • Mean: **{spd_block['mean']}** • "
+            f"Median: **{spd_block['median']}** • P90: **{spd_block['p90']}**"
+        )
+        st.plotly_chart(bar_response_time_subjects(spd_block["per_subject"], unit_label=" mins"), use_container_width=True)
+
+    with tab3:
+        st.write("Active days:", eng_block["active_days"])
+        st.write("Total sessions:", eng_block["sessions_total"])
+        st.write("Longest streak:", eng_block["streak"])
+        weeks = eng_block.get("weeks", [])
+        st.caption(f"Weeks with activity: {sum(1 for col in eng_block.get('heat', []) if sum(col) > 0)} / {len(weeks)}")
+
+    with tab4:
+        st.write("Hint rate:", f"{indep_block['hint_rate']}%")
+        st.write("Retry rate:", f"{indep_block['retry_rate']}%")
+        st.write("Support rate:", f"{indep_block['support_rate']}%")
+        st.write("Help requests:", int(indep_block["help_requests"]))
+        st.write("Support features used:", int(indep_block["support_feature_uses"]))
+        st.write("Accessibility toggles:", int(indep_block["accessibility_uses"]))
+        st.write("Independence index:", f"{indep_block['independence']}")
+
+    with tab5:
+        st.write("Messages (period):", comm_block["messages"])
+        st.write("Personalisation changes (proxy):", comm_block["personalisation_changes"])
+        st.write("Avatar/Text interactions:", comm_block["interactions"])
+        st.write("Student-initiated:", comm_block["student_initiated"])
+        st.write("Avg length (chars):", comm_block["avg_length"])
+        st.write("Avg turns:", comm_block["avg_turns"])
+        st.write("Last interaction type:", comm_block.get("last_interaction_type") or "missed")
+
+    with tab6:
+        if emo_block["records"]:
+            st.write("Entries captured:", int(emo_block["records"]))
+            st.write("Latest zone:", emo_block.get("latest_zone") or "missed")
+            st.write("Latest mood:", emo_block.get("latest_mood") or "missed")
+            st.write("Green time:", f"{emo_block['green_pct']}%")
+            st.write("Stability index:", f"{emo_block['stability_index']}%")
+            adjustments = emo_block.get("top_adjustments") or []
+            st.write("Top sensory adjustments:", ", ".join(adjustments) if adjustments else "missed")
+            timeline = emo_block.get("timeline") or []
+            if timeline:
+                timeline_text = ", ".join(f"{item['date']} ({item['zone']})" for item in timeline)
+                st.write("Recent timeline:", timeline_text)
+        else:
+            st.info("No emotional regulation entries in this period.")
+
+    with tab7:
+        st.write("Activities recorded:", attempts_block["activities_recorded"])
+        st.write("MCQ attempted:", attempts_block["mcq_attempted"])
+        st.write("MCQ correct:", f"{attempts_block['mcq_correct_pct']}%")
+        st.write("Avg attempts (MCQ):", attempts_block["mcq_avg_attempts"])
+        st.write("First-try success:", f"{attempts_block['mcq_first_try_success_pct']}%")
+        detail_df = pd.DataFrame(attempts_block["attempt_details"])
+        if not detail_df.empty:
+            st.dataframe(detail_df)
+        else:
+            st.info("No activity performance captured for this period.")
+
+    with tab8:
+        if ai_block.get("available"):
+            st.write(f"Pre-test: {ai_block.get('pre_score', 'missed')} / {int(ai_block.get('max_score') or 100)}")
+            st.write(f"Post-test: {ai_block.get('post_score', 'missed')} / {int(ai_block.get('max_score') or 100)}")
+            st.write(f"Learning Gain: {ai_block.get('learning_gain', 'missed')}%")
+            st.write(f"Level (before → after): {ai_block.get('level_before', 'missed')} → {ai_block.get('level_after', 'missed')}")
+            concepts = ai_block.get("concepts_mastered") or []
+            apps = ai_block.get("applications") or []
+            if concepts:
+                st.write("Key Concepts Mastered:", ", ".join(concepts))
+            if apps:
+                st.write("Skill Applications:", "; ".join(apps))
+        else:
+            st.info("AI Literacy assessment not found. Add 'ai_literacy_assessment' to your JSON to enable this section.")
+
+    # ---------- Personalisation usage ----------
+    st.markdown("### Personalisation usage")
+    render_personalisation_usage(data, user_id, start_dt, end_dt)
+
+    # ---------- Subject growth ----------
+    render_subject_growth(agg)
+
+    # ---------- SEN Report ----------
+    st.subheader("🧾 SEN Report (auto-generated)")
+    if not curr["had_ts"]:
+        st.warning("No reliable timestamps found in your selected range.")
+
+    render_sen_report(report_data)
+
+    report_text = build_report(report_data)
+    st.text_area("Report (copy-ready)", value=report_text, height=600)
+
+    st.subheader("🤖 AI Narrative Draft")
+    ai_state_key = f"ai_report_{user_id}"
+    ai_error_key = f"ai_report_error_{user_id}"
+    generated_ai = st.session_state.get(ai_state_key)
+    ai_error = st.session_state.get(ai_error_key)
+    if st.button("Generate AI narrative", key=f"ai_btn_{user_id}"):
+        st.session_state.pop(ai_error_key, None)
+        with st.spinner("Calling Qwen2.5-0.5B-Instruct..."):
+            try:
+                generated_ai = generate_ai_report(report_data, max_new_tokens=420)
+                st.session_state[ai_state_key] = generated_ai
+            except Exception as exc:
+                st.session_state[ai_error_key] = str(exc)
+                ai_error = str(exc)
+    if ai_error:
+        st.error(f"AI report generation failed: {ai_error}")
+    if generated_ai:
+        st.text_area("AI-generated summary", value=generated_ai, height=400)
+    else:
+        st.caption("Click \"Generate AI narrative\" to have Qwen draft a human-readable summary from these metrics.")
+
 if __name__ == "__main__":
     main()
