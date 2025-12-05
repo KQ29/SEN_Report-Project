@@ -153,7 +153,7 @@ def build_prompt_from_report(report: Dict[str, Any]) -> str:
             f"MCQ first-try %: {_fmt(attempts.get('mcq_first_try_success_pct'))}",
             f"Latest zone: {_fmt(emotional.get('latest_zone'))}",
             f"Messages: {_fmt(communication.get('messages'))}",
-            f"Interactions: {_fmt(communication.get('interactions'))}",
+            f"Interactions: {_fmt(communication.get('interactions'))}", # change to interaction with AI 
             "",
             "End of DATA BLOCK.",
         ]

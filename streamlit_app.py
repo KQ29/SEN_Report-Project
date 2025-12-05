@@ -1,5 +1,7 @@
 # streamlit_app.py
 import math
+import operator
+import re
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
@@ -655,6 +657,154 @@ def compute_report_payload(data, user_id, audience, start_date, end_date, data_l
     }
 
 
+def collect_student_period_metrics(data, start_dt, end_dt):
+    rows = []
+    users = data.get("user", []) or []
+    for user in users:
+        uid = user.get("user_id")
+        if uid is None:
+            continue
+        try:
+            curr = period_stats(data, uid, start_dt, end_dt)
+        except Exception:
+            continue
+        focus = compute_focus_score(curr.get("completion_pct", 0), curr.get("avg_session_mins", 0))
+        rows.append({
+            "user_id": uid,
+            "name": user.get("name") or f"User {uid}",
+            "focus_score": round(focus, 1) if focus is not None else None,
+            "completion_pct": round(curr.get("completion_pct", 0), 1),
+            "avg_session_mins": round(curr.get("avg_session_mins", 0), 1),
+            "total_time_mins": round(curr.get("total_time_mins", 0), 1),
+            "lessons_done": curr.get("lessons_done", 0),
+            "lessons_total": curr.get("lessons_total", 0),
+            "sessions": curr.get("sessions", 0),
+            "active_days": curr.get("active_days", 0),
+        })
+    return rows
+
+
+_FILTER_PATTERN = re.compile(r"\s*([a-zA-Z0-9_ ]+)\s*(<=|>=|==|=|!=|<|>)\s*(.+?)\s*")
+
+FIELD_SYNONYMS = {
+    "name": ["student", "student_name", "learner"],
+    "focus_score": ["focus", "focus score", "attention score"],
+    "completion_pct": ["completion", "completion percent", "progress %"],
+    "avg_session_mins": ["avg session", "average session", "session length"],
+    "total_time_mins": ["time on task", "total time"],
+    "lessons_done": ["lessons", "lessons completed", "topics done"],
+    "lessons_total": ["lessons total", "topics total"],
+    "sessions": ["session_count", "sessions total"],
+    "active_days": ["active days", "days active"],
+}
+
+def _normalize_field_name(field: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "_", field.strip().lower())
+
+
+def resolve_field_name(field: str, df: pd.DataFrame) -> str:
+    normalized = _normalize_field_name(field)
+    if normalized in df.columns:
+        return normalized
+    for canonical, synonyms in FIELD_SYNONYMS.items():
+        all_names = [canonical] + synonyms
+        for name in all_names:
+            if _normalize_field_name(name) == normalized and canonical in df.columns:
+                return canonical
+    return None
+
+
+def apply_filter_expression(df: pd.DataFrame, expr: str):
+    expr = expr.strip()
+    if not expr:
+        return df, None
+
+    ops = {
+        "<": operator.lt,
+        "<=": operator.le,
+        ">": operator.gt,
+        ">=": operator.ge,
+        "=": operator.eq,
+        "==": operator.eq,
+        "!=": operator.ne,
+    }
+
+    def _apply_single(condition: str):
+        condition = condition.strip()
+        if not condition:
+            return pd.Series(True, index=df.index)
+        match = _FILTER_PATTERN.match(condition)
+        if not match:
+            raise ValueError(f"Invalid clause '{condition}'. Example: focus_score <= 55")
+        field_raw, op, value_raw = match.groups()
+        field = resolve_field_name(field_raw, df)
+        if field is None:
+            raise ValueError(f"Unknown field '{field_raw}'.")
+        series = df[field]
+        comparator = ops[op]
+        if pd.api.types.is_numeric_dtype(series):
+            try:
+                value = float(value_raw)
+            except ValueError:
+                raise ValueError(f"'{field_raw}' expects a numeric value.")
+            left = pd.to_numeric(series, errors="coerce")
+            return comparator(left, value)
+        value = str(value_raw).strip().strip('"\'')
+        left = series.astype(str).str.lower()
+        return comparator(left, value.lower())
+
+    try:
+        and_parts = [p.strip() for p in re.split(r"&{2}", expr) if p.strip()]
+        if and_parts:
+            mask = pd.Series(True, index=df.index)
+            for part in and_parts:
+                or_parts = [c.strip() for c in re.split(r"\|\|", part) if c.strip()]
+                if not or_parts:
+                    continue
+                or_mask = pd.Series(False, index=df.index)
+                for clause in or_parts:
+                    or_mask |= _apply_single(clause)
+                mask &= or_mask
+        else:
+            mask = _apply_single(expr)
+    except ValueError as e:
+        human_fields = ", ".join(sorted(df.columns))
+        return df, f"{e} Available fields: {human_fields}"
+
+    filtered = df[mask.fillna(False)]
+    return filtered, None
+
+
+def _clean_name_query(text: str) -> str:
+    text = re.sub(r"for\s+(teacher|parent|carer)\b.*", "", text, flags=re.IGNORECASE)
+    text = re.sub(r"user[_\s]?id\s*\d+", "", text, flags=re.IGNORECASE)
+    return text.strip()
+
+
+def match_user_by_name(query: str, users: List[dict]):
+    cleaned = _clean_name_query(query or "")
+    tokens = [tok for tok in re.split(r"\s+", cleaned.lower()) if tok]
+    if not tokens:
+        return None, None
+    matches = []
+    for user in users:
+        uid = user.get("user_id")
+        name = (user.get("name") or "").strip()
+        if not name or uid is None:
+            continue
+        name_lower = name.lower()
+        if all(tok in name_lower for tok in tokens):
+            matches.append(user)
+    if not matches:
+        return None, f"No student matches '{cleaned}'."
+    uids = {m.get("user_id") for m in matches if m.get("user_id") is not None}
+    if len(uids) > 1:
+        names = ", ".join(sorted({m.get("name") or str(m.get("user_id")) for m in matches}))
+        return None, f"Multiple students match '{cleaned}': {names}. Please specify the full name."
+    uid = next(iter(uids), None)
+    return uid, None
+
+
 def main():
     st.title("Student Report Generator (merged datasets)")
 
@@ -690,16 +840,26 @@ def main():
     st.sidebar.success(f"Loaded: {data_label}")
 
     # -------- Query / user selection --------
-    query = st.text_input("Query", value="user_id 1 for teacher")
+    users_df = pd.DataFrame(data.get("user", []))
+    if not users_df.empty:
+        cols = [c for c in ["user_id", "name", "class_level", "grade_level", "email"] if c in users_df.columns]
+        if cols:
+            st.markdown("### Students roster")
+            st.dataframe(users_df[cols], use_container_width=True, hide_index=True)
+    query = st.text_input(
+        "Query",
+        value="",
+        placeholder="e.g. Mia Sanchez for teacher",
+    )
     user_id, audience = extract_user_id_and_audience(query)
+    name_error = None
+    if user_id is None and not users_df.empty:
+        user_id, name_error = match_user_by_name(query, users_df.to_dict("records"))
     if user_id is None:
-        st.warning("Enter a query like: `user_id 1` or `user_id 2 for teacher`")
-        users_df = pd.DataFrame(data.get("user", []))
-        if not users_df.empty:
-            cols = [c for c in ["user_id", "name", "email", "class_level"] if c in users_df.columns]
-            if cols:
-                st.write("Users available:")
-                st.table(users_df[cols])
+        if name_error:
+            st.warning(name_error)
+        else:
+            st.warning("Type a student's full name (e.g. 'Ava Patel') or specify `user_id 1`.")
         return
 
     idx = build_indexes(data)
@@ -928,6 +1088,46 @@ def main():
         st.text_area("AI-generated summary", value=generated_ai, height=400)
     else:
         st.caption("Click \"Generate AI narrative\" to have Qwen draft a human-readable summary from these metrics.")
+
+    st.markdown("### 🔎 Multi-student metric search")
+    metrics_cache_key = f"student_metrics_{payload['data_label']}_{payload['start_date']}_{payload['end_date']}"
+    metrics_rows = st.session_state.get(metrics_cache_key)
+    if metrics_rows is None:
+        metrics_rows = collect_student_period_metrics(data, start_dt, end_dt)
+        st.session_state[metrics_cache_key] = metrics_rows
+
+    df_metrics = pd.DataFrame(metrics_rows)
+    if df_metrics.empty:
+        st.info("No comparable student metrics found for this date range.")
+    else:
+        synonym_lines = []
+        for canonical, names in FIELD_SYNONYMS.items():
+            if canonical in df_metrics.columns:
+                human_list = ", ".join([canonical] + names)
+                synonym_lines.append(f"- **{canonical}** → {human_list}")
+        if synonym_lines:
+            st.caption(
+                "You can filter by any of these fields/synonyms:\n" + "\n".join(synonym_lines)
+            )
+        filter_expr = st.text_input(
+            "Filter expression",
+            key=f"search_expr_{user_id}",
+            placeholder="focus_score <= 50",
+            help="Use field comparisons such as `focus_score <= 50`, `completion_pct > 80`, `name = Ava Patel`."
+        )
+        filtered_df = df_metrics
+        warning_msg = None
+        if filter_expr:
+            filtered_df, warning_msg = apply_filter_expression(df_metrics, filter_expr)
+        if warning_msg:
+            st.warning(warning_msg)
+        if filtered_df.empty:
+            st.info("No students matched that filter.")
+        else:
+            st.dataframe(
+                filtered_df.sort_values(by="focus_score", ascending=True, na_position="last"),
+                use_container_width=True,
+            )
 
 if __name__ == "__main__":
     main()
